@@ -24,7 +24,7 @@ const userSchema = new mongoose.Schema(
         },
         binanceAPI: {
             type: String,
-            required: true,
+            required: false,
             default: "APIPorDefecto",
         },
     },
