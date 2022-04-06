@@ -58,4 +58,37 @@ const authUser = asyncHandler(async (req, res) => {
     }
 });
 
-module.exports = { registerUser, authUser };
+const deleteUser = async (req, res) => {
+    const { id } = req.params
+    try {
+        const response = await User.findByIdAndDelete(id)
+        if (response === null) { return res.status(404).json({ message: "El usuario solictado no se encuenta en la base de datos" }) }
+        return res.status(200).json({ id: id })
+    } catch (error) {
+        return res.status(404).json({ message: 'No se ha podido eliminar al usuario' })
+    }
+}
+
+const getUser = async (req, res) => {
+    const { id } = req.params
+    try {
+        const user = await User.findById(id).exec()
+        if (user === null) { return res.status(404).json({ message: `El usuario con el ID: ${id}, no existe en la base de datos!` }) }
+        return res.status(200).json(user)
+    } catch (error) {
+        return res.status(404).json({ message: error.message })
+    }
+}
+
+const getUsers = async (req, res) => {
+    try {
+        const users = await User.find();
+        return res.status(200).json(users);
+    } catch (error) {
+        return res.status(404).json({ message: error.message });
+    }
+};
+
+
+
+module.exports = { registerUser, deleteUser,authUser, getUsers , getUser};

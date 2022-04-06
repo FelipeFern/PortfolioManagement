@@ -2,37 +2,36 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
 
-const userSchema = new mongoose.Schema(
-    {
-        name: {
-            type: String,
-            required: true,
-        },
-        email: {
-            type: String,
-            required: true,
-            unique: true,
-        },
-        password: {
-            type: String,
-            required: true,
-        },
-        isAdmin: {
-            type: Boolean,
-            required: true,
-            default: false,
-        },
-        binanceAPI: {
-            type: String,
-            required: false,
-            default: "APIPorDefecto",
-        },
+const userSchema = new mongoose.Schema({
+    name: {
+        type: String,
+        required: true,
     },
-    {
-        // Para agregar una columna sobre la fecha y hora en que se creo/ modificaron los datos.
-        timestamps: true,
-    }
-);
+    email: {
+        type: String,
+        required: true,
+        unique: true,
+    },
+    password: {
+        type: String,
+        required: true,
+    },
+    isAdmin: {
+        type: Boolean,
+        required: true,
+        default: false,
+    },
+    createdAt: {
+        type: Date,
+        default: new Date(),
+    },
+    inscriptions: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Inscription",
+        },
+    ],
+});
 
 // Encriptamos la contraseña
 userSchema.pre("save", async function (next) {
@@ -48,6 +47,6 @@ userSchema.methods.matchPassword = async function (enteredPassword) {
     return await bcrypt.compare(enteredPassword, this.password);
 };
 
-const UserModel = mongoose.model("users", userSchema);
+const userModel = mongoose.model("User", userSchema);
 
-module.exports = UserModel;
+module.exports = userModel;
