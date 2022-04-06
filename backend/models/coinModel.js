@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+const mongoose= require ("mongoose");
 
 const coinSchema = mongoose.Schema({
     id: { type: String, required: true },
@@ -11,5 +11,4 @@ const coinSchema = mongoose.Schema({
 });
 
 const coinModel = mongoose.model("Coin", coinSchema);
-export default coinModel;
-
+module.export =  {coinModel};
