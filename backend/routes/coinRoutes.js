@@ -3,8 +3,8 @@ const { coins, coinRange, getCoin, coinsAPI } = require("../controllers/coinCont
 const router = express.Router();
 
 router.get("/coins", coins);
-//router.get("/coin/range/:id", coinRange);
-router.get("/coins/:id", getCoin);
-//router.get("/coinsAPI", coinsAPI)
+router.get("/coin/range/:id", coinRange);
+router.get("/coin/:id", getCoin);
+router.get("/coinsAPI", coinsAPI)
 
 module.exports = router;

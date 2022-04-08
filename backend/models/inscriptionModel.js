@@ -1,9 +1,9 @@
-import mongoose from "mongoose";
+const mongoose = require("mongoose");
 
 const insctiptionSchema = mongoose.Schema({
     inscriptionDate: { type: Date, default: new Date() },
     profit: { type: Number, default: 0 },
-    score: {type: Number, default: 0},
+    score: { type: Number, default: 0 },
     positions: [
         {
             type: mongoose.Schema.Types.ObjectId,
@@ -20,5 +20,4 @@ const insctiptionSchema = mongoose.Schema({
     },
 });
 
-const insctiptionModel = mongoose.model("Insctiption", insctiptionSchema);
-module.exports = insctiptionModel;
+module.exports = mongoose.model("Inscription", insctiptionSchema);

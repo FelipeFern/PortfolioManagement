@@ -1,7 +1,7 @@
 const mongoose= require ("mongoose");
 
 const coinSchema = mongoose.Schema({
-    id: { type: String, required: true },
+    identifier: { type: String, required: true },
     symbol: { type: String, required: true },
     name: { type: String, required: true },
     image: { type: String, required: true },
@@ -10,5 +10,4 @@ const coinSchema = mongoose.Schema({
     //  No se si tendría que guardar las relaciones sobre
 });
 
-const coinModel = mongoose.model("Coin", coinSchema);
-module.export =  {coinModel};
+module.exports = mongoose.model("Coin", coinSchema);

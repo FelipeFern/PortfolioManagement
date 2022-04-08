@@ -8,13 +8,17 @@ const cors = require("cors");
 const userRoutes = require("./routes/userRoutes");
 const coinController = require("./routes/coinRoutes");
 
+
 const app = express();
 connectDB();
+
+//require('./models/inscriptionModel')
+//const inscriptionSeed = require("./seeders/inscriptionSeeder");
+//inscriptionSeed();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cors({ origin: true, credentials: true }));
-
 
 app.use("/api/users", userRoutes);
 

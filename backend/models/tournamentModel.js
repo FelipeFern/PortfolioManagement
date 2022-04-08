@@ -1,10 +1,9 @@
-import mongoose from "mongoose";
+const mongoose = require("mongoose");
 
 const tournamentSchema = mongoose.Schema({
-    id: { type: String, required: true },
     startDate: { type: Date, required: true },
     finishDate: { type: Date, required: true },
-    monetAvailable: { type: Number, required: true },
+    moneyAvailable: { type: Number, required: true },
     inscriptions: [
         {
             type: mongoose.Schema.Types.ObjectId,
@@ -19,5 +18,4 @@ const tournamentSchema = mongoose.Schema({
     ],
 });
 
-const tournamentModel = mongoose.model("Tournament", tournamentSchema);
-module.exports = tournamentModel;
+module.exports = mongoose.model("Tournament", tournamentSchema);

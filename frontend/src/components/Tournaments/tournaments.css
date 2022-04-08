@@ -1,0 +1,72 @@
+.tournaments__container {
+    display: grid;
+    grid-template-columns: 40% 40%;
+    gap: 20%;
+}
+
+.tournaments__cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+}
+
+.tournament__card {
+    background: var(--color-bg-variant);
+    border: 1px solid transparent;
+    border-radius: 1rem;
+    padding: 2rem;
+    text-align: center;
+    transition: var(--transition);
+}
+
+.tournament__card:hover {
+    background: transparent;
+    border-color: var(--color-primary-variant);
+    cursor: default;
+}
+
+.tournament__icon {
+    color: var(--color-primary);
+    font-size: 1.4rem;
+    margin-bottom: 1rem;
+}
+
+.tournament__card h5 {
+    font-size: 0.95rem;
+}
+
+.tournament__card small {
+    font-size: 0.8rem;
+    color: var(--color-light);
+}
+
+/* ==== Est ossería del parafo de abajo  */
+.tournaments__content p {
+    margin: 2rem 0 2.6rem;
+}
+
+/*   ======== Media Queries Medium ========= */
+@media screen and (max-width: 1024px) {
+    .tournaments__container {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+    }
+}
+
+/*   ======== Media Queries Small ========= */
+@media screen and (max-width: 600px) {
+    .tournaments__cards {
+        grid-template-columns: 1fr ;
+        gap: 1rem;
+    }
+
+    .tournaments__content {
+        text-align: center;
+        width: 100%;
+        padding: 2rem;
+    }
+
+    .tournaments__content p {
+        margin: 1.5rem 0;
+    }
+}
