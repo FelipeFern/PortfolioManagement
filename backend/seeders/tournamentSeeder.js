@@ -4,6 +4,7 @@ const tournamentSeed = async () => {
     try {
         const tournament = mongoose.model("Tournament");
         tournament.create({
+            name: 'Primer  Torneo',
             startDate: Date.now(),
             finishDate: new Date("5/1/22"),
             moneyAvailable: 100,
@@ -16,6 +17,7 @@ const tournamentSeed = async () => {
         });
 
         tournament.create({
+            name: 'Segundo Torneo',
             startDate: Date.now(),
             finishDate: new Date("5/2/22"),
             moneyAvailable: 200,
@@ -32,3 +34,5 @@ const tournamentSeed = async () => {
 };
 
 module.exports = tournamentSeed;
+
+

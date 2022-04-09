@@ -70,4 +70,21 @@ const getTournament = asyncHandler(async (req, res) => {
     }
 });
 
-module.exports = { createTournament, deleteTournament, getTournament };
+const getTournaments = asyncHandler(async (req, res) => {
+    try {
+        const response = await Tournament.find();
+        if (response === null) {
+            return res.status(404).json({
+                message: `Error trying to get all the tournaments from the DB.`,
+            });
+        }
+        return res.status(200).json(response);
+    } catch (error) {
+        return res
+            .status(404)
+            .json({ message: "Failed to retrieve Tournaments from DB" });
+    }
+});
+
+
+module.exports = { createTournament, deleteTournament, getTournament, getTournaments };

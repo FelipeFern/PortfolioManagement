@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 
 const tournamentSchema = mongoose.Schema({
+    name: {type: String, required: true},
     startDate: { type: Date, required: true },
     finishDate: { type: Date, required: true },
     moneyAvailable: { type: Number, required: true },

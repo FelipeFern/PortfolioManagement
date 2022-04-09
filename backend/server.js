@@ -7,7 +7,7 @@ const cors = require("cors");
 
 const userRoutes = require("./routes/userRoutes");
 const coinController = require("./routes/coinRoutes");
-
+const tournamentController = require("./routes/tournamentRoutes");
 
 const app = express();
 connectDB();
@@ -21,8 +21,8 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cors({ origin: true, credentials: true }));
 
 app.use("/api/users", userRoutes);
-
 app.use("/api/coingecko", coinController);
+app.use("/api/tournaments", tournamentController);
 
 app.use(notFound);
 app.use(errorHandler);

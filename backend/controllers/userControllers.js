@@ -1,5 +1,7 @@
 const asyncHandler = require("express-async-handler");
 const User = require("../models/userModel");
+const Tournament = require("../models/tournamentModel");
+const Inscription = require("../models/inscriptionModel");
 const generateToken = require("../utils/generateToken");
 
 const registerUser = asyncHandler(async (req, res) => {
@@ -56,26 +58,37 @@ const authUser = asyncHandler(async (req, res) => {
 });
 
 const deleteUser = async (req, res) => {
-    const { id } = req.params
+    const { id } = req.params;
     try {
-        const response = await User.findByIdAndDelete(id)
-        if (response === null) { return res.status(404).json({ message: "El usuario solictado no se encuenta en la base de datos" }) }
-        return res.status(200).json({ id: id })
+        const response = await User.findByIdAndDelete(id);
+        if (response === null) {
+            return res.status(404).json({
+                message:
+                    "El usuario solictado no se encuenta en la base de datos",
+            });
+        }
+        return res.status(200).json({ id: id });
     } catch (error) {
-        return res.status(404).json({ message: 'No se ha podido eliminar al usuario' })
+        return res
+            .status(404)
+            .json({ message: "No se ha podido eliminar al usuario" });
     }
-}
+};
 
 const getUser = async (req, res) => {
-    const { id } = req.params
+    const { id } = req.params;
     try {
-        const user = await User.findById(id).exec()
-        if (user === null) { return res.status(404).json({ message: `El usuario con el ID: ${id}, no existe en la base de datos!` }) }
-        return res.status(200).json(user)
+        const user = await User.findById(id).exec();
+        if (user === null) {
+            return res.status(404).json({
+                message: `El usuario con el ID: ${id}, no existe en la base de datos!`,
+            });
+        }
+        return res.status(200).json(user);
     } catch (error) {
-        return res.status(404).json({ message: error.message })
+        return res.status(404).json({ message: error.message });
     }
-}
+};
 
 const getUsers = async (req, res) => {
     try {
@@ -86,6 +99,69 @@ const getUsers = async (req, res) => {
     }
 };
 
+const getTournamentsRegistered = asyncHandler(async (req, res) => {
+    const { id } = req.params;
+    try {
+        //const user = req.user;
+        //console.log(user);
 
+        const response = await Inscription.find({ user: id });
+        const inscriptionsArray = [];
+        for (insciption of response) {
+            inscriptionsArray.push(insciption._id);
+        }
+        const tournaments = await Tournament.find({
+            inscriptions: { $in: inscriptionsArray },
+        });
+        res.status(200).json(tournaments);
+    } catch (error) {
+        return res.status(404).json({ message: error.message });
+    }
+});
 
-module.exports = { registerUser, deleteUser,authUser, getUsers , getUser};
+const getTournamentsUnregistered = asyncHandler(async (req, res) => {
+    const { id } = req.params;
+    try {
+        //const user = req.user;
+        //console.log(user);
+
+        const response = await Inscription.find({ user: id });
+        const inscriptionsArray = [];
+        for (insciption of response) {
+            inscriptionsArray.push(insciption._id);
+        }
+        const tournaments = await Tournament.find({
+            inscriptions: { $not: { $in: inscriptionsArray } },
+        });
+        res.status(200).json(tournaments);
+    } catch (error) {
+        return res.status(404).json({ message: error.message });
+    }
+});
+
+const getPositionTournament = asyncHandler(async (req, res) => {
+    const { id } = req.params;
+    const { tournament } = req.body;
+    try {
+        const response = await Inscription.find({
+            user: id,
+            tournament: tournament,
+        });
+        console.log(response.positions);
+
+        res.status(200).json(response.positions);
+    } catch (error) {
+        return res.status(404).json({ message: error.message });
+    }
+});
+
+module.exports = {
+    registerUser,
+    deleteUser,
+    authUser,
+    getUsers,
+    getUser,
+    getTournamentsRegistered,
+    getTournamentsUnregistered,
+    getPositionTournament
+};
