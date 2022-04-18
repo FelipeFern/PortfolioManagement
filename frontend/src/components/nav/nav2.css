@@ -1,5 +1,4 @@
 aside .top{
-    background: green;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -11,7 +10,8 @@ aside .logo {
     gap: 1rem;
 }
 
-aside .close{
+
+aside .nav__toggler{
     display: none;
 }
 
@@ -74,4 +74,34 @@ aside .sidebar a.active.icon{
 aside .sidebar a:hover{
     color:var(--color-primary);
     margin-left: 1rem;
+}
+
+
+
+
+@media screen and (max-width: 768px) {
+
+    aside .top{
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-top: 0.2rem;
+        margin-bottom: 0;
+        
+    }
+    
+    aside .logo {
+        display: flex;
+        gap: 1rem;
+        padding: auto;
+    }
+
+    
+    aside .nav__toggler{
+        display: block;
+        border: 1px solid var(--color-primary);
+        border-radius: var(--border-radius-2);
+    }
+
+
 }

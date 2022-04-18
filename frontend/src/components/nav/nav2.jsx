@@ -1,23 +1,39 @@
-import React from "react";
+import React, { useRef, useState } from "react";
 import { AiOutlineClose, AiOutlineTrophy } from "react-icons/ai";
 import { BsGrid } from "react-icons/bs";
 import { RiCoinsLine } from "react-icons/ri";
 import { MdOutlineCreate } from "react-icons/md";
 import { FiLogOut } from "react-icons/fi";
 import "./nav2.css";
+import { MdMenu } from "react-icons/md";
 
-function nav2() {
+function Nav2() {
+    const [sidebarActive, setSidebarActive] = useState("sidebar ");
+    const [toggleIcon, setToggleIcon] = useState("nav__toggler");
+
+    const navToggle = () => {
+        sidebarActive === "sidebar"
+            ? setSidebarActive("sidebar nav_active")
+            : setSidebarActive("sidebar");
+        console.log(sidebarActive);
+        toggleIcon === "nav__toggler"
+            ? setToggleIcon("nav__toggler toggle")
+            : setToggleIcon("nav__toggler");
+    };
+
     return (
         <aside>
             <div className="top">
-                <div className="logo">
+                <div onClick={navToggle} className={toggleIcon}>
+                    <div className="line1"></div>
+                    <div className="line2"></div>
+                    <div className="line3"></div>
+                </div>
+                <div className="logo" id="menu-btn">
                     <h2>LogoNuestro</h2>
                 </div>
-                <div className="close" id="close-btn">
-                    <AiOutlineClose />
-                </div>
             </div>
-            <div className="sidebar">
+            <div className={sidebarActive}>
                 <a href="" className="active">
                     <div className="icon">
                         <BsGrid />
@@ -73,4 +89,4 @@ function nav2() {
     );
 }
 
-export default nav2;
+export default Nav2;

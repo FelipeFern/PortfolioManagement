@@ -57,7 +57,14 @@ color: var(--color-light);
 
 /* ========================= Small QUERY ======================== */
 @media screen and (max-width: 768px) {
-   
+   .recent-order{
+       position: relative;
+       margin: 3rem 0 0 0;
+       width: 100%;
+   }
 
+   .recent-order table{
+       border-radius: var(--card-border-radius);
+   }
 
 }

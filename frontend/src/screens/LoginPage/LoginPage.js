@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import ErrorMessage from "../../components/ErrorMessage";
 import Loading from "../../components/Loading";
 import MainScreen from "../../components/MainScreen";
+import Header from "../../components/Header/Header";
 import "./LoginPage.css";
 
 function LoginPage(history) {
@@ -43,6 +44,8 @@ function LoginPage(history) {
     };
 
     return (
+        <div>
+            <Header/>
         <MainScreen title="LOGIN">
             <div className="loginContainer">
                 {error && (
@@ -82,6 +85,8 @@ function LoginPage(history) {
                 </Row>
             </div>
         </MainScreen>
+        </div>
+        
     );
 }
 

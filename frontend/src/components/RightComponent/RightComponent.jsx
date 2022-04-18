@@ -68,17 +68,21 @@ function RightComponent() {
             fetchCoins();
         }, 1000);
 
-        getTournamentPositions();
+        //getTournamentPositions();
 
         return () => {
             clearInterval(coinsData);
         };
     }, [coins, coin, coinPrice]);
 
+    const clickMenuButton= ()=> {
+
+    }
+
     return (
         <div className="right">
             <div className="top">
-                <button id="menu-button">
+                <button id="menu-button" onClick={clickMenuButton()}>
                     <span>
                         <MdMenu />
                     </span>
@@ -164,13 +168,13 @@ function RightComponent() {
                             </tr>
                         </thead>
                         <tbody>
-                            {tournamentPositions.map((rank, index) => (
+                            {/* {tournamentPositions.map((rank, index) => (
                                 <tr key={rank._id}>
                                     <th>{index + 1} °</th>
                                     <th>{rank.user.name}</th>
                                     <th>${rank.inscription.profit}</th>
                                 </tr>
-                            ))}
+                            ))} */}
                             <tr >
                                 <th> 1° </th>
                                 <th>Felipe</th>

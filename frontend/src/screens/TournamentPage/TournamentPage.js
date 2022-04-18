@@ -4,7 +4,7 @@ import "./TournamentPage.css";
 import PositionList from "../../components/PositionList/PositionList";
 import RightComponent from "../../components/RightComponent/RightComponent";
 import axios from "axios";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 
 const URIPositions =
     "http://localhost:5000/api/users/tournamentPostions/62506acceecaa7c367b162c1";

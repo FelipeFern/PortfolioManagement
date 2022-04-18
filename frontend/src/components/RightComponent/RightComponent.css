@@ -258,3 +258,52 @@ tbody {
         font-weight: bold;
     }
 }
+
+@media screen and (max-width: 768px) {
+ 
+    .right {
+        width: 94%;
+        margin: 0 auto 4rem;
+        
+    }
+
+    .right .top {
+        position: fixed;
+        top: 0;
+        left: 0;
+        align-items: center;
+        padding: 0 0.8rem;
+        height: 4.6rem;
+        background: var(--color-bg-variant);
+        width: 100%;
+        margin: 0;
+        z-index: 2;
+        border-bottom-left-radius: var(--border-radius-2);
+        border-bottom-right-radius: var(--border-radius-2);
+        display: none;
+    }
+
+    
+    .right .top button {
+        display: inline-block;
+        width: 5rem;
+        height: 98%;
+        border: 1px solid var(--color-primary) ;
+        border-radius: var(--border-radius-3);
+        background: transparent;
+        align-items: center;
+        cursor: pointer;
+        position: absolute;
+        left: 1rem;
+    }
+
+    .right .top span{
+        width: 3rem;
+        height: 3rem;
+        color: var(--color-light);        
+        font-size: 3rem;
+        padding: auto;
+    }
+
+
+}
