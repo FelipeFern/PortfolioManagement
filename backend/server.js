@@ -12,9 +12,9 @@ const tournamentController = require("./routes/tournamentRoutes");
 const app = express();
 connectDB();
 
-//require('./models/inscriptionModel')
-//const inscriptionSeed = require("./seeders/inscriptionSeeder");
-//inscriptionSeed();
+//require('./models/positionModel')
+//const positionSeed = require("./seeders/positionSeeder");
+//positionSeed();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));

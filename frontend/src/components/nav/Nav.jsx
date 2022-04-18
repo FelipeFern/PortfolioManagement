@@ -21,14 +21,16 @@ function Nav() {
             </a>
 
             <a
-                href="#tournaments"
-                onClick={() => setActiveNav("#tournaments")}
-                className={activeNav === "#tournaments" ? "active" : ""}
+                href="tournaments"
+                onClick={() => setActiveNav("tournaments")}
+                className={activeNav === "tournaments" ? "active" : ""}
             >
                 <AiOutlineUnorderedList />
             </a>
 
-            <a href="#createPosition">
+            <a href="coins"
+            onClick={() => setActiveNav("coins")}
+            className={activeNav === "coins" ? "active" : ""}>
                 <MdAttachMoney />
             </a>
         </div>

@@ -2,6 +2,7 @@ const asyncHandler = require("express-async-handler");
 const User = require("../models/userModel");
 const Tournament = require("../models/tournamentModel");
 const Inscription = require("../models/inscriptionModel");
+const Position = require("../models/positionModel");
 const generateToken = require("../utils/generateToken");
 
 const registerUser = asyncHandler(async (req, res) => {
@@ -139,21 +140,70 @@ const getTournamentsUnregistered = asyncHandler(async (req, res) => {
     }
 });
 
+// Checked
 const getPositionTournament = asyncHandler(async (req, res) => {
     const { id } = req.params;
     const { tournament } = req.body;
+    console.log(req.body);
+        console.log("Desde el controllador \n")
     try {
-        const response = await Inscription.find({
+        const response = await Inscription.findOne({
             user: id,
             tournament: tournament,
         });
-        console.log(response.positions);
-
-        res.status(200).json(response.positions);
+        const positions = await Position.find({
+            _id: { $in: response.positions },
+        });
+        res.status(200).json(positions);
     } catch (error) {
         return res.status(404).json({ message: error.message });
     }
 });
+
+// Checked
+const getClosedPositionsTournament = asyncHandler(
+    asyncHandler(async (req, res) => {        
+        const { id } = req.params;
+        const { tournament } = req.body;
+        try {
+            const response = await Inscription.findOne({
+                user: id,
+                tournament: tournament,
+            });
+            console.log(response.positions);
+
+            const positions = await Position.find({
+                _id: { $in: response.positions },
+                closeDate: { $lt: new Date() },
+            });
+            res.status(200).json(positions);
+        } catch (error) {
+            return res.status(404).json({ message: error.message });
+        }
+    })
+);
+
+
+const getOpenPositionsTournament = asyncHandler(
+    asyncHandler(async (req, res) => {       
+        const { id } = req.params;
+        const { tournament } = req.body;
+        try {
+            const response = await Inscription.findOne({
+                user: id,
+                tournament: tournament,
+            });
+        
+            const positions = await Position.find({
+                _id: { $in: response.positions },
+                closeDate: { $exists: false }, // Esto nose si esta bien, pero hasta no crear el seeder, no lo voy a poder probar.
+            });
+            res.status(200).json(positions);
+        } catch (error) {
+            return res.status(404).json({ message: error.message });
+        }
+    })
+);
 
 module.exports = {
     registerUser,
@@ -163,5 +213,7 @@ module.exports = {
     getUser,
     getTournamentsRegistered,
     getTournamentsUnregistered,
-    getPositionTournament
+    getPositionTournament,
+    getClosedPositionsTournament,
+    getOpenPositionsTournament
 };

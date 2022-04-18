@@ -46,7 +46,17 @@ const getInscription = asyncHandler(async (req, res) => {
                 message: `The inscription that you trying to get, ID: ${_id} doesn't exist on the DB`,
             });
         }
-        return res.status(200).json(inscription);
+
+        const _user = await User.findById(
+            inscription.user.toString()
+        ).exec();
+
+        const toReturn = {
+            inscription: inscription,
+            user: _user
+        }
+
+        return res.status(200).json(toReturn);
     } catch (error) {
         return res
             .status(404)

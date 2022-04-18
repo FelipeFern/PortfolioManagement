@@ -25,6 +25,7 @@ const Tournaments = () => {
 
             <div className="container tournaments__container">
                 <div className="tournaments__content">
+                    <h3> Registeres Tournaments</h3>
                     <div className="tournaments__cards">
                         {tournamentsState.map((tournament) => (
                             <article className="tournament__card">
@@ -43,6 +44,7 @@ const Tournaments = () => {
                 </div>
 
                 <div className="tournaments__content">
+                <h3> UnRegistered Tournaments</h3>
                     <div className="tournaments__cards">
                         <article className="tournament__card">
                             <AiFillTrophy className="tournament__icon" />

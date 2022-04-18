@@ -1,0 +1,148 @@
+body {
+    height: 100%;
+}
+
+h2,
+.tittles {
+    color: var(--color-light);
+}
+
+.th-img-name {
+    display: inline-block;
+    vertical-align: baseline;
+    gap: 0.2rem;
+}
+
+img {
+    float: left;
+    margin-right: 0.4rem;
+}
+
+table {
+    border-collapse: collapse;
+    border-bottom: 0.3rem;
+}
+
+th,
+td {
+    padding: 0.8rem;
+}
+
+img {
+    width: 30px;
+    height: 30px;
+}
+
+tr {
+    border-bottom: 1pt solid var(--color-light);
+}
+
+tbody {
+    background-color: var(--color-bg-variant);
+}
+
+.table-container {
+    padding: 8%;
+}
+
+@media screen and (max-width: 1024px) {
+    thead {
+        display: none;
+    }
+    tbody{
+        font-size: 80%;
+    }
+
+    table{
+        width: 100%;        
+    }
+
+    td {
+        display: block;
+    }
+
+    td:nth-child(1) {
+        background-color: var(--color-light);
+        color: var(--color-light);
+        align-items: center;
+    }
+
+    td:nth-child(2)::before {
+        content: "Symbol";
+    }
+
+    td:nth-child(3)::before {
+        content: "Price";
+    }
+
+    td:nth-child(4)::before {
+        content: "Change";
+        color: var(--color-white);
+    }
+
+    td:nth-child(5)::before {
+        content: "Change %";
+        color: var(--color-white);
+    }
+
+    td {
+        text-align: right;
+        margin-right: 3rem;
+        margin-left: 3rem;
+    }
+
+    td::before {
+        float: left;
+        margin-right: 0;
+        font-weight: bold;
+    }
+}
+
+
+@media screen and (max-width: 600px) {
+    thead {
+        display: none;
+    }
+
+    td {
+        display: block;
+        margin-right: 1rem;
+        margin-left: 1rem;
+    }
+
+    td:nth-child(1) {
+        background-color: var(--color-light);
+        color: var(--color-light);
+        align-items: center;
+    }
+
+    td:nth-child(2)::before {
+        content: "Symbol";
+        color: var(--color-light);
+    }
+
+    td:nth-child(3)::before {
+        content: "Price";
+        color: var(--color-light);
+    }
+
+    td:nth-child(4)::before {
+        content: "Change";
+        color: var(--color-light);
+    }
+
+    td:nth-child(5)::before {
+        content: "Change %";
+        color: var(--color-light);
+    }
+
+    td {
+        text-align: right;
+    }
+
+    td::before {
+        float: left;
+        margin-right: 3rem;
+        font-weight: bold;
+    }
+}

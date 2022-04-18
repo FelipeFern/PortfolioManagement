@@ -1,0 +1,63 @@
+.recent-order {
+    margin-top: 2rem;
+}
+
+.recent-order h2 {
+    margin-bottom: 0.8rem;
+}
+
+.recent-order table{
+    border-radius: var(--card-border-radius);
+    background: var(--color-info-dark);
+    width: 100%;
+    text-align: center;
+    padding: var(--card-padding);
+}
+
+.recent-order tbody td{
+    height: 2.8rem;
+    border-bottom: 1px solid var(--color-light);
+}
+
+.recent-order tbody tr:last-child td{
+    border: none;
+}
+
+.recent-order a{
+text-align: center;
+display: block;
+margin: 1rem auto;
+color: var(--color-light);
+}
+
+.recent-order a:hover{
+    color: var(--color-white)
+}
+
+
+/* ========================= MEDIA QUERY ======================== */
+@media screen and (max-width: 1200px) {
+    .recent-order {
+        width: 94%;
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        margin: 2rem 0 0 8.8rem;
+    }
+
+    .recent-order table {
+        width: 84vw;
+    }
+
+}
+
+
+
+
+
+/* ========================= Small QUERY ======================== */
+@media screen and (max-width: 768px) {
+   
+
+
+}

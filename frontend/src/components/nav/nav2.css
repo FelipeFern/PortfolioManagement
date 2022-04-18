@@ -1,0 +1,77 @@
+aside .top{
+    background: green;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 1.4rem;
+}
+
+aside .logo {
+    display: flex;
+    gap: 1rem;
+}
+
+aside .close{
+    display: none;
+}
+
+/* ================= SIDE BAR =============== */
+
+aside .sidebar {
+    background-color: var(--color-bg-variant);
+    display: flex;
+    flex-direction: column;
+    height: 86vh;
+    position: relative;
+    top: 2rem;
+}
+
+aside h3 {
+    font-size: 80%;
+    font-weight: 500;
+}
+
+aside .sidebar a{
+    display: flex;
+    color: var(--color-light);
+    margin-left: 2rem;
+    gap: 1rem;
+    align-items: center;
+    position: relative;
+    height: 4.8rem;
+    transition: var(--transition);
+}
+
+aside .sidebar a .icon{
+    font-size: 1.8rem;
+}
+
+
+aside .sidebar a:last-child {
+    position: absolute;
+    bottom: 2rem;
+    width: 100%;
+}
+
+aside .sidebar a.active{
+    background: var(--color-info-dark);
+    color: var(--color-primary);
+    margin-left: 0;
+    margin-right: 0;
+}
+
+aside .sidebar a.active::before{
+    content: '';
+    width: 6px;
+    height: 100%;
+    background: var(--color-primary);
+}
+
+aside .sidebar a.active.icon{
+    margin-left: calc(1rem - 6px);
+}
+
+aside .sidebar a:hover{
+    color:var(--color-primary);
+    margin-left: 1rem;
+}

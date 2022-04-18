@@ -6,7 +6,7 @@
 
 .tournaments__cards {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(3, 1fr);
     gap: 1.5rem;
 }
 
@@ -32,7 +32,7 @@
 }
 
 .tournament__card h5 {
-    font-size: 0.95rem;
+    font-size: 0.8rem;
 }
 
 .tournament__card small {
@@ -43,6 +43,12 @@
 /* ==== Est ossería del parafo de abajo  */
 .tournaments__content p {
     margin: 2rem 0 2.6rem;
+}
+
+.tournaments__content h3 {
+    padding: 1rem;
+    text-align: center;
+    color: var(--color-light);
 }
 
 /*   ======== Media Queries Medium ========= */

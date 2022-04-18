@@ -1,0 +1,88 @@
+.container--1 {
+    display: grid;
+    width: 96%;
+    margin: 0 auto;
+    gap: 1.8rem;
+    grid-template-columns: 16rem auto 23rem;
+}
+
+aside {
+    height: 100vh;
+    background-color: var(--color-dark-variant);
+}
+
+/* .container--1 .middleDiv{
+     TENGO QUE PONERLOS UNO ABAJO DEL OTRO A LOS COMPONENTES 
+} */
+
+/* ========================= MEDIA QUERY ======================== */
+@media screen and (max-width: 1200px) {
+    .container--1 {
+        width: 94%;
+        grid-template-columns: 7rem auto 23rem;
+    }
+
+    aside .logo {
+        display: none;
+    }
+
+    aside .sidebar h3 {
+        display: none;
+    }
+
+    aside .sidebar a {
+        width: 5.6rem;
+    }
+
+    aside .sidebar a:last-child {
+        position: relative;
+        margin-top: 1.8rem;
+    }
+}
+
+/* ========================= Small QUERY ======================== */
+@media screen and (max-width: 768px) {
+    .container--1 {
+        width: 100%;
+    }
+
+    aside {
+        position: fixed;
+        left: 0;
+        background: green;
+        width: 18rem;
+        z-index: 3;
+        height: 100vh;
+        padding-right: var(--card-padding);
+        display: none;
+    }
+
+    aside .logo {
+        margin-left: 1rem;
+        display: flex;
+    }
+
+    aside .logo h2 {
+        display: inline;
+    }
+
+    aside .sidebar h3 {
+        display: inline;
+    }
+
+    aside .sidebar a {
+        width: 100%;
+    }
+
+    aside .sidebar a:last-child{
+        position: absolute;
+        bottom: 5rem;
+    }
+
+    aside .close{
+        display: inline-block;
+        cursor: pointer;
+    }
+    
+   
+}

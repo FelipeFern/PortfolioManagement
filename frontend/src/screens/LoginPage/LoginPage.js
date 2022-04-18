@@ -23,12 +23,10 @@ function LoginPage(history) {
             };
             setLoading(true);
             const name = "nombre pruebas";
-            const binanceAPI = "API PRUEBAS";
             const { data } = await axios.post(
                 "/api/users/login",
                 {
                     name,
-                    binanceAPI,
                     email,
                     password,
                 },

@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-const User = require("../models/userModel");
 const Tournament = require("../models/tournamentModel");
 
 const inscriptionSeed = async () => {

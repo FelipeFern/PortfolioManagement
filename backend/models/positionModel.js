@@ -12,7 +12,7 @@ const positionSchema = mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "Coin",
     },
-    insctiption: {
+    inscription: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Inscription",
     },
