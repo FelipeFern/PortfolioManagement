@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 
 const URI = "http://localhost:5000/api/tournaments/";
+
 const Tournaments = () => {
     const [tournamentsState, setTournamentsState] = useState([]);
 

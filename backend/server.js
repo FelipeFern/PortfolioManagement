@@ -12,9 +12,16 @@ const tournamentController = require("./routes/tournamentRoutes");
 const app = express();
 connectDB();
 
-//require('./models/positionModel')
-//const positionSeed = require("./seeders/positionSeeder");
-//positionSeed();
+app.get("/", function (req, res) {
+    try {
+        require("./models/inscriptionModel");
+        const inscriptionSeed = require("./seeders/inscriptionSeeder");
+        inscriptionSeed();
+        return res.status(200).send(" Se ejecutaron los seeders");
+    } catch (error) {
+        return res.status(404).send("No se pudieron ejecutar los seeders")
+    }
+});
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));

@@ -9,5 +9,5 @@ const coinSchema = mongoose.Schema({
     // TO DO:
     //  No se si tendría que guardar las relaciones sobre
 });
-
+    
 module.exports = mongoose.model("Coin", coinSchema);

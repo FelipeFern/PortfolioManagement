@@ -28,7 +28,7 @@ const App = () => (
                     <Route path="/register" element={<RegisterPage />} exact />
                     <Route path="/InitialPage" element={<InitialPage />} />
                     <Route path="/PortfolioPage" element={<PortfolioPage />} />
-                    <Route path="/torneo" element={<TournamentPage />} />
+                    <Route path="/tournament/:id" element={<TournamentPage />} />
                 </Routes>
             </BrowserRouter>
         </main>

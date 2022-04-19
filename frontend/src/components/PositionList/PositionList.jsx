@@ -14,8 +14,7 @@ function PositionList( { _coins, _tournamentPositions }) {
  
     const insertCoins = async () => {
          let arreglo = []
-        // console.log('torieno')
-        // console.log(tournamentPositions)
+       
         for (let elem of tournamentPositions) {
             const url = URICoins + elem.coin;
             const data = await (await axios.get(url)).data;
@@ -23,8 +22,8 @@ function PositionList( { _coins, _tournamentPositions }) {
         }
         //console.log(arreglo);
         setCoins(_coins);
-        console.log(_coins)
-        console.log(coins)
+        // console.log(_coins)
+        // console.log(coins)
     };
 
     const userPositions = async () => {

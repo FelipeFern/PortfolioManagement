@@ -41,7 +41,6 @@ const TournamentPage = () => {
 
     return (
         <div className="container--1">
-            <Nav2 />
             <div className="middleDiv">
                 <Dashboard />
                 <PositionList
