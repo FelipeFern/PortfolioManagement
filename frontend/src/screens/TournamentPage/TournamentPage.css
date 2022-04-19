@@ -8,12 +8,13 @@
 
 aside {
     height: 100vh;
-    background-color: var(--color-dark-variant);
+    background-color: var(--color-primary-variant);       
+    border-radius: var(--border-radius-3);
 }
 
-/* .container--1 .middleDiv{
-     TENGO QUE PONERLOS UNO ABAJO DEL OTRO A LOS COMPONENTES 
-} */
+aside .sidebar{
+    border-radius: var(--border-radius-2);
+}
 
 /* ========================= MEDIA QUERY ======================== */
 @media screen and (max-width: 1200px) {
@@ -61,18 +62,14 @@ aside {
         margin: 0;
         z-index: 2;
         border-bottom-left-radius: var(--border-radius-2);
-        border-bottom-right-radius: var(--border-radius-2);
-       /* position: fixed;
-        left: 0;
-        background: green;
-        width: 18rem;
-        z-index: 3;
-        height: 100vh; */
-        padding-right: var(--card-padding);
+        border-bottom-right-radius: var(--border-radius-2);        
+        transition: var(--transition);
+        padding-right: var(--card-padding);     
     }
 
     aside .nav_active{
         transform: translateX(-110%);
+        transition: var(--transition);
     } 
 
     aside .logo {
@@ -104,6 +101,4 @@ aside {
         cursor: pointer;
     }
     
-
-   
 }

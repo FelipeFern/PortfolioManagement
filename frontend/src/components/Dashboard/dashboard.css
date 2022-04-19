@@ -1,6 +1,10 @@
 .main-dash{
     margin-top: 1.4rem;
 }
+
+.main-dash h1 {
+    font-size: 2rem;
+}
 .main-dash .date{
     display: inline-block;
     background: var(--color-light);

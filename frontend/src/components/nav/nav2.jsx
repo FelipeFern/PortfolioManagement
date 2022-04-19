@@ -8,7 +8,7 @@ import "./nav2.css";
 import { MdMenu } from "react-icons/md";
 
 function Nav2() {
-    const [sidebarActive, setSidebarActive] = useState("sidebar ");
+    const [sidebarActive, setSidebarActive] = useState("sidebar nav_active");
     const [toggleIcon, setToggleIcon] = useState("nav__toggler");
 
     const navToggle = () => {
@@ -47,7 +47,7 @@ function Nav2() {
 
                     <h3>Coins</h3>
                 </a>
-                <a href="">
+                <a href="/tournaments">
                     <div className="icon">
                         {" "}
                         <AiOutlineTrophy />

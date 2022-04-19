@@ -75,28 +75,10 @@ function RightComponent() {
         };
     }, [coins, coin, coinPrice]);
 
-    const clickMenuButton= ()=> {
-
-    }
-
+  
     return (
         <div className="right">
-            <div className="top">
-                <button id="menu-button" onClick={clickMenuButton()}>
-                    <span>
-                        <MdMenu />
-                    </span>
-                </button>
-                <div className="profile">
-                    <div className="info">
-                        <p>Hey Daniel</p>
-                        <small className="text-muted">admin</small>
-                    </div>
-                    {/* <div className="profile-photo">
-                        <img src={profilePicture} />
-                    </div> */}
-                </div>
-            </div>
+            
 
             <div className="create-position">
                 <h2>Create New Positoin</h2>
