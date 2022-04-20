@@ -1,4 +1,5 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useContext } from "react";
+import { UserContext } from "../../UserContext";
 import { AiOutlineClose, AiOutlineTrophy } from "react-icons/ai";
 import { BsGrid } from "react-icons/bs";
 import { RiCoinsLine } from "react-icons/ri";
@@ -8,6 +9,7 @@ import "./nav2.css";
 import { MdMenu } from "react-icons/md";
 
 function Nav2() {
+    const { user, setUser } = useContext(UserContext);
     const [sidebarActive, setSidebarActive] = useState("sidebar nav_active");
     const [toggleIcon, setToggleIcon] = useState("nav__toggler");
 
@@ -77,13 +79,25 @@ function Nav2() {
 
                     <h3>Create Tournament</h3>
                 </a>
-                <a href="">
+                {user == null ?
+                   <div>
+
+                    </div>
+                    : 
+                    <a href="/login">
                     <div className="icon">
                         <FiLogOut />
                     </div>
 
-                    <h3>Logout </h3>
+                    <h3
+                        onClick={() => {
+                            setUser(null);
+                        }}
+                    >
+                        Logout{" "}
+                    </h3>
                 </a>
+                }
             </div>
         </aside>
     );

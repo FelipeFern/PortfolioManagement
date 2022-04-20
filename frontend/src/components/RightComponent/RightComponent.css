@@ -1,5 +1,5 @@
 .right {
-    margin-top: 1.4rem;
+    margin-top: 1rem;
 }
 
 .right .create-position h2 {
@@ -26,30 +26,27 @@
     background: var(--color-info-dark);
     padding: 3px;
     border-radius: var(--border-radius-2);
-    font-size: 1.4rem;
-}    
-
+    font-size: 1.2rem;
+}
 
 .right .create-position .form-position label select {
- background: var(--color-dark-variant);
- color: var(--color-light);
- font-size: 1rem;
- border-radius: var(--border-radius-1);
+    border: 1px solid var(--color-bg-dark);
+    background: var(--color-info-dark);
+    color: var(--color-white);
+    font-size: 1rem;
+    border-radius: var(--border-radius-1);
+    padding-left: 0.8rem;
 }
 
 .right .create-position .form-position label input {
-    background: var(--color-dark-variant);
-    color: var(--color-light);
-    font-size: 1rem;
+    border: 1px solid var(--color-bg-dark);
+    background: var(--color-info-dark);
+    color: var(--color-white);
+    font-size: 1.4rem;
     border-radius: var(--border-radius-1);
     width: 50%;
-   }
-
-.right .create-position .form-position label select option {
-   color: var(--color-light);
-   background: var(--color-dark-variant);
-  }
-
+    padding-left: 1rem;
+}
 
 
 .right .create-position .form-position .buttons {
@@ -63,8 +60,8 @@
 .right .create-position .form-position .buttons button {
     font-size: 1.7rem;
     color: var(--color-white);
-    padding: 0.5rem;    
-    border-radius: var(--border-radius-2);  
+    padding: 0.5rem;
+    border-radius: var(--border-radius-2);
 }
 
 .right .create-position .form-position .buttons .short {
@@ -75,18 +72,19 @@
     background: var(--color-buy);
 }
 
+/*   ============================================== Coins ================================= */
 
-/*   ============================================== Table Leaderboard ================================= */
-
-.leaderboard {
-    margin-top: 2rem;
+.coins {
+    margin-top: 1rem;
+    margin-bottom: 2rem;
 }
 
-.leaderboard h2 {
+.coins h2 {
     margin-bottom: 0.8rem;
 }
 
-.leaderboard table{
+.coins table {
+    font-size: 80%;
     border-radius: var(--card-border-radius);
     background: var(--color-info-dark);
     width: 100%;
@@ -94,20 +92,56 @@
     padding: var(--card-padding);
 }
 
-.leaderboard tbody td{
+.coins table thead{
+    font-size: 1.7rem;
+}
+
+.coins table tbody{
+    font-size: 1.2rem;
+}
+
+.coins tbody td {
     height: 2.8rem;
     border-bottom: 1px solid var(--color-light);
 }
 
-.leaderboard tbody tr:last-child td{
+
+.coins tbody tr:last-child tr {
     border: none;
 }
 
-.leaderboard a{
-text-align: center;
-display: block;
-margin: 1rem auto;
-color: var(--color-light);
+.coins a {
+    text-align: center;
+    display: block;
+    margin: 1rem auto;
+    color: var(--color-light);
+}
+
+.coin .table-container .table-container__table .th-img-name {
+    display: inline-block;
+    vertical-align: baseline;
+    gap: 0.2rem;
+}
+
+
+/*   ============================================== Message Alert ================================= */
+
+.message_div_hidden{
+    display: none;
+}
+
+.message_div {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    display:block;
+    font-size: 1.3rem;
+    background: var(--color-bg-variant);
+    color: var(--color-white);
+    border-radius: var(--border-radius-2);
+}
+
+.message_div span {
+    margin: 1rem;
 }
 
 /* =============== ACA ESTARÍA PARA QUE SE HAGA RESPONSIVE ================ */
@@ -115,7 +149,7 @@ table {
     border-collapse: collapse;
     border-bottom: 0.3rem;
 }
-        
+
 th,
 td {
     padding: 0.8rem;
@@ -135,19 +169,19 @@ tbody {
 }
 
 .table-container {
-    padding: 8%;
+    padding: 1% !important;
 }
 
 @media screen and (max-width: 1024px) {
     thead {
         display: none;
     }
-    tbody{
+    tbody {
         font-size: 80%;
     }
 
-    table{
-        width: 100%;        
+    table {
+        width: 100%;
     }
 
     td {
@@ -190,7 +224,6 @@ tbody {
         font-weight: bold;
     }
 }
-
 
 @media screen and (max-width: 600px) {
     thead {
@@ -241,12 +274,8 @@ tbody {
 }
 
 @media screen and (max-width: 768px) {
- 
     .right {
         width: 94%;
         margin: 0 auto 4rem;
-        
     }
-
-
 }

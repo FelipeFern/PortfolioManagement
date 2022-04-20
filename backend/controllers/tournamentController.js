@@ -2,7 +2,9 @@ const asyncHandler = require("express-async-handler");
 const Tournament = require("../models/tournamentModel");
 const Inscription = require("../models/inscriptionModel");
 const User = require("../models/userModel");
-const InscriptionController = require("../controllers/inscriptionController");
+const Coin = require("../models/coinModel");
+const CoinGecko = require("coingecko-api");
+const coinGeckoClient = new CoinGecko();
 
 const createTournament = asyncHandler(async (req, res) => {
     const { startDate, finishDate, moneyAvailable, coins } = req.body;
@@ -68,7 +70,7 @@ const getTournament = asyncHandler(async (req, res) => {
     } catch (error) {
         return res
             .status(404)
-            .json({ message: "Can not get the tournamenet, it's not valid" });
+            .json({ message: "Can not get the tournamenet, it's not valid " });
     }
 });
 
@@ -104,11 +106,7 @@ const getTournaments = asyncHandler(async (req, res) => {
     }
 });
 
-
-//ME TIRA ERROR PORQUE LOS DATOS DE LOS SEEDERS NO SON VALIDOS.
-// Pero para mi esta bien, debería andar, === Lo unico que podría tirarme problemas es el toReturn, POR SI LEE STOY AGREGANDO MAL LOS DATOS AL JSON
-// Capaz lo tengo que parsear a JSON para que funcione.
-const getTournamentPositions = asyncHandler(async (req, res) => {
+const getTournamentCoins = asyncHandler(async (req, res) => {
     const { id } = req.params;
     try {
         let toReturn = [];
@@ -119,26 +117,39 @@ const getTournamentPositions = asyncHandler(async (req, res) => {
             });
         }
 
-        for (let _inscriptionId of tournament.inscriptions) {
-            let _id = _inscriptionId.toString();
-            const _inscription = await Inscription.findById(_id).exec();
-            const _user = await User.findById(
-                _inscription.user.toString()
-            ).exec();
+        for (let _coinId of tournament.coins) {
+            let _id = _coinId.toString();
+            const _coin = await Coin.findById(_id).exec();
+            let respuesta = await coinGeckoClient.coins.fetch(
+                _coin.identifier,
+                {
+                    tickers: false,
+                    community_data: false,
+                    developer_data: false,
+                    localization: false,
+                    sparkline: false,
+                }
+            );
+
             const toInsert = {
-                user: _user,
-                inscription: _inscription,
+                _id: _coin._id,
+                identifier: _coin.identifier,
+                symbol: _coin.symbol,
+                current_price: respuesta.data.market_data.current_price.usd,
+                price_change_24h: respuesta.data.market_data.price_change_24h,
+                price_change_percentage_24h:
+                    respuesta.data.market_data.price_change_percentage_24h,
+                image: respuesta.data.image.small,
             };
+
             toReturn.push(toInsert);
         }
-        toReturn.sort((a, b) => {
-            return a.inscription.profit - b.inscription.profit;
-        });
+
         return res.status(200).json(toReturn);
     } catch (error) {
         return res
             .status(404)
-            .json({ message: "Can not get the tournamenet, it's not valid" });
+            .json({ message: "Can not get the tournamenet, it's not valid " });
     }
 });
 
@@ -147,5 +158,5 @@ module.exports = {
     deleteTournament,
     getTournament,
     getTournaments,
-    getTournamentPositions,
+    getTournamentCoins,
 };

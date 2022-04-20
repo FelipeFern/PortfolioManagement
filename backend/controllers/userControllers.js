@@ -43,7 +43,6 @@ const authUser = asyncHandler(async (req, res) => {
     const { email, password } = req.body;
 
     const user = await User.findOne({ email });
-
     if (user && (await user.matchPassword(password))) {
         res.status(200).json({
             _id: user.id,
@@ -144,8 +143,6 @@ const getTournamentsUnregistered = asyncHandler(async (req, res) => {
 const getPositionTournament = asyncHandler(async (req, res) => {
     const { id } = req.params;
     const { tournament } = req.body;
-    console.log(req.body);
-        console.log("Desde el controllador \n")
     try {
         const response = await Inscription.findOne({
             user: id,

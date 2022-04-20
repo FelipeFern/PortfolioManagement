@@ -1,12 +1,9 @@
 import React, { useState, useEffect } from "react";
 import "./RightComponent.css";
-import profilePicture from "../../images/profile-1.jpg";
-import { MdMenu } from "react-icons/md";
 import axios from "axios";
 
-const URICoins = "http://localhost:5000/api/coingecko/coinsAPI";
-const URITournamentPositions =
-    "http://localhost:5000/api/tournaments/positions/625074cd29da7ab6d8897946";
+const URICoins =
+    "http://localhost:5000/api/tournaments/coins/625ec361b5f1244a7d437a39";
 
 function RightComponent() {
     const [available, setAvailable] = useState(0);
@@ -15,7 +12,8 @@ function RightComponent() {
     const [coinPrice, setCoinPrice] = useState(0);
     const [total, setTotal] = useState(0);
     const [coins, setCoins] = useState([]);
-    const [tournamentPositions, setTournamentPositon] = useState([]);
+    const [message, setMessage] = useState("Un Mensajeas");
+    const [message_div, setMessageDiv] = useState("message_div_hidden");
 
     const handleSubmitDraft = (data) => {
         console.log(`
@@ -24,6 +22,8 @@ function RightComponent() {
             coin: ${coin}
             Total: ${total}
             `);
+
+        showMessage("Se creo una nueva posicion ....");
     };
 
     const handleSubmitPreview = (data) => {
@@ -33,6 +33,13 @@ function RightComponent() {
         coin: ${coin}
         Total: ${total}
         `);
+
+        showMessage("Se creo una nueva posicion ....");
+    };
+
+    const showMessage = async (msg) => {
+        setMessage(msg);
+        setMessageDiv("message_div");
     };
 
     const refreshData = async (_quantity, _coinPrice) => {
@@ -41,9 +48,9 @@ function RightComponent() {
     };
 
     const handleCoinChange = async (e) => {
-        await setCoin(e.target.value);
-        let _asset = coins.find((element) => element.symbol === e.target.value);
-        let _coinPrice = _asset.market_data.current_price.usd;
+        await setCoin(e);
+        let _asset = coins.find((element) => element.symbol === e);
+        let _coinPrice = _asset.current_price;
         await setCoinPrice(parseFloat(_coinPrice).toFixed(4));
         refreshData(quantity, _coinPrice);
     };
@@ -58,55 +65,32 @@ function RightComponent() {
         setCoins(data);
     };
 
-    const getTournamentPositions = async () => {
-        const data = await (await axios.post(URITournamentPositions)).data;
-        setTournamentPositon(data);
-    };
-
     useEffect(() => {
         const coinsData = setInterval(() => {
             fetchCoins();
-        }, 1000);
-
-        //getTournamentPositions();
+        }, 10000);
 
         return () => {
             clearInterval(coinsData);
         };
-    }, [coins, coin, coinPrice]);
+    }, [coins]);
 
-  
     return (
         <div className="right">
-            
-
             <div className="create-position">
                 <h2>Create New Positoin</h2>
                 <div className="form-position">
                     <form>
-                        <label>
-                            Coin
-                            <select
-                                value={coin}
-                                onChange={(e) => handleCoinChange(e)}
-                            >
-                                {coins.map((asset) => (
-                                    <option
-                                        key={asset.symbol}
-                                        value={asset.symbol}
-                                    >
-                                        {asset.symbol.toUpperCase()}USDT
-                                    </option>
-                                ))}
-                            </select>
+                        <label className="_label_coin">
+                            Coin: &nbsp; {coin.toUpperCase()}USD
                         </label>
                         <label>
-                            Disponible: {available} <span>USD</span>
+                            Disponible: &nbsp; {available} <span>USD</span>
                         </label>
 
-                        <label> Coin: {coin.toUpperCase()}</label>
+                        <label> Coin: &nbsp;{coin.toUpperCase()}</label>
 
-                        <label> Price: {coinPrice} USD</label>
+                        <label> Price: &nbsp; {coinPrice} USD</label>
 
                         <label>
                             Quantity:
@@ -118,7 +102,7 @@ function RightComponent() {
                             />
                         </label>
 
-                        <label>Total $: {total}</label>
+                        <label>Total: &nbsp;{total.toFixed(3)} USD</label>
                         <div className="buttons">
                             <button
                                 className="short"
@@ -136,54 +120,57 @@ function RightComponent() {
                     </form>
                 </div>
             </div>
-            <div className="leaderboard">
+
+            <div className={message_div}>
+                <span>{message}</span>
+            </div>
+
+            <div className="coins">
                 <div className="table-container">
                     <div className="table-container_title">
-                        <h2> Leaderboard </h2>
+                        <h2> Coins </h2>
                     </div>
                     <table className="table-container__table">
                         <thead>
                             <tr>
-                                <th> Pos</th>
-                                <th>Name</th>
-                                <th>Profit</th>
+                                <th>Coin</th>
+                                <th>Price</th>
+                                <th>24h</th>
                             </tr>
                         </thead>
                         <tbody>
-                            {/* {tournamentPositions.map((rank, index) => (
-                                <tr key={rank._id}>
-                                    <th>{index + 1} °</th>
-                                    <th>{rank.user.name}</th>
-                                    <th>${rank.inscription.profit}</th>
+                            {coins.map((_coin) => (
+                                <tr
+                                    key={_coin.symbol}
+                                    onClick={() =>
+                                        handleCoinChange(_coin.symbol)
+                                    }
+                                >
+                                    <th className="th-img-name">
+                                        <img src={_coin.image} />
+                                        {_coin.symbol.toUpperCase()}
+                                    </th>
+                                    <th> ${_coin.current_price}</th>
+                                    <td
+                                        style={
+                                            _coin.price_change_percentage_24h >
+                                            0
+                                                ? { color: "lawngreen" }
+                                                : { color: "orangered" }
+                                        }
+                                    >
+                                        {" "}
+                                        {_coin.price_change_percentage_24h.toFixed(
+                                            4
+                                        )}
+                                        %
+                                    </td>
                                 </tr>
-                            ))} */}
-                            <tr >
-                                <th> 1° </th>
-                                <th>Felipe</th>
-                                <th>$400</th>
-                            </tr>
-                            <tr >
-                                <th> 1° </th>
-                                <th>Felipe</th>
-                                <th>$400</th>
-                            </tr>
-                            <tr >
-                                <th> 1° </th>
-                                <th>Felipe</th>
-                                <th>$400</th>
-                            </tr>
+                            ))}
                         </tbody>
                     </table>
                 </div>
             </div>
-
-            {/* {tournamentPositions.map((position) => (
-                                    <div
-                                    key={position._id}
-                                    >
-                                        {}USDT
-                                    </div> 
-                                ))} */}
         </div>
     );
 }

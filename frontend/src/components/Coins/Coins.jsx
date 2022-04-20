@@ -22,8 +22,8 @@ const Coins = () => {
         <Fragment>
             <Table
                 tableData={driversData}
-                headingColumns={["Coin", "Symbol", "Last", "Change", "Change %", ""]}
-                title="Monedas de por ahí. "
+                headingColumns={["#", "Coin","Symbol" ,"Price", "24h", "7d" ,"30d", "Market Cap"]}
+                title="Cryptocurrency Prices by Market Cap "
             ></Table>
         </Fragment>
     );

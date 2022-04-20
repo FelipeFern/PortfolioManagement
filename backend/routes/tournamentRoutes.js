@@ -4,7 +4,8 @@ const {
     deleteTournament,
     getTournament,
     getTournaments,
-    getTournamentPositions
+    getTournamentPositions,
+    getTournamentCoins
 } = require("../controllers/tournamentController.js");
 
 const router = express.Router();
@@ -14,6 +15,6 @@ router.post("/", createTournament);
 router.get("/", getTournaments);
 router.delete("/:id", deleteTournament);
 router.get("/:id", getTournament);
-router.get("/positions/:id", getTournamentPositions)
+router.get("/coins/:id", getTournamentCoins);
 
 module.exports = router;

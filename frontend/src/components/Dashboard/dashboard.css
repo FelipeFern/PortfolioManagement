@@ -1,11 +1,11 @@
-.main-dash{
+.main-dash {
     margin-top: 1.4rem;
 }
 
 .main-dash h1 {
     font-size: 2rem;
 }
-.main-dash .date{
+.main-dash .date {
     display: inline-block;
     background: var(--color-light);
     border-radius: var(--border-radius-1);
@@ -13,13 +13,13 @@
     padding: 0.5rem 1.6rem;
 }
 
-.main-dash .date input[type="date"]{
+.main-dash .date input[type="date"] {
     background: transparent;
     color: var(--color-dark);
     font-size: 17px;
 }
 
-.main-dash .insights{
+.main-dash .insights {
     display: flex;
     flex-direction: row;
     gap: 1.6rem;
@@ -36,11 +36,18 @@
     width: 100%;
 }
 
-.main-dash .insights >div:hover{
-    box-shadow: var(--box-shadow); 
+.main-dash .insights > div:hover {
+    box-shadow: var(--box-shadow);
 }
 
-.main-dash .insights > div span{
+.main-dash .insights .div-1 .middle{
+    margin-top: 4rem;
+}
+.main-dash .insights .div-2 .middle{
+   margin-top: 1rem;
+}
+
+.main-dash .insights > div span {
     padding: 1rem;
     border-radius: 50%;
     color: var(--color-white);
@@ -49,29 +56,37 @@
     margin: 0.5rem;
 }
 
-.main-dash .insights >div.div-1 span{
-    background-color: var(--color-success);
-}
-.main-dash .insights >div.div-2 span{
-    background-color: var(--color-danger);
-}
-.main-dash .insights >div.div-3 span{
-    background-color: var(--color-light);
+.main-dash .insights > div span svg{
+    position: relative;
+    top: 8px;
 }
 
-.main-dash .insights > div .middle{
+.main-dash .insights > div.div-1 span {
+    background-color: var(--color-success);
+}
+.main-dash .insights > div.div-2 span {
+    background-color: var(--color-danger);
+}
+
+.main-dash .insights > div.div-2 .logos {
+    display: flex;
+    align-items: center;
+    gap: 4.5rem;
+}
+
+.main-dash .insights > div .middle {
     display: flex;
     align-items: center;
     justify-content: space-between;
 }
 
-.main-dash .insights svg{
+.main-dash .insights svg {
     width: 2.5rem;
     height: 2.5rem;
 }
 
 .main-dash .insights h3 {
-    margin:  1rem 0 0.6rem;
+    margin: 1rem 0 0.6rem;
     font-size: 1.5rem;
 }
 
@@ -82,27 +97,85 @@
     border-radius: 50%;
 }
 
-.main-dash .insights .progress .number{
+.main-dash .insights .progress .number {
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-.main-dash .insights small{
+.main-dash .insights small {
     margin-top: 1.6rem;
     display: block;
 }
 
+/*   ============================================== Table Leaderboard ================================= */
+
+.main-dash .insights .div-3 {
+    padding: 1rem;
+} 
+
+.leaderboard {
+    margin-top: 0rem;
+    color: var(--color-white);
+    height: 100%;
+}
+
+.leaderboard .table-container .table-container_title {
+    text-align: center;
+    margin-top: 0rem;
+    margin-bottom: 0rem;
+}
+
+.leaderboard .table-container .table-container__table thead,
+.leaderboard .table-container .table-container__table tbody {
+    display: block;
+    font-size: 100%;
+}
+
+.leaderboard .table-container .table-container__table tbody {
+    height: 145px; /* Just for the demo          */
+    overflow-y: auto; /* Trigger vertical scroll    */
+    overflow-x: hidden; /* Hide the horizontal scroll */
+}
+
+.leaderboard .table-container .table-container__table tbody{
+    scrollbar-width: thin;    
+}
 
 
+
+.leaderboard table {
+    border-radius: var(--card-border-radius);
+    background: var(--color-info-dark);
+    width: 100%;
+    text-align: center;
+    padding: var(--card-padding);
+}
+
+
+
+.leaderboard tbody td {
+    height: 2.8rem;
+    border-bottom: 1px solid var(--color-light);
+}
+
+.leaderboard tbody tr:last-child td {
+    border: none;
+}
+
+.leaderboard a {
+    text-align: center;
+    display: block;
+    margin: 1rem auto;
+    color: var(--color-light);
+}
 
 /* ========================= MEDIA QUERY ======================== */
 @media screen and (max-width: 1200px) {
-
     .main-dash .insights {
         display: flex;
         flex-direction: column;
-        gap:0;
+        gap: 0;
         align-items: center;
     }
 }

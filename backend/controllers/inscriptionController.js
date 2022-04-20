@@ -1,6 +1,7 @@
 const asyncHandler = require("express-async-handler");
 const Inscription = require("../models/inscriptionModel");
 const Tournament = require("../models/tournamentModel");
+const Position = require("../models/positionModel");
 const User = require("../models/userModel");
 
 const createInscription = asyncHandler(async (req, res) => {
@@ -64,8 +65,33 @@ const getInscription = asyncHandler(async (req, res) => {
     }
 });
 
+// NO creo que funciones, por cuando pido la Inscirpion (73) - Ni tampoco cuando pido la posicion. 
+const getInscriptionPositions = asyncHandler(async (req, res) => {
+    const {_user: user, _tournament: tournament} = req.body;
+    try {
+        let toReturn = [];
+        const _inscription = await Inscription.findOne({user: _user, tournament: _tournament});
+        if (_inscription === null) {
+            return res.status(404).json({
+                message: `The inscription that you trying to get, UserID: ${user} doesn't exist on the DB`,
+            });
+        }
+
+        for (let _positionId of _inscription.positions) {
+            let _id = _positionId.toString();
+            const _position = await Position.findById(_id).exec();
+            toReturn.push(_position);
+        }
+        return res.status(200).json(toReturn);
+    } catch (error) {
+        return res
+            .status(404)
+            .json({ message: "Can not get the inscription, it's not valid" });
+    }
 
 
+
+})
 
 
 module.exports = { createInscription, getInscription };
