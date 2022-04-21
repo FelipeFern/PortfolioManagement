@@ -2,7 +2,175 @@
     display: flex;
     flex-direction: column;
     margin: 20px;
-  }
-.Form.Group{
+}
+.Form.Group {
     padding: 2px;
+}
+
+.main_containter_login {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.login_container {
+    background: var(--color-primary-variant);
+    position: relative;
+    max-width: 480px;
+    width: 100%;
+    /* background: var(--color-bg-variant); */
+    box-shadow: var(--box-shadow);
+    border-radius: var(--card-border-radius);
+    padding: 30px;
+    overflow: hidden;
+}
+
+.login_container .forms {
+    display: flex;
+    align-items: center;
+    height: 440px;
+    width: 200%;
+    transition: var(--transition);
+}
+
+.login_container .form {
+    width: 50%;
+    padding: 30px;
+    border-radius: var(--card-border-radius);
+    transition: var(--transition);
+}
+
+
+.login_container .register{
+  opacity: 0;
+  transition: var(--transition);
+}
+
+.login_container.active .login  {
+  margin-left: -50%;
+  opacity: 0;
+}
+
+.login_container.active .forms  {
+    height: 560px;
+
+}
+
+.login_container.active .register{
+  opacity: 1;
+}
+
+
+.login_container .title_container .title {
+    font-size: 3rem;
+    font-weight: 600;
+    position: relative;
+    color: var(--color-white);
+}
+
+.login_container .title_container .title::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 3px;
+    width: 45px;
+    background: var(--color-light);
+    border-radius: var(--border-radius-2);
+}
+
+.login_container .form .login_form .input_field {
+    margin-top: 30px;
+    display: flex;
+    height: 50px;
+    width: 100%;
+}
+
+.input_field input {
+    height: 100%;
+    width: 100%;
+    margin-left: 1rem;
+    font-size: 16px;
+    background: transparent;
+    border: none;
+    outline: none;
+    border-bottom: 2px solid var(--color-dark);
+    border-top: 2px solid transparent;
+    color: var(--color-dark);
+}
+
+.input_field .logo {
+    font-size: 23px;
+    top: 20px;
+    left: 0;
+    align-items: center;
+    border: none;
+}
+
+.input_field .logo svg {
+    margin-top: 17px;
+}
+
+.input_field .eye_slash {
+    right: 0;
+    cursor: pointer;
+}
+
+.input_field input:is(:focus, :valid) {
+    border-bottom-color: var(--color-light);
+    transition: var(--transition);
+}
+
+.input_field input:is(:focus, :valid) ~ .logo {
+    color: var(--color-light);
+    transition: var(--transition);
+}
+
+.login-signup span a:hover {
+    cursor: pointer;
+}
+
+.button-input {
+    height: 100%;
+    margin-left: 1rem;
+    margin-top: 1rem;
+    font-size: 16px;
+    background: transparent;
+    border: 2px solid var(--color-light);
+    border-radius: var(--border-radius-2);
+    outline: none;
+    color: var(--color-light);
+}
+
+.button-input input {
+    background: transparent;
+    color: var(--color-white);
+    height: 100%;
+    width: 100%;
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+    font-size: 17px;
+    font-weight: 800;
+    transition: var(--transition);
+}
+
+.button-input:hover {
+    background-color: var(--color-bg-variant);
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.login-signup {
+    margin-top: 2rem;
+    margin-bottom: 0;
+    text-align: center;
+}
+
+.login-signup a:hover {
+    text-decoration: underline;
+}
+
+.login-signup span {
+    align-content: center;
 }

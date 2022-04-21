@@ -42,7 +42,7 @@ function Nav2() {
                     </div>
                     <h3>Menu</h3>
                 </a>
-                <a href="">
+                <a href="/coins">
                     <div className="icon">
                         <RiCoinsLine />
                     </div>
