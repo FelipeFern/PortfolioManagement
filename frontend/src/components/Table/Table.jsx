@@ -1,9 +1,31 @@
-import React from "react";
+import React, { useState, useEffect }  from "react";
 import "./table.css";
 import PropTypes from "prop-types";
+import axios from "axios";
+
+const URI = "http://localhost:5000/api/coingecko/coinsAPI";
 
 const Table = ({ tableData, headingColumns, title }) => {
-    let tableClass = "table-container__table";
+
+
+    let tableClass = "table-container__table";    
+    const [coins, setCoins] = useState(tableData);
+
+    const fetchCoins = async () => {
+        const data = await (await axios.get(URI)).data;
+        setCoins(data);
+        console.log('entre')
+    };
+
+    useEffect(() => {
+        const coinsData = setInterval(() => {
+            fetchCoins();
+        }, 10000);
+
+        return () => {
+            clearInterval(coinsData);
+        };
+    }, [coins, ]);
 
     return (
         <div className="table_coins">

@@ -1,9 +1,8 @@
 import "./App.css";
 import React, { useState, useContext, useMemo } from "react";
+import { useNavigate } from 'react-router-dom';
 import LandingPage from "./screens/LandingPage/LandingPage";
-import InitialPage from "./screens/Pages/CoinsPage";
 import LoginPage from "./screens/LoginPage/LoginPage";
-import RegisterPage from "./screens/RegisterPage/RegisterPage";
 import TournamentPage from "./screens/TournamentPage/TournamentPage";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import PortfolioPage from "./screens/Pages/PortfolioPages";
@@ -28,14 +27,9 @@ const App = () => {
                             element={<Tournaments />}
                             exact
                         />
-                        <Route path="/" element={<LandingPage />} exact />
+                        <Route path="/" element={<Coins />} exact />
                         <Route path="/login" element={<LoginPage />} exact />
-                        <Route
-                            path="/register"
-                            element={<RegisterPage />}
-                            exact
-                        />
-                        <Route path="/InitialPage" element={<InitialPage />} />
+                        
                         <Route
                             path="/PortfolioPage"
                             element={<PortfolioPage />}

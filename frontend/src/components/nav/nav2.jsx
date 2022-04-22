@@ -1,12 +1,11 @@
-import React, { useRef, useState, useContext } from "react";
+import React, { useState, useContext } from "react";
 import { UserContext } from "../../UserContext";
-import { AiOutlineClose, AiOutlineTrophy } from "react-icons/ai";
+import { AiOutlineTrophy } from "react-icons/ai";
 import { BsGrid } from "react-icons/bs";
 import { RiCoinsLine } from "react-icons/ri";
 import { MdOutlineCreate } from "react-icons/md";
-import { FiLogOut } from "react-icons/fi";
+import { FiLogOut , FiLogIn} from "react-icons/fi";
 import "./nav2.css";
-import { MdMenu } from "react-icons/md";
 
 function Nav2() {
     const { user, setUser } = useContext(UserContext);
@@ -36,7 +35,7 @@ function Nav2() {
                 </div>
             </div>
             <div className={sidebarActive}>
-                <a href="" className="active">
+                <a href="/coins" className="active">
                     <div className="icon">
                         <BsGrid />
                     </div>
@@ -57,7 +56,7 @@ function Nav2() {
 
                     <h3>My Tournaments</h3>
                 </a>
-                <a href="">
+                <a href="/tournaments">
                     <div className="icon">
                         <AiOutlineTrophy />
                     </div>
@@ -72,13 +71,32 @@ function Nav2() {
 
                     <h3>Open Tournaments</h3>
                 </a>
-                <a href="">
+                <a href="/tournament/ias">
                     <div className="icon">
                         <MdOutlineCreate />
                     </div>
 
                     <h3>Create Tournament</h3>
                 </a>
+                {user != null ?
+                   <div>
+
+                    </div>
+                    : 
+                    <a href="/login">
+                    <div className="icon">
+                        <FiLogIn />
+                    </div>
+
+                    <h3
+                        onClick={() => {
+                            setUser(null);
+                        }}
+                    >
+                        Login{" "}
+                    </h3>
+                </a>
+                }
                 {user == null ?
                    <div>
 

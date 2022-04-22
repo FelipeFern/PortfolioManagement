@@ -1,45 +1,92 @@
 import axios from "axios";
 import React, { useContext, useState } from "react";
 import "./LoginPage.css";
+import { useNavigate } from "react-router-dom";
 import { UserContext } from "../../UserContext";
 import { AiOutlineUser, AiOutlineEyeInvisible } from "react-icons/ai";
 import { RiLockPasswordLine } from "react-icons/ri";
 import { HiOutlineMail } from "react-icons/hi";
+import ErrorMessage from "../../components/ErrorMessage";
+import Loading from "../../components/Loading";
 
 function LoginPage() {
-    
-    let booleanVar = false;
-    const { user, setUser } = useContext(UserContext);
+    const navigate = useNavigate();
+    const {setUser } = useContext(UserContext);
 
     const [emailLogin, setEmailLogin] = useState("");
     const [passwordLogin, setPasswordLogin] = useState("");
+    const [emailRegister, setEmailRegister] = useState("");
+    const [nameRegister, setNameRegister] = useState("");
+    const [passwordRegister, setPasswordRegister] = useState("");
+    const [confirmpasswordRegister, setConfirmPasswordRegister] = useState("");
     const [passwordType, setPasswordType] = useState("password");
-    const [loginActive, setLoginActive] = useState("form login ");
-    const [registerActive, setRegisterActive] = useState("form register ");
     const [containerActive, setContainerActive] = useState("login_container ");
-    const [error, setError] = useState(false);
-    const [loading, setLoading] = useState(false);
+    const [errorLogin, setErrorLogin] = useState(false);
+    const [loadingLogin, setLoadingLogin] = useState(false);
+    const [messageLogin, setMessageLogin] = useState(null);
+    const [messageRegister, setMessageRegister] = useState(null);
+    const [errorRegister, setErrorRegister] = useState(false);
+    const [loadingRegister, setLoadingRegister] = useState(false);
 
     const submitHandler = async (e) => {
         e.preventDefault();
         try {
-            setLoading(true);
+            setLoadingLogin(true);
             console.log("Estoy queriendo hacer el LogIn");
-            const name = "nombre pruebas";
             const { data } = await axios.post(
                 "http://localhost:5000/api/users/login",
                 {
-                    emailLogin,
-                    passwordLogin,
+                    email: emailLogin,
+                    password: passwordLogin,
                 }
             );
             setUser(data);
-            setLoading(false);
-            setError(false);
+            setLoadingLogin(false);
+            setErrorLogin(false);
+
+            navigate("/coins");
         } catch (error) {
-            setError(error.response.data.message);
-            setLoading(false);
+            setErrorLogin(error.response.data.message);
+            setLoadingLogin(false);
         }
+    };
+
+    const submitHandlerRegister = async (e) => {
+        e.preventDefault();
+        console.log(emailRegister);
+
+        if (passwordRegister !== confirmpasswordRegister) {
+            setMessageRegister("Passwords do not match");
+        } else
+            try {
+                console.log("Trying to register a new user");
+                const config = {
+                    headers: {
+                        "Content-type": "application/json",
+                    },
+                };
+
+                setLoadingRegister(true);
+                const { data } = await axios.post(
+                    "/api/users",
+                    {
+                        name: nameRegister,
+                        email: emailRegister,
+                        password: passwordRegister,
+                    },
+                    config
+                );
+                console.log(data)
+                setLoadingRegister(false);
+                setUser(data);
+                setErrorRegister(false);
+                setMessageRegister("User creates successfully");
+                navigate("/coins");
+            } catch (error) {
+                setErrorRegister(error.response.data.message);
+                setMessageRegister(false);
+                setLoadingRegister(false);
+            }
     };
 
     const showHidePassword = () => {
@@ -47,39 +94,43 @@ function LoginPage() {
     };
 
     const signUpOnClick = (e) => {
-        e.preventDefault()
-        console.log(containerActive)
+        e.preventDefault();
         setContainerActive(
             containerActive === "login_container active"
-                    ? "login_container"
-                    : "login_container active"
-            );
-       
-            // setLoginActive(
-            //     loginActive === "form login active"
-            //         ? "form login unactive"
-            //         : "form login active"
-            // );
-            // setRegisterActive(
-            //     registerActive === "form register active"
-            //         ? "form register unactive"
-            //         : "form register active"
-            // );
-        console.log(containerActive)
+                ? "login_container"
+                : "login_container active"
+        );
         return true;
-        
-        
     };
 
     return (
-        <div className="main_containter_login">
+        <html lang="en">
+            <div className="main_containter_login">
             <div className={containerActive}>
                 <div className="forms">
-                    <div className={loginActive}>
+                    <div className="form login">
                         <div className="title_container">
                             <span className="title">Welcome </span>
                         </div>
-                        <form className="login_form" action="#">
+                        <div className="message_span">
+                             {errorLogin && (
+                            <ErrorMessage variant="danger">
+                                {errorLogin}
+                            </ErrorMessage>
+                        )}
+                        {messageLogin && (
+                            <ErrorMessage variant="success">
+                                {messageLogin}
+                            </ErrorMessage>
+                        )}
+                        {loadingLogin && <Loading />}
+                        </div>
+                       
+                        <form
+                            className="login_form"
+                            action="#"
+                            onSubmit={submitHandler}
+                        >
                             <div className="input_field">
                                 <div className="logo">
                                     {" "}
@@ -88,6 +139,9 @@ function LoginPage() {
                                 <input
                                     type="text"
                                     placeholder="Email"
+                                    onChange={(e) =>
+                                        setEmailLogin(e.target.value)
+                                    }
                                     required
                                 ></input>
                             </div>
@@ -100,6 +154,9 @@ function LoginPage() {
                                     type={passwordType}
                                     placeholder="Password"
                                     className="password"
+                                    onChange={(e) =>
+                                        setPasswordLogin(e.target.value)
+                                    }
                                     required
                                 ></input>
                                 <div
@@ -112,25 +169,48 @@ function LoginPage() {
                             </div>
 
                             <div className="button-input">
-                                <input type="button" value="LOGIN" required />
+                                <input type="submit" value="LOGIN" required />
                             </div>
                         </form>
 
                         <div className="login-signup">
-                            <span class="text">
+                            <span type="text">
                                 {" "}
                                 Don’t have an account?
-                                <a onClick ={(e) => signUpOnClick(e)}> Sign Up</a>
+                                <a onClick={(e) => signUpOnClick(e)}>
+                                    {" "}
+                                    Sign Up
+                                </a>
                             </span>
                         </div>
                     </div>
                     {/* Registration Form */}
 
-                    <div className={registerActive}>
+                    <div className="form register">
                         <div className="title_container">
                             <span className="title">Welcome </span>
                         </div>
-                        <form className="login_form" action="#">
+                        <div className="title_container">
+                            <span className="title">Welcome </span>
+                        </div>
+                        <div className="message_span">
+                             {errorRegister && (
+                            <ErrorMessage variant="danger">
+                                {errorRegister}
+                            </ErrorMessage>
+                        )}
+                        {messageRegister && (
+                            <ErrorMessage variant="success">
+                                {messageRegister}
+                            </ErrorMessage>
+                        )}
+                        {loadingRegister && <Loading />}
+                        </div>
+                        <form
+                            className="login_form"
+                            action="#"
+                            onSubmit={submitHandlerRegister}
+                        >
                             <div className="input_field">
                                 <div className="logo">
                                     {" "}
@@ -139,6 +219,9 @@ function LoginPage() {
                                 <input
                                     type="text"
                                     placeholder="Enter your User Name"
+                                    onChange={(e) =>
+                                        setNameRegister(e.target.value)
+                                    }
                                     required
                                 ></input>
                             </div>
@@ -150,6 +233,9 @@ function LoginPage() {
                                 <input
                                     type="text"
                                     placeholder="Enter your Email"
+                                    onChange={(e) =>
+                                        setEmailRegister(e.target.value)
+                                    }
                                     required
                                 ></input>
                             </div>
@@ -162,6 +248,9 @@ function LoginPage() {
                                     type={passwordType}
                                     className="password"
                                     placeholder="Create a Password"
+                                    onChange={(e) =>
+                                        setPasswordRegister(e.target.value)
+                                    }
                                     required
                                 ></input>
                                 <div
@@ -181,6 +270,11 @@ function LoginPage() {
                                     type={passwordType}
                                     placeholder="Confirm Password"
                                     className="password"
+                                    onChange={(e) =>
+                                        setConfirmPasswordRegister(
+                                            e.target.value
+                                        )
+                                    }
                                     required
                                 ></input>
                                 <div
@@ -194,7 +288,7 @@ function LoginPage() {
 
                             <div className="button-input">
                                 <input
-                                    type="button"
+                                    type="submit"
                                     value="REGISTER"
                                     required
                                 />
@@ -202,57 +296,18 @@ function LoginPage() {
                         </form>
 
                         <div className="login-signup">
-                            <span class="text">
+                            <span type="text">
                                 {" "}
                                 Already have an account?
-                                <a onClick ={(e) => signUpOnClick(e)}> Login</a>
+                                <a onClick={(e) => signUpOnClick(e)}> Login</a>
                             </span>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-
-        // <MainScreen title="LOGIN">
-        //     <div className="loginContainer">
-        //         {error && (
-        //             <ErrorMessage variant="danger"> {error}</ErrorMessage>
-        //         )}
-        //         {loading && <Loading />}
-        //         <Form onSubmit={submitHandler}>
-        //             <Form.Group controlId="formBasicEmail">
-        //                 <Form.Label>Email address</Form.Label>
-        //                 <Form.Control
-        //                     type="email"
-        //                     placeholder="Enter email"
-        //                     value={email}
-        //                     onChange={(e) => setEmail(e.target.value)}
-        //                 />
-        //             </Form.Group>
-
-        //             <Form.Group controlId="formBasicPassword">
-        //                 <Form.Label>Password</Form.Label>
-        //                 <Form.Control
-        //                     type="password"
-        //                     placeholder="Password"
-        //                     value={password}
-        //                     onChange={(e) => setPassword(e.target.value)}
-        //                 />
-        //             </Form.Group>
-
-        //             <Button variant="primary" type="submit">
-        //                 Submit
-        //             </Button>
-        //         </Form>
-
-        //         <Row className="py-3">
-        //             <Col>
-        //                 New Account:{" "}
-        //                 <Link to="/register"> Register Here</Link>
-        //             </Col>
-        //         </Row>
-        //     </div>
-        // </MainScreen>
+        </html>
+        
     );
 }
 

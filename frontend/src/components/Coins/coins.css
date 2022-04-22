@@ -1,25 +1,19 @@
-.table_coins .table-container{
-}
-
-.table_coins .table-container .table-container_title{
+.table_coins .table-container .table-container_title {
     margin: 1rem;
 }
 
-
-.table_coins .table-container .table-container__table{
+.table_coins .table-container .table-container__table {
     border-radius: var(--card-border-radius);
     background: var(--color-info-dark);
     width: 100%;
     text-align: center;
     padding: var(--card-padding);
-    
 }
 
-
-.table_coins .table-container .table-container__table tbody .div_right{
+.table_coins .table-container .table-container__table tbody .div_right {
     text-align: right;
 }
 
-.table_coins .table-container .table-container__table tbody .div_left{
+.table_coins .table-container .table-container__table tbody .div_left {
     text-align: left;
 }

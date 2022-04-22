@@ -12,7 +12,7 @@ aside .logo {
 
 
 aside .nav__toggler{
-    display: none;
+    display: none;    
 }
 
 /* ================= SIDE BAR =============== */
@@ -88,7 +88,6 @@ aside .sidebar a:hover{
         justify-content: space-between;
         margin-top: 0.2rem;
         margin-bottom: 0;
-        
     }
     
     aside .logo {
@@ -99,9 +98,15 @@ aside .sidebar a:hover{
 
     
     aside .nav__toggler{
+        width: 4rem;
+        height: 4rem;
         display: block;
         border: 1px solid var(--color-primary);
         border-radius: var(--border-radius-2);
+    }
+
+    aside .nav__toggler.toggle {
+        display: block;
     }
 
 
