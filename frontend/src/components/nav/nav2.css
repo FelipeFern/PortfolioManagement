@@ -23,7 +23,7 @@ aside .sidebar {
     flex-direction: column;
     height: 86vh;
     position: relative;
-    top: 2rem;
+    transition: var(--transition);
 }
 
 aside h3 {
@@ -101,13 +101,31 @@ aside .sidebar a:hover{
         width: 4rem;
         height: 4rem;
         display: block;
-        border: 1px solid var(--color-primary);
-        border-radius: var(--border-radius-2);
     }
 
     aside .nav__toggler.toggle {
         display: block;
     }
+
+    
+.nav__active {
+    transform: translateX(0);
+    transition: var(--transition);
+}
+
+/* Toggler Icon Animation  */
+
+.toggle .line1 {
+    transform: rotate(-45deg) translate(-4px, 5px);
+}
+
+.toggle .line2 {
+    opacity: 0;
+}
+
+.toggle .line3 {
+    transform: rotate(45deg) translate(-4px, -5px);
+}
 
 
 }

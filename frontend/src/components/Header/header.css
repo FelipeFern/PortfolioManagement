@@ -58,7 +58,7 @@ a {
 
     .nav__menu {
         position: absolute;
-        top: 7vh;
+        top: 3vh;
         right: 0;
         width: 50vw;
         height: 93vh;
@@ -71,13 +71,13 @@ a {
 
 /* Nav Active Class  */
 
-.nav__active {
+/* .nav__active {
     transform: translateX(0);
 }
 
 /* Toggler Icon Animation  */
 
-.toggle .line1 {
+/* .toggle .line1 {
     transform: rotate(-45deg) translate(-4px, 5px);
 }
 
@@ -87,4 +87,4 @@ a {
 
 .toggle .line3 {
     transform: rotate(45deg) translate(-4px, -5px);
-}
+} */ 

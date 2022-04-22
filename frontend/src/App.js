@@ -10,6 +10,7 @@ import Tournaments from "./components/Tournaments/Tournaments";
 import Nav2 from "./components/nav/nav2";
 import Coins from "./components/Coins/Coins";
 import { UserContext } from "./UserContext";
+import Header from './components/Header/Header'
 
 const App = () => {
     const [user, setUser] = useState(null);
@@ -21,6 +22,7 @@ const App = () => {
                 <Nav2 />
                 <BrowserRouter>
                     <Routes>
+                        <Route  path="/algo" element= {<Header/>}/>
                         <Route path="/coins" element={<Coins />} exact />
                         <Route
                             path="/tournaments"
