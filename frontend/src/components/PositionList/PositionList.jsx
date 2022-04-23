@@ -20,10 +20,7 @@ function PositionList( { _coins, _tournamentPositions }) {
             const data = await (await axios.get(url)).data;
             arreglo.push(data)
         }
-        //console.log(arreglo);
         setCoins(_coins);
-        // console.log(_coins)
-        // console.log(coins)
     };
 
     const userPositions = async () => {
@@ -33,7 +30,6 @@ function PositionList( { _coins, _tournamentPositions }) {
             })
         ).data;
         setTournamentPositon(data);
-        //console.log("Posiciones se cargaorn bien");
         await insertCoins();
 
     };

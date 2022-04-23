@@ -124,7 +124,7 @@ p{
 
 
 section {
-    margin-top: 8rem;
+    margin-top:2rem;
     height: 100vh;
 }
 
@@ -180,7 +180,7 @@ img {
 }
 
 /* ========================= Media Queries (Medium Devices) ================ */
-@media screen and (max-width: 1024px) {
+@media screen and (max-width: 1200px) {
     .container {
         width: var(--container-width-md);
     }
@@ -191,7 +191,7 @@ img {
 }
 
 /* ========================= Media Queries (Small Devices) ================ */
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 768px) {
     .container {
         width: var(--container-width-sm);
     }

@@ -3,43 +3,60 @@ const Inscription = require("../models/inscriptionModel");
 const Tournament = require("../models/tournamentModel");
 const Position = require("../models/positionModel");
 const User = require("../models/userModel");
+const res = require("express/lib/response");
 
 const createInscription = asyncHandler(async (req, res) => {
     const { userId: _userId, tournamentId: _tournamentId } = req.body;
-
-    // No se si estaran bien como los agregue, capaz hay que castear algo. O capaz se tiene que guardar solo los ID, y no el objeto completo.
-    const inscription = await Inscription.create({
-        user: _userId,
-        tournament: _tournamentId,
-    });
-    if (inscription) {
-        Tournament.findByIdAndUpdate(
-            _tournamentId,
-            { $push: { inscriptions: inscription } }
-        );
-
-        User.findByIdAndUpdate(
-            _userId,
-            { $push: { inscriptions: inscription } }
-        );
-
-        res.status(200).json({
-            _id: inscription.id,
-            inscriptionDate: inscription.inscriptionDate,
-            tournament: inscription.tournament,
-            user: inscription.user,
-            profit: inscription.profit,
-            score: inscription.score,
+    try {
+        const inscription = await Inscription.create({
+            user: _userId,
+            tournament: _tournamentId,
         });
-    } else {
+        console.log(inscription);
+
+        if (inscription === null) {
+            return res.status(404).json({
+                message: `The inscription that you trying to get, ID: ${_id} doesn't exist on the DB`,
+            });
+        }
+
+         await updateModels(_userId, _tournamentId, inscription._id.toString())
+        return res.status(200).json(inscription);
+    } catch (error) {
         return res.status(404).json({
             message: "Can not create the insctiption on the tournament",
         });
     }
 });
 
+const updateModels = async (_userId, _tournamentId, _inscriptionId) => {
+     Tournament.findOne({_id: _tournamentId}, function(err, tournament){
+        if(err) return res.status(404).json(err);
+        if(!tournament) return res.status(404).json(err);
+
+        tournament.inscriptions.push(_inscriptionId);
+
+        tournament.save(function(err) {
+            if (err) return res.status(400).json(err)
+            console.log('Se actualizo bien')
+        })
+    })
+   
+    User.findOne({_id: _userId}, function(err, user){
+        if(err) return res.status(404).json(err);
+        if(!user) return res.status(404).json(err);
+
+        user.inscriptions.push(_inscriptionId);
+
+        user.save(function(err) {
+            if (err) return res.status(400).json(err)
+            console.log('Se actualizo bien')
+        })
+    })
+};
+
 const getInscription = asyncHandler(async (req, res) => {
-    const { _id } = req.params;
+    const { id: _id } = req.params;
     try {
         const inscription = await Inscription.findById(_id).exec();
         if (inscription === null) {
@@ -48,14 +65,11 @@ const getInscription = asyncHandler(async (req, res) => {
             });
         }
 
-        const _user = await User.findById(
-            inscription.user.toString()
-        ).exec();
-
+        const _user = await User.findById(inscription.user.toString()).exec();
         const toReturn = {
             inscription: inscription,
-            user: _user
-        }
+            user: _user,
+        };
 
         return res.status(200).json(toReturn);
     } catch (error) {
@@ -65,12 +79,15 @@ const getInscription = asyncHandler(async (req, res) => {
     }
 });
 
-// NO creo que funciones, por cuando pido la Inscirpion (73) - Ni tampoco cuando pido la posicion. 
+// NO creo que funciones, por cuando pido la Inscirpion (73) - Ni tampoco cuando pido la posicion.
 const getInscriptionPositions = asyncHandler(async (req, res) => {
-    const {_user: user, _tournament: tournament} = req.body;
+    const { _user: user, _tournament: tournament } = req.body;
     try {
         let toReturn = [];
-        const _inscription = await Inscription.findOne({user: _user, tournament: _tournament});
+        const _inscription = await Inscription.findOne({
+            user: _user,
+            tournament: _tournament,
+        });
         if (_inscription === null) {
             return res.status(404).json({
                 message: `The inscription that you trying to get, UserID: ${user} doesn't exist on the DB`,
@@ -88,10 +105,6 @@ const getInscriptionPositions = asyncHandler(async (req, res) => {
             .status(404)
             .json({ message: "Can not get the inscription, it's not valid" });
     }
-
-
-
-})
-
+});
 
 module.exports = { createInscription, getInscription };

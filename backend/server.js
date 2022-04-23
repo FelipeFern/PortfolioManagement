@@ -6,8 +6,9 @@ const { notFound, errorHandler } = require("./middlewares/errorMiddleware");
 const cors = require("cors");
 
 const userRoutes = require("./routes/userRoutes");
-const coinController = require("./routes/coinRoutes");
-const tournamentController = require("./routes/tournamentRoutes");
+const coinRoutes = require("./routes/coinRoutes");
+const tournamentRoutes = require("./routes/tournamentRoutes");
+const inscriptionRoutes = require("./routes/inscriptionRoutes");
 
 const app = express();
 connectDB();
@@ -27,9 +28,10 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cors({ origin: true, credentials: true }));
 
+app.use("/api/inscriptions", inscriptionRoutes);
 app.use("/api/users", userRoutes);
-app.use("/api/coingecko", coinController);
-app.use("/api/tournaments", tournamentController);
+app.use("/api/coingecko", coinRoutes);
+app.use("/api/tournaments", tournamentRoutes);
 
 app.use(notFound);
 app.use(errorHandler);

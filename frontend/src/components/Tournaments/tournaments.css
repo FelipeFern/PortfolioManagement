@@ -1,16 +1,40 @@
-.tournaments__container {
-    display: grid;
-    grid-template-columns: 40% 40%;
-    gap: 20%;
+section#tournaments {
+    margin-top: 0rem;
+    width: 94%;
 }
 
-.tournaments__cards {
+section#tournaments h2 {
+    font-size: 3.2rem;
+    margin-bottom: 0;
+}
+
+section#tournaments h5 {
+    font-size: 1rem;
+    margin-bottom: 0;
+}
+
+section#tournaments .container.tournaments__container {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    margin: 4rem;
+    margin-top: 0;
+    padding: 1rem;
+    gap: 10%;
+}
+
+section#tournaments .tournaments__content {
+    width: 45%;
+}
+
+section#tournaments .tournaments__cards {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(2, 1fr);
     gap: 1.5rem;
 }
 
-.tournament__card {
+section#tournaments .tournament__card {
     background: var(--color-bg-variant);
     border: 1px solid transparent;
     border-radius: 1rem;
@@ -19,41 +43,61 @@
     transition: var(--transition);
 }
 
-.tournament__card:hover {
-    background: transparent;
+section#tournaments .tournament__card:hover {
+    box-shadow: var(--box-shadow);
     border-color: var(--color-primary-variant);
     cursor: default;
 }
 
-.tournament__icon {
+section#tournaments .tournament__icon {
     color: var(--color-primary);
-    font-size: 1.4rem;
-    margin-bottom: 1rem;
+    font-size: 2rem;
+    margin-bottom: 0.7rem;
 }
 
-.tournament__card h5 {
-    font-size: 0.8rem;
+section#tournaments .tournament__card h5 {
+    font-size: 1.2rem;
 }
 
-.tournament__card small {
+section#tournaments .tournament__card small {
     font-size: 0.8rem;
     color: var(--color-light);
 }
 
 /* ==== Est ossería del parafo de abajo  */
-.tournaments__content p {
+section#tournaments .tournaments__content p {
     margin: 2rem 0 2.6rem;
 }
 
-.tournaments__content h3 {
+section#tournaments .tournaments__content h3 {
     padding: 1rem;
     text-align: center;
+    font-size: 1.6rem;
     color: var(--color-light);
+}
+
+section#tournaments .card_middle {
+    background: red;
+    display: flex;
+    justify-content: space-between;
+}
+
+section#tournaments .card_middle .card_left,
+section#tournaments .card_middle .card_right{
+    flex: 1;
+    display: grid;
+}
+
+section#tournaments .small{
+    margin-top: 0.3rem;
+    font-size: 1rem;
+    color: var(--color-light);
+    margin-bottom: 0.5rem;
 }
 
 /*   ======== Media Queries Medium ========= */
 @media screen and (max-width: 1024px) {
-    .tournaments__container {
+    section#tournaments .tournaments__container {
         grid-template-columns: 1fr;
         gap: 3rem;
     }
@@ -61,18 +105,18 @@
 
 /*   ======== Media Queries Small ========= */
 @media screen and (max-width: 600px) {
-    .tournaments__cards {
-        grid-template-columns: 1fr ;
+    section#tournaments .tournaments__cards {
+        grid-template-columns: 1fr;
         gap: 1rem;
     }
 
-    .tournaments__content {
+    section#tournaments .tournaments__content {
         text-align: center;
         width: 100%;
         padding: 2rem;
     }
 
-    .tournaments__content p {
+    section#tournaments .tournaments__content p {
         margin: 1.5rem 0;
     }
 }

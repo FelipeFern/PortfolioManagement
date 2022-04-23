@@ -8,10 +8,7 @@ const {
 const router = express.Router();
 
 router.post("/", createInscription);
-// router.route("/login", authUser);
-// router.get("/", getUsers);
-// router.delete("/:id", deleteTournament);
  router.get("/:id", getInscription); 
-router.post("/positions/:id", getInscriptionPositions)
+// router.post("/positions/:id", getInscriptionPositions)
 
 module.exports = router;

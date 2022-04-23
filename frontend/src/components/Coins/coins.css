@@ -11,12 +11,3 @@
     padding: var(--card-padding);
     
 }
-
-
-.table_coins .table-container .table-container__table tbody .div_right{
-    text-align: right;
-}
-
-.table_coins .table-container .table-container__table tbody .div_left{
-    text-align: left;
-}

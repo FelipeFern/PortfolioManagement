@@ -5,7 +5,6 @@ import PositionList from "../../components/PositionList/PositionList";
 import RightComponent from "../../components/RightComponent/RightComponent";
 import axios from "axios";
 import React, { useEffect, useState,useContext } from "react";
-import { UserContext } from "../../UserContext";
 
 const URIPositions =
     "http://localhost:5000/api/users/tournamentPostions/62506acceecaa7c367b162c1";
@@ -13,7 +12,6 @@ const URIPositions =
 const URICoins = "http://localhost:5000/api/coingecko/coin/";
 
 const TournamentPage = () => {
-    const {user} = useContext(UserContext)
     let tournamentPositions = [];
     let coins = [];
 

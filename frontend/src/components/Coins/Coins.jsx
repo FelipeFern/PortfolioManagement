@@ -1,12 +1,13 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useContext, useState, useEffect } from "react";
 import "./coins.css";
-import Table from "../Table/Table";
-import { useState, useEffect } from "react";
+import Table from "../Table/Table" ;
 import axios from "axios";
 
 const URI = "http://localhost:5000/api/coingecko/coinsAPI";
 
 const Coins = () => {
+    const user = localStorage.getItem('userId')
+    console.log(user)
 
     const fetchData = async () => {
         const data = await (await axios.get(URI)).data;

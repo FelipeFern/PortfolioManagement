@@ -1,14 +1,13 @@
-import React, { useState, useContext } from "react";
-import { UserContext } from "../../UserContext";
+import React, { useState, useContext, useEffect } from "react";
 import { AiOutlineTrophy } from "react-icons/ai";
 import { BsGrid } from "react-icons/bs";
 import { RiCoinsLine } from "react-icons/ri";
 import { MdOutlineCreate } from "react-icons/md";
-import { FiLogOut , FiLogIn} from "react-icons/fi";
+import { FiLogOut, FiLogIn } from "react-icons/fi";
 import "./nav2.css";
 
 function Nav2() {
-    const { user, setUser } = useContext(UserContext);
+    const user = localStorage.getItem("userId");
     const [sidebarActive, setSidebarActive] = useState("sidebar nav_active");
     const [toggleIcon, setToggleIcon] = useState("nav__toggler");
 
@@ -20,6 +19,13 @@ function Nav2() {
         toggleIcon === "nav__toggler"
             ? setToggleIcon("nav__toggler toggle")
             : setToggleIcon("nav__toggler");
+    };
+
+    useEffect(() => { }, [user]);
+
+    const logInButton = async () => {
+        localStorage.clear();
+        return true;
     };
 
     return (
@@ -78,44 +84,31 @@ function Nav2() {
 
                     <h3>Create Tournament</h3>
                 </a>
-                {user != null ?
-                   <div>
 
-                    </div>
-                    : 
-                    <a href="/login">
-                    <div className="icon">
-                        <FiLogIn />
-                    </div>
+                {user ? (
+                    <a href="/login" onClick="return localStorage.clear()">
+                        <div className="icon">
+                            <FiLogOut />
+                        </div>
 
-                    <h3
-                        onClick={() => {
-                            setUser(null);
-                        }}
-                    >
-                        Login{" "}
-                    </h3>
-                </a>
-                }
-                {user == null ?
-                   <div>
+                        <h3>Logout </h3>
+                    </a>
+                ) : (
+                    <a href="/login" onClick="logInButton()">
+                        <div className="icon">
+                            <FiLogIn />
+                        </div>
 
-                    </div>
-                    : 
-                    <a href="/login">
-                    <div className="icon">
-                        <FiLogOut />
-                    </div>
-
-                    <h3
-                        onClick={() => {
-                            setUser(null);
-                        }}
-                    >
-                        Logout{" "}
-                    </h3>
-                </a>
-                }
+                        <h3
+                            onClick={(e) => {
+                                e.preventDefault();
+                                logInButton();
+                            }}
+                        >
+                            Log in{" "}
+                        </h3>
+                    </a>
+                )}
             </div>
         </aside>
     );

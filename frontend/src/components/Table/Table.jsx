@@ -1,4 +1,4 @@
-import React, { useState, useEffect }  from "react";
+import React, { useState, useEffect, useContext }  from "react";
 import "./table.css";
 import PropTypes from "prop-types";
 import axios from "axios";
@@ -6,7 +6,7 @@ import axios from "axios";
 const URI = "http://localhost:5000/api/coingecko/coinsAPI";
 
 const Table = ({ tableData, headingColumns, title }) => {
-
+    const user = localStorage.getItem('userId')
 
     let tableClass = "table-container__table";    
     const [coins, setCoins] = useState(tableData);
@@ -15,6 +15,7 @@ const Table = ({ tableData, headingColumns, title }) => {
         const data = await (await axios.get(URI)).data;
         setCoins(data);
         console.log('entre')
+        console.log(user)
     };
 
     useEffect(() => {
@@ -62,7 +63,7 @@ const Table = ({ tableData, headingColumns, title }) => {
                                     }
                                 >
                                     {" "}
-                                    {coin.market_data.price_change_percentage_24h.toFixed(4)
+                                    {coin.market_data.price_change_percentage_24h.toFixed(3)
                                     }%
                                 </td>
                                 <td className="div_right"
@@ -74,7 +75,7 @@ const Table = ({ tableData, headingColumns, title }) => {
                                     }
                                 >
                                     {coin.market_data.price_change_percentage_7d.toFixed(
-                                        4
+                                        3
                                     )}%
                                 </td>
                                 <td className="div_right"
@@ -86,7 +87,7 @@ const Table = ({ tableData, headingColumns, title }) => {
                                     }
                                 >
                                     {coin.market_data.price_change_percentage_30d.toFixed(
-                                        4
+                                        3
                                     )}%
                                 </td>
 

@@ -106,6 +106,31 @@ const getTournaments = asyncHandler(async (req, res) => {
     }
 });
 
+const getOpenTournaments = asyncHandler(async (req, res) => {
+    const {id : _userId} = req.params
+    try {
+        const _user = await User.findById(_userId);
+        const _userInscriptions = _user.inscriptions;
+        const registedTournaments = await Tournament.find({
+            inscriptions: { $in: _userInscriptions },
+        });
+
+        const unregistedTournaments = await Tournament.find({
+            inscriptions: { $nin: _userInscriptions },
+        });
+        const toReturn = {
+            registedTournaments: registedTournaments,
+            unregistedTournaments: unregistedTournaments
+        }
+        return res.status(200).json(toReturn);
+    } catch (error) {
+        return res
+            .status(404)
+            .json({ message: "Failed to retrieve Tournaments from DB" });
+    }
+});
+
+
 const getTournamentCoins = asyncHandler(async (req, res) => {
     const { id } = req.params;
     try {
@@ -159,4 +184,5 @@ module.exports = {
     getTournament,
     getTournaments,
     getTournamentCoins,
+    getOpenTournaments
 };

@@ -13,9 +13,20 @@ const createPosition = asyncHandler(async (req, res) => {
 
     const position = await Inscription.create({});
     if (position) {
-        Inscription.findByIdAndUpdate(_inscriptionId, {
-            $push: { positions: position },
-        });
+        Inscription.findOne(
+            { _id: _inscriptionId },
+            function (err, inscription) {
+                if (err) return res.status(404).json(err);
+                if (!user) return res.status(404).json(err);
+
+                inscription.positions.push(_inscriptionId);
+
+                inscription.save(function (err) {
+                    if (err) return res.status(400).json(err);
+                    console.log("Se actualizo bien");
+                });
+            }
+        );
 
         res.status(200).json({
             _id: position.id,
