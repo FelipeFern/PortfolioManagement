@@ -14,8 +14,6 @@ const Table = ({ tableData, headingColumns, title }) => {
     const fetchCoins = async () => {
         const data = await (await axios.get(URI)).data;
         setCoins(data);
-        console.log('entre')
-        console.log(user)
     };
 
     useEffect(() => {
@@ -26,7 +24,7 @@ const Table = ({ tableData, headingColumns, title }) => {
         return () => {
             clearInterval(coinsData);
         };
-    }, [coins, ]);
+    }, [coins ]);
 
     return (
         <div className="table_coins">
@@ -45,7 +43,7 @@ const Table = ({ tableData, headingColumns, title }) => {
                         </tr>
                     </thead>
                     <tbody>
-                        {tableData.map((coin, index) => (
+                        {coins.map((coin, index) => (
                             <tr key={coin.id} >
                                 <th >{coin.market_data.market_cap_rank}</th>
                                 <th className="th-img-name ">

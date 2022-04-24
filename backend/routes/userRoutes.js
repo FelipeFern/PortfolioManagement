@@ -8,7 +8,9 @@ const {
     getTournamentsRegistered,
     getTournamentsUnregistered,
     getPositionTournament,
-    getClosedPositionsTournament
+    getClosedPositionsTournament,
+    getOpenPositionsTournament,
+    getInscription
 } = require("../controllers/userControllers.js");
 
 const router = express.Router();
@@ -20,8 +22,10 @@ router.delete("/:id", deleteUser);
 router.get("/:id", getUser);
 router.get("/tournaments/:id", getTournamentsRegistered);
 router.get("/tournamentsUnregistered/:id", getTournamentsUnregistered); 
-router.post("/tournamentPostions/:id", getPositionTournament);
-router.get("/tournamentClosedPostions/:id", getClosedPositionsTournament);
+router.post("/tournamentPositions/:id", getPositionTournament);
+router.post("/tournamentClosedPostions/:id", getClosedPositionsTournament);
+router.post("/tournamentOpenPostions/:id", getOpenPositionsTournament);
+router.post ("/inscription/:id", getInscription);
 
 
 

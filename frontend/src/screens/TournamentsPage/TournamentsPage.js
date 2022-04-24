@@ -1,11 +1,13 @@
 import "./TournamentsPage.css";
 import axios from "axios";
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState } from "react";
 import Tournaments from "../../components/Tournaments/Tournaments";
+import { useParams } from "react-router-dom";
 
 const URIOpenTournaments = "http://localhost:5000/api/tournaments/open/";
 
 const TournamentsPage = () => {
+    const { id } = useParams();
     const user = localStorage.getItem("userId");
     const URIOpen = URIOpenTournaments.concat(JSON.parse(user));
 
@@ -20,9 +22,9 @@ const TournamentsPage = () => {
         setOpenUnregistedTournaments(data.unregistedTournaments);
     };
 
-    useEffect(async () => {
-        await openTournaments();
-    }, [user]);
+    useEffect( () => {
+         openTournaments();
+    }, [user,]);
 
     return (
         <div className="tournaments_page">

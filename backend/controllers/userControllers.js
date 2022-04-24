@@ -3,7 +3,9 @@ const User = require("../models/userModel");
 const Tournament = require("../models/tournamentModel");
 const Inscription = require("../models/inscriptionModel");
 const Position = require("../models/positionModel");
+const Coin = require("../models/coinModel");
 const generateToken = require("../utils/generateToken");
+const CoinGecko = require("coingecko-api/lib/CoinGecko");
 
 const registerUser = asyncHandler(async (req, res) => {
     const { name, email, password } = req.body;
@@ -159,48 +161,84 @@ const getPositionTournament = asyncHandler(async (req, res) => {
 
 // Checked
 const getClosedPositionsTournament = asyncHandler(
-    asyncHandler(async (req, res) => {        
+    asyncHandler(async (req, res) => {
         const { id } = req.params;
         const { tournament } = req.body;
+        const toReturn = [];
         try {
             const response = await Inscription.findOne({
                 user: id,
                 tournament: tournament,
             });
-            console.log(response.positions);
 
             const positions = await Position.find({
                 _id: { $in: response.positions },
-                closeDate: { $lt: new Date() },
+                closeDate: { $lte: new Date() },
             });
-            res.status(200).json(positions);
+
+            for (let _position of positions) {
+                let _coinId = _position.coin.toString();
+                let _coin = await Coin.findById(_coinId).exec();
+                let toInsert = {
+                    position: _position,
+                    coin: _coin,
+                };
+                toReturn.push(toInsert);
+            }
+
+            res.status(200).json(toReturn);
         } catch (error) {
             return res.status(404).json({ message: error.message });
         }
     })
 );
-
 
 const getOpenPositionsTournament = asyncHandler(
-    asyncHandler(async (req, res) => {       
+    asyncHandler(async (req, res) => {
         const { id } = req.params;
         const { tournament } = req.body;
+        let toReturn = [];
         try {
             const response = await Inscription.findOne({
                 user: id,
                 tournament: tournament,
             });
-        
             const positions = await Position.find({
                 _id: { $in: response.positions },
-                closeDate: { $exists: false }, // Esto nose si esta bien, pero hasta no crear el seeder, no lo voy a poder probar.
+                closeDate: { $not: { $exists: true } }, // Esto nose si esta bien, pero hasta no crear el seeder, no lo voy a poder probar.
             });
-            res.status(200).json(positions);
+
+            for (let _position of positions) {
+                let _coinId = _position.coin.toString();
+                let _coin = await Coin.findById(_coinId).exec();
+                let toInsert = {
+                    position: _position,
+                    coin: _coin,
+                };
+                toReturn.push(toInsert);
+            }
+
+            return res.status(200).json(toReturn);
         } catch (error) {
             return res.status(404).json({ message: error.message });
         }
     })
 );
+
+const getInscription = asyncHandler(async (req, res) => {
+    const { id } = req.params;
+    const { tournament } = req.body;
+    try {
+        const response = await Inscription.findOne({
+            user: id,
+            tournament: tournament,
+        });
+      
+        res.status(200).json(response._id);
+    } catch (error) {
+        return res.status(404).json({ message: error.message });
+    }
+});
 
 module.exports = {
     registerUser,
@@ -212,5 +250,6 @@ module.exports = {
     getTournamentsUnregistered,
     getPositionTournament,
     getClosedPositionsTournament,
-    getOpenPositionsTournament
+    getOpenPositionsTournament,
+    getInscription,
 };

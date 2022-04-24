@@ -13,6 +13,19 @@ const coinsAPI = async (req, res) => {
     }
 };
 
+const coinAPI = async (req, res) => {
+    const { id: _id } = req.params;
+    try {
+        const requestAPI = await coinGeckoClient.simple.price({
+            ids: [ _id],
+            vs_currencies: [ 'usd'],
+        });
+        return res.status(200).json(requestAPI.data);
+    } catch (error) {
+        res.json({ message: error.message });
+    }
+}; 
+
 const coins = async (req, res) => {
     try {
         const response = await Coin.find();
@@ -59,4 +72,4 @@ const coinRange = async (req, res) => {
     }
 };
 
-module.exports = { coins, coinRange, getCoin, coinsAPI };
+module.exports = { coins, coinRange, getCoin, coinsAPI, coinAPI };

@@ -5,37 +5,38 @@ const Coin = require("../models/coinModel");
 
 const createPosition = asyncHandler(async (req, res) => {
     const {
-        entryPrice: _entryPrice,
-        buyOrder: _buyOrder,
-        coin: _coinId,
-        inscription: _inscriptionId,
+        entryPrice,
+        coin,
+        inscription,
+        quantity,
+        buyOrder,
     } = req.body;
 
-    const position = await Inscription.create({});
+    const position = await Position.create({
+        entryPrice,
+        entryDate: Date.now(),
+        coin,
+        inscription,
+        quantity,
+        buyOrder
+    });
     if (position) {
         Inscription.findOne(
-            { _id: _inscriptionId },
-            function (err, inscription) {
+            { _id: inscription },
+            function (err, inscriptiona) {
                 if (err) return res.status(404).json(err);
-                if (!user) return res.status(404).json(err);
+                if (!inscriptiona) return res.status(404).json(err);
 
-                inscription.positions.push(_inscriptionId);
+                inscriptiona.positions.push(position._id.toString());
 
-                inscription.save(function (err) {
+                inscriptiona.save(function (err) {
                     if (err) return res.status(400).json(err);
                     console.log("Se actualizo bien");
                 });
             }
         );
 
-        res.status(200).json({
-            _id: position.id,
-            entryPrice: position.entryPrice,
-            entryDate: position.entryDate,
-            buyOrder: position.buyOrder,
-            coin: position.coin,
-            inscription: position.inscription,
-        });
+        res.status(200).json(position);
     } else {
         return res.status(404).json({
             message:
@@ -45,10 +46,11 @@ const createPosition = asyncHandler(async (req, res) => {
 });
 
 const closePosition = asyncHandler(async (req, res) => {
-    const { id: _id } = req.params;
+    const { id} = req.params;
     const { closePrice: _closePrice, closeDate: _closeDate } = req.body;
     try {
-        const position = await Position.findById(_id);
+        console.log(_closePrice, _closeDate)
+        const position = await Position.findById(id);
         let difference = 0;
         if (position.buyOrder) {
             difference = position.closePrice - position.entryPrice;
@@ -56,12 +58,31 @@ const closePosition = asyncHandler(async (req, res) => {
             difference = position.entryPrice - position.closePrice;
         }
         let _profit = position.quantity * difference;
-        await Position.findByIdAndUpdate(_id, {
+        await Position.findByIdAndUpdate(id, {
             closePrice: _closePrice,
             closeDate: _closeDate,
             _profit: _profit,
         });
-        res.status(200).json(position);
+
+
+        Position.findOne(
+            { _id: id },
+            function (err, _position) {
+                if (err) return res.status(404).json(err);
+                if (!_position) return res.status(404).json(err);
+
+                _position.closePrice =_closePrice;
+                _position.closeDate = _closeDate;
+                _position._profit = _profit
+
+                _position.save(function (err) {
+                    if (err) return res.status(400).json(err);
+                    console.log("Se actualizo bien");
+                });
+            }
+        );
+
+        res.status(200).json({position, _profit, _closeDate, _closePrice});
     } catch (error) {}
 });
 

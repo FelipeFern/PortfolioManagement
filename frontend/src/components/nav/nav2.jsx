@@ -15,7 +15,6 @@ function Nav2() {
         sidebarActive === "sidebar"
             ? setSidebarActive("sidebar nav_active")
             : setSidebarActive("sidebar");
-        console.log(sidebarActive);
         toggleIcon === "nav__toggler"
             ? setToggleIcon("nav__toggler toggle")
             : setToggleIcon("nav__toggler");

@@ -7,17 +7,23 @@ const URI = "http://localhost:5000/api/coingecko/coinsAPI";
 
 const Coins = () => {
     const user = localStorage.getItem('userId')
-    console.log(user)
+    const [driversData, setDriversData] = useState([]);
 
     const fetchData = async () => {
         const data = await (await axios.get(URI)).data;
         setDriversData(data);
     };
-    const [driversData, setDriversData] = useState([]);
+    
 
     useEffect(() => {
-        fetchData();
-    }, []);
+        const coinsData = setInterval(() => {
+            fetchData();
+        }, 10000);
+
+        return () => {
+            clearInterval(coinsData);
+        };
+    }, [driversData ]);
 
     return (
         <Fragment>

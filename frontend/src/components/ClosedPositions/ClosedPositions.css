@@ -6,49 +6,36 @@
     margin-bottom: 0.8rem;
 }
 
-.recent-order table {
+.recent-order table{
     border-radius: var(--card-border-radius);
     background: var(--color-info-dark);
     width: 100%;
     text-align: center;
     padding: var(--card-padding);
     font-size: 1.3rem;
+    
 }
 
-.recent-order tbody td {
+.recent-order tbody td{
     height: 2.8rem;
     border-bottom: 1px solid var(--color-light);
 }
 
-.recent-order tbody tr:last-child td {
+.recent-order tbody tr:last-child td{
     border: none;
 }
 
-.recent-order button {
-    background: var(--color-primary);
-    border-radius: var(--border-radius-2);
-    height: 30px;
-    width: 100px;
-    font-size: 1rem;
-    transition: var(--transition);
+.recent-order a{
+text-align: center;
+display: block;
+margin: 1rem auto;
+color: var(--color-light);
 }
 
-.recent-order button:hover{
-    background: var(--color-white);
-    cursor: pointer;
-    transition: var(--transition);
+.recent-order a:hover{
+    color: var(--color-white)
 }
 
-.recent-order a {
-    text-align: center;
-    display: block;
-    margin: 1rem auto;
-    color: var(--color-light);
-}
-
-.recent-order a:hover {
-    color: var(--color-white);
-}
 
 /* ========================= MEDIA QUERY ======================== */
 @media screen and (max-width: 1200px) {
@@ -63,17 +50,23 @@
     .recent-order table {
         width: 84vw;
     }
+
 }
+
+
+
+
 
 /* ========================= Small QUERY ======================== */
 @media screen and (max-width: 768px) {
-    .recent-order {
-        position: relative;
-        margin: 3rem 0 0 0;
-        width: 100%;
-    }
+   .recent-order{
+       position: relative;
+       margin: 3rem 0 0 0;
+       width: 100%;
+   }
 
-    .recent-order table {
-        border-radius: var(--card-border-radius);
-    }
+   .recent-order table{
+       border-radius: var(--card-border-radius);
+   }
+
 }

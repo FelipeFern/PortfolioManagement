@@ -13,7 +13,6 @@ import Coins from "./components/Coins/Coins";
 import Header from './components/Header/Header'
 
 const App = () => {
-
     return (
         <main>
                 <Nav2 />
@@ -35,7 +34,7 @@ const App = () => {
                         />
                         <Route
                             path="/tournament/:id"
-                            element={<TournamentPage />}
+                            element={<TournamentPage  />}
                         />
                     </Routes>
                 </BrowserRouter>

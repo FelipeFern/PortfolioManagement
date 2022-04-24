@@ -3,7 +3,6 @@ import "./tournaments.css";
 import { AiFillTrophy } from "react-icons/ai";
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
 
 const URI = "http://localhost:5000/api/tournaments/";
 const URIInscription = "http://localhost:5000/api/inscriptions/";
@@ -13,7 +12,6 @@ const Tournaments = ({
     openUnregistedTournaments,
 }) => {
     const user = localStorage.getItem("userId");
-    const navigate = useNavigate();
     const [tournamentsState, setTournamentsState] = useState([]);
 
     const getCorrectDate = (_date) => {
@@ -33,17 +31,13 @@ const Tournaments = ({
     };
 
     const signUpTournament = async (tournamentId) => {
-        const _uri = URIInscription ;
-        console.log(_uri);
-        const _user =  JSON.parse(user);
-        console.log(JSON.parse(user), tournamentId)
-        console.log({_user, tournamentId})
+        const _uri = URIInscription;
+        const _user = JSON.parse(user);
         const { _inscription } = await axios.post(_uri, {
             userId: _user,
             tournamentID: tournamentId,
         });
-        console.log(_inscription);
-        navigate("/tournament/" + tournamentId);
+
     };
 
     useEffect(() => {
@@ -58,43 +52,40 @@ const Tournaments = ({
                 <div className="tournaments__content">
                     <h3> Registeres Tournaments</h3>
                     <div className="tournaments__cards">
-                        {openRegistedTournaments.map((tournament) => (
-                            <article
-                                className="tournament__card"
-                                key={tournament._id}
-                            >
-                                <AiFillTrophy className="tournament__icon" />
-                                <h5>{tournament.name}</h5>
-                                <div className="small">
-                                    Money: {tournament.moneyAvailable}
-                                </div>
-                                <div className="small">
-                                    {getCorrectDate(tournament.startDate)} --{" "}
-                                    {getCorrectDate(tournament.finishDate)}
-                                </div>
-                                <a
-                                    href={
-                                        "/tournament/" +
-                                        tournament._id.toString()
-                                    }
+                        {openRegistedTournaments.length === 0 ? (
+                            <div className="no_open_positions">
+                                <h3> You are not registed in any Tournament</h3>
+                            </div>
+                        ) : (
+                            openRegistedTournaments.map((tournament) => (
+                                <article
+                                    className="tournament__card"
+                                    key={tournament._id}
                                 >
-                                    <button className="btn btn-primary">
-                                        {" "}
-                                        Tournaments Stats
-                                    </button>
-                                </a>
-                            </article>
-                        ))}
-                        <article className="tournament__card">
-                            <AiFillTrophy className="tournament__icon" />
-                            <h5>Torneo</h5>
-                            <small> Info del torneo</small>
-                            <br />
-                            <button className="btn btn-primary">
-                                {" "}
-                                Tournaments Stats
-                            </button>
-                        </article>
+                                    <AiFillTrophy className="tournament__icon" />
+                                    <h5>{tournament.name}</h5>
+                                    <div className="small">
+                                        Money: {tournament.moneyAvailable}
+                                    </div>
+                                    <div className="small">
+                                        {getCorrectDate(tournament.startDate)}{" "}
+                                        --{" "}
+                                        {getCorrectDate(tournament.finishDate)}
+                                    </div>
+                                    <a
+                                        href={
+                                            "/tournament/" +
+                                            tournament._id.toString()
+                                        }
+                                    >
+                                        <button className="btn btn-primary">
+                                            {" "}
+                                            Tournaments Stats
+                                        </button>
+                                    </a>
+                                </article>
+                            ))
+                        )}
                     </div>
                 </div>
 

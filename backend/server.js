@@ -9,15 +9,16 @@ const userRoutes = require("./routes/userRoutes");
 const coinRoutes = require("./routes/coinRoutes");
 const tournamentRoutes = require("./routes/tournamentRoutes");
 const inscriptionRoutes = require("./routes/inscriptionRoutes");
+const positionRoutes = require("./routes/positionRoutes");
 
 const app = express();
 connectDB();
 
 // app.get("/", function (req, res) {
 //     try {
-//         require("./models/positionModel");
-//         const positionSeed = require("./seeders/positionSeeder");
-//         positionSeed();
+//         require("./models/tournamentModel");
+//         const tournamentSeed = require("./seeders/tournamentSeeder");
+//         tournamentSeed();
 //         return res.status(200).send(" Se ejecutaron los seeders");
 //     } catch (error) {
 //         return res.status(404).send("No se pudieron ejecutar los seeders")
@@ -32,6 +33,7 @@ app.use("/api/inscriptions", inscriptionRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/coingecko", coinRoutes);
 app.use("/api/tournaments", tournamentRoutes);
+app.use("/api/positions", positionRoutes);
 
 app.use(notFound);
 app.use(errorHandler);

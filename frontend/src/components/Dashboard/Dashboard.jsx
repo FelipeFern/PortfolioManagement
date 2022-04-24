@@ -12,7 +12,7 @@ ChartJS.register(ArcElement, Tooltip, Legend);
 const URITournamentPositions =
     "http://localhost:5000/api/tournaments/positions/625074cd29da7ab6d8897946";
 
-function Dashboard() {
+function Dashboard({ title}) {
     const [tournamentPositions, setTournamentPositon] = useState([]);
 
     const data1 = {
@@ -38,11 +38,8 @@ function Dashboard() {
 
     return (
         <div className="main-dash">
-            <h1>Dashboard</h1>
+            <h1>{title}</h1>
 
-            <div className="date">
-                <input type="date" />
-            </div>
 
             <div className="insights">
                 <div className="div-1">

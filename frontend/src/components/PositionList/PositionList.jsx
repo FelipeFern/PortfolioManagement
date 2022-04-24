@@ -1,105 +1,147 @@
 import React, { useState, useEffect } from "react";
 import "./PositionList.css";
 import axios from "axios";
+import { element } from "prop-types";
+import { useNavigate } from "react-router-dom";
 
-const URIPositions =
-    "http://localhost:5000/api/users/tournamentPostions/62506acceecaa7c367b162c1";
+const URIPositions = "http://localhost:5000/api/users/tournamentPostions/";
 
-const URICoins = "http://localhost:5000/api/coingecko/coin/";
+const URICoinsAPIAll = "http://localhost:5000/api/coingecko/coinsAPI";
+const URICoinsAPI = "http://localhost:5000/api/coingecko/coinsAPI/";
+const URIClosePosition = "http://localhost:5000/api/positions/close/";
 
-function PositionList( { _coins, _tournamentPositions }) {
-    
-    const [tournamentPositions, setTournamentPositon] = useState([]);
-    const [coins, setCoins] = useState([]);
- 
-    const insertCoins = async () => {
-         let arreglo = []
-       
-        for (let elem of tournamentPositions) {
-            const url = URICoins + elem.coin;
-            const data = await (await axios.get(url)).data;
-            arreglo.push(data)
-        }
-        setCoins(_coins);
-    };
+function PositionList({
+    _coins,
+    _openTournamentPositions,
+    _closedTournamentPositions,
+    title,
+}) {
+    const navigate = useNavigate();
+    const [openTournamentPositions, setopenTournamentPositions] = useState(
+        _openTournamentPositions
+    );
+    const [coins, setCoins] = useState([_coins]);
 
-    const userPositions = async () => {
+    const closePosition = async (_positionId, coin, price) => {
+        const closeDate = Date.now();
+        const closePrice = price;
         const data = await (
-            await axios.post(URIPositions, {
-                tournament: "625074cd29da7ab6d8897946",
+            await axios.post(URIClosePosition + _positionId, {
+                closePrice,
+                closeDate
             })
         ).data;
-        setTournamentPositon(data);
-        await insertCoins();
-
     };
 
-    useEffect(async () => {
-        await userPositions();  
-        //console.log(coins);
-    }, []);
+    const refreshCoins = async () => {
+        const data = await (await axios.get(URICoinsAPIAll)).data;
+        setCoins(data);
+    };
+
+    const price = (_id) => {
+        let toReturn = 0;
+
+        if (coins.length > 0) {
+            let aux = coins.find((coin) => (coin.id == _id));
+            if (aux !== undefined) {               
+                toReturn = aux.market_data.current_price.usd;
+            }
+        }
+        return toReturn;
+    };
+
+    useEffect(() => {
+        const coinsData = setInterval(() => {
+            refreshCoins();
+        }, 10000);
+
+        return () => {
+            clearInterval(coinsData);
+        };
+    }, [coins]);
 
     return (
         <div className="recent-order">
-            <h2>Tournament Positions</h2>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Coin</th>
-                        <th>Quantity</th>
-                        <th>Entry Price</th>
-                        <th>Current Price</th>
-                        <th>Profit</th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {tournamentPositions.map((position, index) => (
-                        <tr key={position._id}>
-                             <td>{ coins[index]?.symbol.toUpperCase() || 0}</td> 
-                            <td>{position.quantity}</td>
-                            <td>{position.entryPrice}</td>
-                            <td> {coins[index]?.identifier || 0} </td> 
-                            <td>{position.profit}</td>
-                            <td className="primary">Close Position</td>
-                        </tr>
-                    ))}
+            {_closedTournamentPositions.length === 0 ? (
+                <h2>Currently no Open Positions</h2>
+            ) : (
+                <>
+                    <h2>{title}</h2>
+                    <table className="table-container__table">
+                        <thead>
+                            <tr>
+                                <th>Coin</th>
+                                <th>Type</th>
+                                <th>Quantity</th>
+                                <th>Entry Price</th>
+                                <th>Price</th>
+                                <th>Profit</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {_closedTournamentPositions.map(
+                                (_position, index) => (
+                                    <tr key={_position.coin.symbol}>
+                                        <th className="th-img-name">
+                                            <img src={_position.coin.image} />
+                                            {_position.coin.symbol.toUpperCase()}
+                                        </th>
+                                        <td
+                                            style={
+                                                _position.position.buyOrder
+                                                    ? { color: "lawngreen" }
+                                                    : { color: "orangered" }
+                                            }
+                                        >
+                                            {" "}
+                                            {_position.position.buyOrder
+                                                ? "Long"
+                                                : "Long"}
+                                        </td>
 
-                    <tr>
-                        <td>Symbol</td>
-                        <td>Quantity</td>
-                        <td>Entry Price</td>
-                        <td>Currrent Price</td>
-                        <td>Profit</td>
-                        <td className="primary">Close Position</td>
-                    </tr>
-                    <tr>
-                        <td>Symbol</td>
-                        <td>Quantity</td>
-                        <td>Entry Price</td>
-                        <td>Currrent Price</td>
-                        <td>Profit</td>
-                        <td className="primary">Close Position</td>
-                    </tr>
-                    <tr>
-                        <td>Symbol</td>
-                        <td>Quantity</td>
-                        <td>Entry Price</td>
-                        <td>Currrent Price</td>
-                        <td>Profit</td>
-                        <td className="primary">Close Position</td>
-                    </tr>
-                    <tr>
-                        <td>Symbol</td>
-                        <td>Quantity</td>
-                        <td>Entry Price</td>
-                        <td>Currrent Price</td>
-                        <td>Profit</td>
-                        <td className="primary">Close Position</td>
-                    </tr>
-                </tbody>
-            </table>
-            <a href="#">Show All</a>
+                                        <th> {_position.position.quantity}</th>
+                                        <th>
+                                            {" "}
+                                            ${_position.position.entryPrice}
+                                        </th>
+                                        <th>
+                                            {" "}
+                                            ${price(_position.coin.identifier)}
+                                        </th>
+                                        <td
+                                            style={
+                                                _position.position.profit > 0
+                                                    ? { color: "lawngreen" }
+                                                    : { color: "orangered" }
+                                            }
+                                        >
+                                            {" "}
+                                            ${_position.position.profit}
+                                        </td>
+                                        <th>
+                                            <button
+                                                onClick={(e) => {
+                                                    e.preventDefault();
+                                                    closePosition(
+                                                        _position._id,
+                                                        _position.coin
+                                                            .identifier,
+                                                            price(_position.coin.identifier)   
+                                                    );
+                                                }}
+                                            >
+                                                {" "}
+                                                Close Position
+                                            </button>
+                                        </th>
+                                    </tr>
+                                )
+                            )}
+                        </tbody>
+                    </table>
+                </>
+            )}
         </div>
     );
 }

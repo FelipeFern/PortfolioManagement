@@ -2,10 +2,14 @@ import React, { useState, useEffect } from "react";
 import "./RightComponent.css";
 import axios from "axios";
 
+const URICreatePosition = "http://localhost:5000/api/positions/";
 const URICoins =
     "http://localhost:5000/api/tournaments/coins/625ec361b5f1244a7d437a39";
+const URICoinsAPIAll = "http://localhost:5000/api/coingecko/coinsAPI";
+const URIGetInscription = "http://localhost:5000/api/users/inscription/"
 
-function RightComponent() {
+function RightComponent( {tournamenId}) {
+    const user = localStorage.getItem("userId");
     const [available, setAvailable] = useState(0);
     const [quantity, setQuantity] = useState(0);
     const [coin, setCoin] = useState("btc");
@@ -14,29 +18,30 @@ function RightComponent() {
     const [coins, setCoins] = useState([]);
     const [message, setMessage] = useState("Un Mensajeas");
     const [message_div, setMessageDiv] = useState("message_div_hidden");
+    const [allCoins, setAllCoins] = useState([]);
 
-    const handleSubmitDraft = (data) => {
-        console.log(`
-            available: ${available}
-            quantity: ${quantity}
-            coin: ${coin}
-            Total: ${total}
-            `);
+    const handleSubmitPosition = async (
+       
+        _buyOrder,
+    ) => {
+        console.log(tournamenId)
+        const _inscription = await axios.post(URIGetInscription + JSON.parse(user), {
+            tournament: tournamenId
+        });
+        console.log("insctipcion" , _inscription)
+
+        let _coin = coins.find((c) => (c._symbol == coin));
+        const { data } = await axios.post(URICreatePosition, {
+            inscription: _inscription,
+            coin: _coin,
+            quantity: quantity,
+            buyOrder: _buyOrder,
+            entryPrice: coinPrice,
+        });
 
         showMessage("Se creo una nueva posicion ....");
     };
-
-    const handleSubmitPreview = (data) => {
-        console.log(`
-        available: ${available} 
-        quantity: ${quantity}
-        coin: ${coin}
-        Total: ${total}
-        `);
-
-        showMessage("Se creo una nueva posicion ....");
-    };
-
+    
     const showMessage = async (msg) => {
         setMessage(msg);
         setMessageDiv("message_div");
@@ -65,15 +70,35 @@ function RightComponent() {
         setCoins(data);
     };
 
+    const refreshCoins = async () => {
+        const data = await (await axios.get(URICoinsAPIAll)).data;
+        setAllCoins(data);
+    };
+
+    const price = (_id) => {
+        let toReturn = 0;
+
+        if (allCoins.length > 0) {
+            let aux = allCoins.find((coin) => coin.id == _id);
+            if (aux !== undefined) {
+                toReturn = aux.market_data.current_price.usd;
+            }
+        }
+        return toReturn;
+    };
+
     useEffect(() => {
+        fetchCoins();
         const coinsData = setInterval(() => {
-            fetchCoins();
+            refreshCoins();
+            console.log('Entre')
+            console.log(coins)
         }, 10000);
 
         return () => {
             clearInterval(coinsData);
         };
-    }, [coins]);
+    }, [allCoins]);
 
     return (
         <div className="right">
@@ -90,7 +115,7 @@ function RightComponent() {
 
                         <label> Coin: &nbsp;{coin.toUpperCase()}</label>
 
-                        <label> Price: &nbsp; {coinPrice} USD</label>
+                        <label> Price: &nbsp; 2 USD</label>
 
                         <label>
                             Quantity:
@@ -106,13 +131,17 @@ function RightComponent() {
                         <div className="buttons">
                             <button
                                 className="short"
-                                onClick={handleSubmitPreview}
+                                onClick={(e) => {
+                                    e.preventDefault();
+                                    handleSubmitPosition(false);}}
                             >
                                 Sell Short
                             </button>
                             <button
                                 className="long"
-                                onClick={handleSubmitDraft}
+                                onClick={(e) => {
+                                    e.preventDefault();
+                                    handleSubmitPosition(true);}}
                             >
                                 Buy Long
                             </button>
@@ -150,7 +179,7 @@ function RightComponent() {
                                         <img src={_coin.image} />
                                         {_coin.symbol.toUpperCase()}
                                     </th>
-                                    <th> ${_coin.current_price}</th>
+                                    <th> $ {price(_coin.identifier)} </th>
                                     <td
                                         style={
                                             _coin.price_change_percentage_24h >
