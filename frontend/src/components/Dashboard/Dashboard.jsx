@@ -1,17 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import "./dashboard.css";
-import { SiCashapp } from "react-icons/si";
-import { MdLeaderboard } from "react-icons/md";
-import { BsTrophyFill } from "react-icons/bs";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
-import { Doughnut } from "react-chartjs-2";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 function Dashboard({ tournamentLeaderboard, title, userInscription }) {
-    const [tournamentPositions, setTournamentPositon] = useState([]);
-    const [_userInscription, setUserInscription] = useState("")
-
     const data1 = {
         labels: [],
         datasets: [
@@ -28,15 +21,7 @@ function Dashboard({ tournamentLeaderboard, title, userInscription }) {
         ],
     };
 
-    const setLeadedrboard = async () => {
-        setTournamentPositon(tournamentLeaderboard);
-        setUserInscription(userInscription)
-    };
-
-    useEffect(() => {
-        setLeadedrboard();
-    }, []);
-
+  
     return (
         <div className="main-dash">
             <h1>{title}</h1>
@@ -47,7 +32,7 @@ function Dashboard({ tournamentLeaderboard, title, userInscription }) {
                         <div className="left">
                             <h3>Profits </h3>
                             <h1> $
-                            {_userInscription != "" ?
+                            {userInscription.length !== 0 ?
                             userInscription.inscription.profit : 0  
                         }
                             </h1>
@@ -55,7 +40,7 @@ function Dashboard({ tournamentLeaderboard, title, userInscription }) {
                         <div className="left">
                             <h3>Money Available </h3>
                             <h1> $
-                            {_userInscription != "" ?
+                            {userInscription.length !== 0 ?
                             userInscription.inscription.score : 0   
                         }
                             </h1>
@@ -63,7 +48,7 @@ function Dashboard({ tournamentLeaderboard, title, userInscription }) {
                         <div className="left">
                             <h3>Current Position </h3>
                             <h1> $
-                            {_userInscription !== "" ?
+                            {userInscription.length !== 0 ?
                             userInscription.inscription.profit : 0   
                         }
                             </h1>
