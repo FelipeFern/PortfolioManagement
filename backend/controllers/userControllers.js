@@ -146,6 +146,7 @@ const getPositionTournament = asyncHandler(async (req, res) => {
     const { id } = req.params;
     const { tournament } = req.body;
     try {
+        const toReturn =[]
         const response = await Inscription.findOne({
             user: id,
             tournament: tournament,
@@ -153,11 +154,29 @@ const getPositionTournament = asyncHandler(async (req, res) => {
         const positions = await Position.find({
             _id: { $in: response.positions },
         });
-        res.status(200).json(positions);
+
+        for (let _position of positions) {
+            let _inscriptionId = _position.inscription.toString();
+            let _inscription = await Inscription.findById(_inscriptionId).exec();
+            let _userId = _inscription.user.toString();
+            let _user = await User.findById(_userId).exec();
+            let toInsert = {
+                position: _position,
+                user: _user,
+            };
+            toReturn.push(toInsert);
+        }
+
+        toReturn.sort(function(a, b) {
+            return b.position.profit - a.position.profit;
+          });
+
+        res.status(200).json(toReturn);
     } catch (error) {
         return res.status(404).json({ message: error.message });
     }
 });
+
 
 // Checked
 const getClosedPositionsTournament = asyncHandler(
@@ -173,7 +192,7 @@ const getClosedPositionsTournament = asyncHandler(
 
             const positions = await Position.find({
                 _id: { $in: response.positions },
-                closeDate: { $lte: new Date() },
+                closeDate: { $lte: Date.now() },
             });
 
             for (let _position of positions) {

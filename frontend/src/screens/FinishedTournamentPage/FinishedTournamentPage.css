@@ -1,0 +1,25 @@
+.container--1 {
+    display: grid;
+    width: 96%;
+    margin: 0 auto;
+    gap: 1.8rem;
+    grid-template-columns: auto 23rem;
+}
+
+/* ========================= MEDIA QUERY ======================== */
+@media screen and (max-width: 1200px) {
+    .container--1 {
+        width: 94%;
+        grid-template-columns: 7rem auto 23rem;
+    }
+}
+
+/* ========================= Small QUERY ======================== */
+@media screen and (max-width: 768px) {
+    .container--1 {
+        width: 100%;
+        margin-top: 4rem;
+        padding: 0 1rem;
+        grid-template-columns: 1fr;
+    }
+}

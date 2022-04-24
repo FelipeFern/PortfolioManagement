@@ -1,5 +1,5 @@
 import React from "react";
-import "./tournaments.css";
+import "./finishedTournaments.css";
 import { AiFillTrophy } from "react-icons/ai";
 import { useState, useEffect } from "react";
 import axios from "axios";
@@ -45,6 +45,8 @@ const Tournaments = ({
 
     return (
         <section id="tournaments">
+            <h2> Finished Tournaments</h2>
+
             <div className="container tournaments__container">
                 <div className="tournaments__content">
                     {openRegistedTournaments.length === 0 ? (
@@ -76,7 +78,7 @@ const Tournaments = ({
                                         </div>
                                         <a
                                             href={
-                                                "/tournament/" +
+                                                "/finishedTournament/" +
                                                 tournament._id.toString()
                                             }
                                         >
@@ -95,10 +97,7 @@ const Tournaments = ({
                 <div className="tournaments__content">
                     {openUnregistedTournaments.length === 0 ? (
                         <div className="no_open_positions">
-                            <h3>
-                                {" "}
-                                You are not registed in any Open Tournament
-                            </h3>
+                            <h3> You are not registed in any Finished Tournament</h3>
                         </div>
                     ) : (
                         <div>
@@ -125,16 +124,14 @@ const Tournaments = ({
                                         </div>
 
                                         <a
-                                            onClick={(e) => {
-                                                e.preventDefault();
-                                                signUpTournament(
-                                                    tournament._id
-                                                );
-                                            }}
+                                             href={
+                                                "/finishedTournaments/" +
+                                                tournament._id.toString()
+                                            }
                                         >
                                             <button className="btn btn-primary">
                                                 {" "}
-                                                Sign up
+                                                Tournaments Stats
                                             </button>
                                         </a>
                                     </article>

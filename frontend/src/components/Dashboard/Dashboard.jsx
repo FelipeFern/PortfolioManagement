@@ -1,19 +1,16 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./dashboard.css";
-import axios from "axios";
 import { SiCashapp } from "react-icons/si";
-import { MdLeaderboard, MdDonutLarge } from "react-icons/md";
-import {BsTrophyFill} from 'react-icons/bs'
+import { MdLeaderboard } from "react-icons/md";
+import { BsTrophyFill } from "react-icons/bs";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { Doughnut } from "react-chartjs-2";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
-const URITournamentPositions =
-    "http://localhost:5000/api/tournaments/positions/625074cd29da7ab6d8897946";
-
-function Dashboard({ title}) {
+function Dashboard({ tournamentLeaderboard, title, userInscription }) {
     const [tournamentPositions, setTournamentPositon] = useState([]);
+    const [_userInscription, setUserInscription] = useState("")
 
     const data1 = {
         labels: [],
@@ -31,61 +28,50 @@ function Dashboard({ title}) {
         ],
     };
 
-    const getTournamentPositions = async () => {
-        const data = await (await axios.post(URITournamentPositions)).data;
-        setTournamentPositon(data);
+    const setLeadedrboard = async () => {
+        setTournamentPositon(tournamentLeaderboard);
+        setUserInscription(userInscription)
     };
+
+    useEffect(() => {
+        setLeadedrboard();
+    }, []);
 
     return (
         <div className="main-dash">
             <h1>{title}</h1>
 
-
             <div className="insights">
                 <div className="div-1">
-                <div className="logos">
-                    <span>
-                        <MdLeaderboard />
-                    </span>
-                </div>
                     <div className="middle">
                         <div className="left">
-                            <h3>Profits algo </h3>
-                            <h1>$213</h1>
+                            <h3>Profits </h3>
+                            <h1> $
+                            {_userInscription != "" ?
+                            userInscription.inscription.profit : 0  
+                        }
+                            </h1>
                         </div>
-                        <div className="progress">
-                            <div className="graphic">
-                                <Doughnut data={data1} />
-                            </div>
-
-                            <div className="number">
-                                <p>81%</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div className="div-2">
-                    <div className="logos">
-                        <span>
-                            <SiCashapp />
-                        </span>
-                        <span>
-                            <BsTrophyFill />
-                        </span>
-                    </div>
-
-                    <div className="middle">
                         <div className="left">
-                            <h3>Money Available</h3>
-                            <h1>$213</h1>
+                            <h3>Money Available </h3>
+                            <h1> $
+                            {_userInscription != "" ?
+                            userInscription.inscription.score : 0   
+                        }
+                            </h1>
                         </div>
-                        <div className="b">
-                            <h3>Current Position</h3>
-                            <h1>2°</h1>
+                        <div className="left">
+                            <h3>Current Position </h3>
+                            <h1> $
+                            {_userInscription !== "" ?
+                            userInscription.inscription.profit : 0   
+                        }
+                            </h1>
                         </div>
+                        
                     </div>
                 </div>
-
+             
                 <div className="div-3">
                     <div className="leaderboard">
                         <div className="table-container">
@@ -101,33 +87,22 @@ function Dashboard({ title}) {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {tournamentPositions.map((rank, index) => (
-                                        <tr key={rank._id}>
-                                            <th>{index + 1} °</th>
-                                            <th>{rank.user.name}</th>
-                                            <th>${rank.inscription.profit}</th>
-                                        </tr>
-                                    ))}
-                                    <tr>
-                                        <th> 1° </th>
-                                        <th>Felipe</th>
-                                        <th>$400</th>
-                                    </tr>
-                                    <tr>
-                                        <th> 1° </th>
-                                        <th>Felipe</th>
-                                        <th>$400</th>
-                                    </tr>
-                                    <tr>
-                                        <th> 1° </th>
-                                        <th>Felipe</th>
-                                        <th>$400</th>
-                                    </tr>
-                                    <tr>
-                                        <th> 1° </th>
-                                        <th>Felipe</th>
-                                        <th>$400</th>
-                                    </tr>
+                                    {tournamentLeaderboard.length !== 0 &&
+                                        tournamentLeaderboard.map(
+                                            (rank, index) => (
+                                                <tr key={rank.inscription._id}>
+                                                    <td>{index + 1} °</td>
+                                                    <td>{rank.user.name}</td>
+                                                    <td>
+                                                        $
+                                                        {
+                                                            rank.inscription
+                                                                .profit
+                                                        }
+                                                    </td>
+                                                </tr>
+                                            )
+                                        )}
                                 </tbody>
                             </table>
                         </div>

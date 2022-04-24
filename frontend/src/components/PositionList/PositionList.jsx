@@ -62,7 +62,7 @@ function PositionList({
 
     return (
         <div className="recent-order">
-            {_closedTournamentPositions.length === 0 ? (
+            {    _openTournamentPositions.length === 0 ? (
                 <h2>Currently no Open Positions</h2>
             ) : (
                 <>
@@ -80,7 +80,7 @@ function PositionList({
                             </tr>
                         </thead>
                         <tbody>
-                            {_closedTournamentPositions.map(
+                            {_openTournamentPositions.map(
                                 (_position, index) => (
                                     <tr key={_position.coin.symbol}>
                                         <th className="th-img-name">

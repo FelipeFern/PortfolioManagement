@@ -107,21 +107,23 @@ const getTournaments = asyncHandler(async (req, res) => {
 });
 
 const getOpenTournaments = asyncHandler(async (req, res) => {
-    const {id : _userId} = req.params
+    const { id: _userId } = req.params;
     try {
         const _user = await User.findById(_userId);
         const _userInscriptions = _user.inscriptions;
         const registedTournaments = await Tournament.find({
             inscriptions: { $in: _userInscriptions },
+            finishDate: { $gte: Date.now() },
         });
 
         const unregistedTournaments = await Tournament.find({
             inscriptions: { $nin: _userInscriptions },
+            finishDate: { $gte: Date.now() },
         });
         const toReturn = {
             registedTournaments: registedTournaments,
-            unregistedTournaments: unregistedTournaments
-        }
+            unregistedTournaments: unregistedTournaments,
+        };
         return res.status(200).json(toReturn);
     } catch (error) {
         return res
@@ -130,6 +132,32 @@ const getOpenTournaments = asyncHandler(async (req, res) => {
     }
 });
 
+
+const getClosedTournaments = asyncHandler(async (req, res) => {
+    const { id: _userId } = req.params;
+    try {
+        const _user = await User.findById(_userId);
+        const _userInscriptions = _user.inscriptions;
+        const registedTournaments = await Tournament.find({
+            inscriptions: { $in: _userInscriptions },
+            finishDate: { $lte: Date.now() },
+        });
+
+        const unregistedTournaments = await Tournament.find({
+            inscriptions: { $nin: _userInscriptions },
+            finishDate: { $lte: Date.now() },
+        });
+        const toReturn = {
+            registedTournaments: registedTournaments,
+            unregistedTournaments: unregistedTournaments,
+        };
+        return res.status(200).json(toReturn);
+    } catch (error) {
+        return res
+            .status(404)
+            .json({ message: "Failed to retrieve Tournaments from DB" });
+    }
+});
 
 const getTournamentCoins = asyncHandler(async (req, res) => {
     const { id } = req.params;
@@ -178,11 +206,50 @@ const getTournamentCoins = asyncHandler(async (req, res) => {
     }
 });
 
+const getTournamentLeaderboard = asyncHandler(async (req, res) => {
+    const { id } = req.params;
+    try {
+        const toReturn = [];
+        const tournament = await Tournament.findById(id).exec();
+        if (tournament === null) {
+            return res.status(404).json({
+                message: `The tournament that you trying to get, ID: ${id} doesn't exist on the DB`,
+            });
+        }
+
+        const _inscriptions = tournament.inscriptions;
+
+        for (let _inscriptionId of _inscriptions) {
+            let _id = _inscriptionId.toString();
+            const _inscription = await Inscription.findById(_id).exec();
+            let _user = await User.findById(
+                _inscription.user.toString()
+            ).exec();
+            let toInsert = {
+                inscription: _inscription,
+                user: _user,
+            };
+            toReturn.push(toInsert);
+        }
+        toReturn.sort(function(a, b) {
+            return b.inscription.profit - a.inscription.profit;
+          });
+
+        return res.status(200).json(toReturn);
+    } catch (error) {
+        return res
+            .status(404)
+            .json({ message: "Can not get the tournamenet, it's not valid " });
+    }
+});
+
 module.exports = {
     createTournament,
     deleteTournament,
     getTournament,
     getTournaments,
     getTournamentCoins,
-    getOpenTournaments
+    getOpenTournaments,
+    getClosedTournaments,
+    getTournamentLeaderboard
 };

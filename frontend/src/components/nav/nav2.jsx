@@ -1,6 +1,5 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState,  useEffect } from "react";
 import { AiOutlineTrophy } from "react-icons/ai";
-import { BsGrid } from "react-icons/bs";
 import { RiCoinsLine } from "react-icons/ri";
 import { MdOutlineCreate } from "react-icons/md";
 import { FiLogOut, FiLogIn } from "react-icons/fi";
@@ -20,9 +19,10 @@ function Nav2() {
             : setToggleIcon("nav__toggler");
     };
 
-    useEffect(() => { }, [user]);
+    useEffect(() => {}, [user]);
 
-    const logInButton = async () => {
+    const logOutButton = async () => {
+        console.log('Entre a borrar userID')
         localStorage.clear();
         return true;
     };
@@ -40,12 +40,12 @@ function Nav2() {
                 </div>
             </div>
             <div className={sidebarActive}>
-                <a href="/coins" className="active">
+                {/* <a href="/coins" className="active">
                     <div className="icon">
                         <BsGrid />
                     </div>
                     <h3>Menu</h3>
-                </a>
+                </a> */}
                 <a href="/coins">
                     <div className="icon">
                         <RiCoinsLine />
@@ -59,22 +59,14 @@ function Nav2() {
                         <AiOutlineTrophy />
                     </div>
 
-                    <h3>My Tournaments</h3>
+                    <h3>Open Tournaments</h3>
                 </a>
-                <a href="/tournaments">
+                <a href="/finishedTournaments">
                     <div className="icon">
                         <AiOutlineTrophy />
                     </div>
 
                     <h3>Finished Tournaments</h3>
-                </a>
-                <a href="">
-                    <div className="icon">
-                        {" "}
-                        <AiOutlineTrophy />
-                    </div>
-
-                    <h3>Open Tournaments</h3>
                 </a>
                 <a href="/tournament/ias">
                     <div className="icon">
@@ -85,27 +77,30 @@ function Nav2() {
                 </a>
 
                 {user ? (
-                    <a href="/login" onClick="return localStorage.clear()">
+                    <a href="/login" onClick={(e) => {
+                        e.preventDefault();
+                        logOutButton();
+                    }}>
                         <div className="icon">
                             <FiLogOut />
-                        </div>
-
-                        <h3>Logout </h3>
-                    </a>
-                ) : (
-                    <a href="/login" onClick="logInButton()">
-                        <div className="icon">
-                            <FiLogIn />
                         </div>
 
                         <h3
                             onClick={(e) => {
                                 e.preventDefault();
-                                logInButton();
+                                logOutButton();
                             }}
                         >
-                            Log in{" "}
+                            Logout{" "}
                         </h3>
+                    </a>
+                ) : (
+                    <a href="/login" >
+                        <div className="icon">
+                            <FiLogIn />
+                        </div>
+
+                        <h3>Log in </h3>
                     </a>
                 )}
             </div>

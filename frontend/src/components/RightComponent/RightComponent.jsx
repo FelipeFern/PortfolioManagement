@@ -6,9 +6,9 @@ const URICreatePosition = "http://localhost:5000/api/positions/";
 const URICoins =
     "http://localhost:5000/api/tournaments/coins/625ec361b5f1244a7d437a39";
 const URICoinsAPIAll = "http://localhost:5000/api/coingecko/coinsAPI";
-const URIGetInscription = "http://localhost:5000/api/users/inscription/"
+const URIGetInscription = "http://localhost:5000/api/users/inscription/";
 
-function RightComponent( {tournamenId}) {
+function RightComponent({ createPositions, tournamenId }) {
     const user = localStorage.getItem("userId");
     const [available, setAvailable] = useState(0);
     const [quantity, setQuantity] = useState(0);
@@ -20,17 +20,17 @@ function RightComponent( {tournamenId}) {
     const [message_div, setMessageDiv] = useState("message_div_hidden");
     const [allCoins, setAllCoins] = useState([]);
 
-    const handleSubmitPosition = async (
-       
-        _buyOrder,
-    ) => {
-        console.log(tournamenId)
-        const _inscription = await axios.post(URIGetInscription + JSON.parse(user), {
-            tournament: tournamenId
-        });
-        console.log("insctipcion" , _inscription)
+    const handleSubmitPosition = async (_buyOrder) => {
+        console.log(tournamenId);
+        const _inscription = await axios.post(
+            URIGetInscription + JSON.parse(user),
+            {
+                tournament: tournamenId,
+            }
+        );
+        console.log("insctipcion", _inscription);
 
-        let _coin = coins.find((c) => (c._symbol == coin));
+        let _coin = coins.find((c) => c._symbol == coin);
         const { data } = await axios.post(URICreatePosition, {
             inscription: _inscription,
             coin: _coin,
@@ -41,7 +41,7 @@ function RightComponent( {tournamenId}) {
 
         showMessage("Se creo una nueva posicion ....");
     };
-    
+
     const showMessage = async (msg) => {
         setMessage(msg);
         setMessageDiv("message_div");
@@ -91,8 +91,6 @@ function RightComponent( {tournamenId}) {
         fetchCoins();
         const coinsData = setInterval(() => {
             refreshCoins();
-            console.log('Entre')
-            console.log(coins)
         }, 10000);
 
         return () => {
@@ -102,62 +100,73 @@ function RightComponent( {tournamenId}) {
 
     return (
         <div className="right">
-            <div className="create-position">
-                <h2>Create New Positoin</h2>
-                <div className="form-position">
-                    <form>
-                        <label className="_label_coin">
-                            Coin: &nbsp; {coin.toUpperCase()}USD
-                        </label>
-                        <label>
-                            Disponible: &nbsp; {available} <span>USD</span>
-                        </label>
+            {createPositions && (
+                <div>
+                    <div className="create-position">
+                        <h2>Create New Positoin</h2>
+                        <div className="form-position">
+                            <form>
+                                <label className="_label_coin">
+                                    Coin: &nbsp; {coin.toUpperCase()}USD
+                                </label>
+                                <label>
+                                    Disponible: &nbsp; {available}{" "}
+                                    <span>USD</span>
+                                </label>
 
-                        <label> Coin: &nbsp;{coin.toUpperCase()}</label>
+                                <label> Coin: &nbsp;{coin.toUpperCase()}</label>
 
-                        <label> Price: &nbsp; 2 USD</label>
+                                <label> Price: &nbsp; 2 USD</label>
 
-                        <label>
-                            Quantity:
-                            <input
-                                type="text"
-                                value={quantity}
-                                required
-                                onChange={(e) => handleQuantityChange(e)}
-                            />
-                        </label>
+                                <label>
+                                    Quantity:
+                                    <input
+                                        type="text"
+                                        value={quantity}
+                                        required
+                                        onChange={(e) =>
+                                            handleQuantityChange(e)
+                                        }
+                                    />
+                                </label>
 
-                        <label>Total: &nbsp;{total.toFixed(3)} USD</label>
-                        <div className="buttons">
-                            <button
-                                className="short"
-                                onClick={(e) => {
-                                    e.preventDefault();
-                                    handleSubmitPosition(false);}}
-                            >
-                                Sell Short
-                            </button>
-                            <button
-                                className="long"
-                                onClick={(e) => {
-                                    e.preventDefault();
-                                    handleSubmitPosition(true);}}
-                            >
-                                Buy Long
-                            </button>
+                                <label>
+                                    Total: &nbsp;{total.toFixed(3)} USD
+                                </label>
+                                <div className="buttons">
+                                    <button
+                                        className="short"
+                                        onClick={(e) => {
+                                            e.preventDefault();
+                                            handleSubmitPosition(false);
+                                        }}
+                                    >
+                                        Sell Short
+                                    </button>
+                                    <button
+                                        className="long"
+                                        onClick={(e) => {
+                                            e.preventDefault();
+                                            handleSubmitPosition(true);
+                                        }}
+                                    >
+                                        Buy Long
+                                    </button>
+                                </div>
+                            </form>
                         </div>
-                    </form>
-                </div>
-            </div>
+                    </div>
 
-            <div className={message_div}>
-                <span>{message}</span>
-            </div>
+                    <div className={message_div}>
+                        <span>{message}</span>
+                    </div>
+                </div>
+            )}
 
             <div className="coins">
                 <div className="table-container">
                     <div className="table-container_title">
-                        <h2> Coins </h2>
+                        <h2> Tournament Coins </h2>
                     </div>
                     <table className="table-container__table">
                         <thead>
