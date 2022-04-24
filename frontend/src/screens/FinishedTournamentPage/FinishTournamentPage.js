@@ -24,6 +24,7 @@ const TournamentPage = () => {
     const [closedTournamentPositions, setClosedTournamentPositions] = useState(
         []
     );
+    const [torneo, setTorneo] = useState([]);
     const [coins, setCoins] = useState([]);
     const [userInscription, setUserInscription] = useState([]);
 
@@ -45,6 +46,7 @@ const TournamentPage = () => {
     const getTournament = async () => {
         const _uri = URIGetTournament + id;
         const _tournament = await axios.get(_uri);
+        setTorneo(_tournament.data)
         setTournament(  '"'+_tournament.data.name +'"')
     }
 
@@ -68,7 +70,7 @@ const TournamentPage = () => {
     return (
         <div className="container--1">
             <div className="middleDiv">
-            <Dashboard  _userInscription = {userInscription} tournamentLeaderboard = {_tournamentLeaderboard} title = {tournament}/>
+            <Dashboard torneo= {torneo} _userInscription = {userInscription} tournamentLeaderboard = {_tournamentLeaderboard} title = {tournament}/>
                 <ClosedPositions
                     title="Closed Positions"
                     _coins={coins}

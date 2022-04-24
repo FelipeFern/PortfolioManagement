@@ -24,16 +24,11 @@ section#finished_tournaments .container.tournaments__container {
     gap: 10%;
 }
 
-section#finished_tournaments .tournaments__content {
-    width: 45%;
-}
-
 section#finished_tournaments .tournaments__cards {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 1.5rem;
 }
-
 
 section#finished_tournaments .tournaments__cards .no_open_positions h3{
     width: 30%;
@@ -103,9 +98,30 @@ section#finished_tournaments .small{
 
 /*   ======== Media Queries Medium ========= */
 @media screen and (max-width: 1024px) {
+   section#finished_tournaments .container.tournaments__container {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        flex-direction: column;
+        margin-top: 0;
+        padding: 1rem;
+        gap: 10%;
+    } 
+    
+    section#finished_tournaments  {
+        display: flex;
+        flex-direction: row;
+        grid-template-columns: 1fr;
+        gap: 3rem;
+    }
+    
     section#finished_tournaments .tournaments__container {
         grid-template-columns: 1fr;
         gap: 3rem;
+    }
+
+    section#finished_tournaments .tournaments__content .tournament__card {
+        width: 230px;       
     }
 }
 
@@ -124,5 +140,9 @@ section#finished_tournaments .small{
 
     section#finished_tournaments .tournaments__content p {
         margin: 1.5rem 0;
+    }
+    
+    section#finished_tournaments .tournaments__content {
+        width: 300px;       
     }
 }

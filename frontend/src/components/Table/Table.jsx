@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext }  from "react";
+import React, { useState, useEffect, useContext } from "react";
 import "./table.css";
 import PropTypes from "prop-types";
 import axios from "axios";
@@ -6,25 +6,25 @@ import axios from "axios";
 const URI = "http://localhost:5000/api/coingecko/coinsAPI";
 
 const Table = ({ tableData, headingColumns, title }) => {
-    const user = localStorage.getItem('userId')
+    const user = localStorage.getItem("userId");
 
-    let tableClass = "table-container__table";    
+    let tableClass = "table-container__table";
     const [coins, setCoins] = useState(tableData);
 
-    const fetchCoins = async () => {
-        const data = await (await axios.get(URI)).data;
-        setCoins(data);
-    };
-
     useEffect(() => {
-        const coinsData = setInterval(() => {
-            fetchCoins();
-        }, 10000);
+        // const fetchCoins = async () => {
+        //     const data = await (await axios.get(URI)).data;
+        //     setCoins(data);
+        // };
 
-        return () => {
-            clearInterval(coinsData);
-        };
-    }, [coins ]);
+        // const coinsData = setInterval(() => {
+        //     fetchCoins();
+        // }, 10000);
+
+        // return () => {
+        //     clearInterval(coinsData);
+        // };
+    }, [coins, tableData]);
 
     return (
         <div className="table_coins">
@@ -32,69 +32,98 @@ const Table = ({ tableData, headingColumns, title }) => {
                 <div className="table-container_title">
                     <h1>{title}</h1>
                 </div>
-                <table className={tableClass}>
-                    <thead>
-                        <tr>
-                            {headingColumns.map((col, index) => (
-                                <th key={index} className="tittles">
-                                    {col}
-                                </th>
-                            ))}
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {coins.map((coin, index) => (
-                            <tr key={coin.id} >
-                                <th >{coin.market_data.market_cap_rank}</th>
-                                <th className="th-img-name ">
-                                    <img src={coin.image.small} />
-                                    {coin.name}
-                                </th>
-                                
-                                <td >{coin.symbol.toUpperCase()} </td>
-                                <td >$ {coin.market_data.current_price.usd}</td>
-                                <td className="div_right"
-                                    style={
-                                        coin.market_data.price_change_percentage_24h > 0
-                                            ? { color: "lawngreen" }
-                                            : { color: "orangered" }
-                                    }
-                                >
-                                    {" "}
-                                    {coin.market_data.price_change_percentage_24h.toFixed(3)
-                                    }%
-                                </td>
-                                <td className="div_right"
-                                    style={
-                                        coin.market_data
-                                            .price_change_percentage_7d > 0
-                                            ? { color: "lawngreen" }
-                                            : { color: "orangered" }
-                                    }
-                                >
-                                    {coin.market_data.price_change_percentage_7d.toFixed(
-                                        3
-                                    )}%
-                                </td>
-                                <td className="div_right"
-                                    style={
-                                        coin.market_data
-                                            .price_change_percentage_30d > 0
-                                            ? { color: "lawngreen" }
-                                            : { color: "orangered" }
-                                    }
-                                >
-                                    {coin.market_data.price_change_percentage_30d.toFixed(
-                                        3
-                                    )}%
-                                </td>
 
-                        
-                                <td> ${new Intl.NumberFormat('de-DE').format(coin.market_data.market_cap.usd)}</td>
-                            </tr>
-                        ))}
-                    </tbody>
-                </table>
+                {tableData.length > 0 && (
+                    <div>
+                        <table className={tableClass}>
+                            <thead>
+                                <tr>
+                                    {headingColumns.map((col, index) => (
+                                        <td key={index} className="tittles">
+                                            {col}
+                                        </td>
+                                    ))}
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                {tableData.map((coin, index) => (
+                                    <tr key={coin.id}>
+                                        <th>
+                                            {coin.market_data.market_cap_rank}
+                                        </th>
+                                        <th className="th-img-name ">
+                                            <img  alt="Img-Logo" src={coin.image.small} />
+                                            {coin.name}
+                                        </th>
+
+                                        <td>{coin.symbol.toUpperCase()} </td>
+                                        <td>
+                                            ${" "}
+                                            {coin.market_data.current_price.usd}
+                                        </td>
+                                        <td
+                                            className="div_right"
+                                            style={
+                                                coin.market_data
+                                                    .price_change_percentage_24h >
+                                                0
+                                                    ? { color: "lawngreen" }
+                                                    : { color: "orangered" }
+                                            }
+                                        >
+                                            {" "}
+                                            {coin.market_data.price_change_percentage_24h.toFixed(
+                                                3
+                                            )}
+                                            %
+                                        </td>
+                                        <td
+                                            className="div_right"
+                                            style={
+                                                coin.market_data
+                                                    .price_change_percentage_7d >
+                                                0
+                                                    ? { color: "lawngreen" }
+                                                    : { color: "orangered" }
+                                            }
+                                        >
+                                            {coin.market_data.price_change_percentage_7d.toFixed(
+                                                3
+                                            )}
+                                            %
+                                        </td>
+                                        <td
+                                            className="div_right"
+                                            style={
+                                                coin.market_data
+                                                    .price_change_percentage_30d >
+                                                0
+                                                    ? { color: "lawngreen" }
+                                                    : { color: "orangered" }
+                                            }
+                                        >
+                                            {coin.market_data.price_change_percentage_30d.toFixed(
+                                                3
+                                            )}
+                                            %
+                                        </td>
+
+                                        <td>
+                                            {" "}
+                                            $
+                                            {new Intl.NumberFormat(
+                                                "de-DE"
+                                            ).format(
+                                                coin.market_data.market_cap.usd
+                                            )}
+                                        </td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
+                )}
             </div>
         </div>
     );

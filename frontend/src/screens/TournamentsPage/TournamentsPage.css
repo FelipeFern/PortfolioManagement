@@ -9,9 +9,13 @@
 
 /* ========================= MEDIA QUERY ======================== */
 @media screen and (max-width: 1200px) {
+    .tournaments_page{
+        margin-left:0cm;
+    }
+
     .tournaments_page .container--1 {
         width: 94%;
-        grid-template-columns: 7rem auto 23rem;
+        grid-template-columns: 1fr;
     }
 }
 

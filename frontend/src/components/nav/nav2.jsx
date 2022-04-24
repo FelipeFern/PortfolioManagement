@@ -1,11 +1,13 @@
-import React, { useState,  useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { AiOutlineTrophy } from "react-icons/ai";
 import { RiCoinsLine } from "react-icons/ri";
 import { MdOutlineCreate } from "react-icons/md";
 import { FiLogOut, FiLogIn } from "react-icons/fi";
 import "./nav2.css";
+import { useNavigate } from "react-router-dom";
 
 function Nav2() {
+    const navigate = useNavigate();
     const user = localStorage.getItem("userId");
     const [sidebarActive, setSidebarActive] = useState("sidebar nav_active");
     const [toggleIcon, setToggleIcon] = useState("nav__toggler");
@@ -22,8 +24,8 @@ function Nav2() {
     useEffect(() => {}, [user]);
 
     const logOutButton = async () => {
-        console.log('Entre a borrar userID')
         localStorage.clear();
+        navigate("/login");
         return true;
     };
 
@@ -53,34 +55,46 @@ function Nav2() {
 
                     <h3>Coins</h3>
                 </a>
-                <a href="/tournaments">
-                    <div className="icon">
-                        {" "}
-                        <AiOutlineTrophy />
-                    </div>
 
-                    <h3>Open Tournaments</h3>
-                </a>
-                <a href="/finishedTournaments">
-                    <div className="icon">
-                        <AiOutlineTrophy />
-                    </div>
+                {user && (
+                    <a href="/tournaments">
+                        <div className="icon">
+                            {" "}
+                            <AiOutlineTrophy />
+                        </div>
 
-                    <h3>Finished Tournaments</h3>
-                </a>
-                <a href="/tournament/ias">
-                    <div className="icon">
-                        <MdOutlineCreate />
-                    </div>
+                        <h3>Open Tournaments</h3>
+                    </a>
+                )}
 
-                    <h3>Create Tournament</h3>
-                </a>
+                {user && (
+                    <a href="/finishedTournaments">
+                        <div className="icon">
+                            <AiOutlineTrophy />
+                        </div>
+
+                        <h3>Finished Tournaments</h3>
+                    </a>
+                )}
+
+                {user && (
+                    <a href="/tournament/ias">
+                        <div className="icon">
+                            <MdOutlineCreate />
+                        </div>
+
+                        <h3>Create Tournament</h3>
+                    </a>
+                )}
 
                 {user ? (
-                    <a href="/login" onClick={(e) => {
-                        e.preventDefault();
-                        logOutButton();
-                    }}>
+                    <a
+                        href="/login"
+                        onClick={(e) => {
+                            e.preventDefault();
+                            logOutButton();
+                        }}
+                    >
                         <div className="icon">
                             <FiLogOut />
                         </div>
@@ -95,7 +109,7 @@ function Nav2() {
                         </h3>
                     </a>
                 ) : (
-                    <a href="/login" >
+                    <a href="/login">
                         <div className="icon">
                             <FiLogIn />
                         </div>

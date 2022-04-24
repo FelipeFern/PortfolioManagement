@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useEffect } from "react";
+import React, { Fragment, useContext, useState, useEffect } from "react";
 import "./coins.css";
 import Table from "../Table/Table" ;
 import axios from "axios";
@@ -12,16 +12,19 @@ const Coins = () => {
         const data = await (await axios.get(URI)).data;
         setDriversData(data);
     };
+    
 
     useEffect(() => {
-        const coinsData = setInterval(() => {
-            fetchData();
-        }, 3000);
+        fetchData()
+        
+        // const coinsData = setInterval(() => {
+        //     fetchData();
+        // }, 3000);
 
-        return () => {
-            clearInterval(coinsData);
-        };
-    }, [driversData ]);
+        // return () => {
+        //     clearInterval(coinsData);
+        // };
+    }, [ ]);
 
     return (
         <Fragment>

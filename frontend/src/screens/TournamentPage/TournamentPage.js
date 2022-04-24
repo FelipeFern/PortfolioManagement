@@ -7,13 +7,11 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
-const URIPositions = "http://localhost:5000/api/users/tournamentPositions/";
 const URITournamentPositions = "http://localhost:5000/api/tournaments/leaderboard/";
 const URIClosedPositions =
     "http://localhost:5000/api/users/tournamentClosedPostions/";
 const URIOpenPositions =
     "http://localhost:5000/api/users/tournamentOpenPostions/";
-const URICoins = "http://localhost:5000/api/coingecko/coin/";
 const URICoinsAPIAll = "http://localhost:5000/api/coingecko/coinsAPI";
 const URIGetTournament = "http://localhost:5000/api/tournaments/"
 
@@ -26,6 +24,7 @@ const TournamentPage = () => {
         []
     );
     const [openTournamentPositions, setOpenTournamentPositions] = useState([]);
+    const [torneo, setTorneo] = useState([]);
     const [coins, setCoins] = useState([]);
     const [userInscription, setUserInscription] = useState([]);
 
@@ -58,6 +57,7 @@ const TournamentPage = () => {
     const getTournament = async () => {
         const _uri = URIGetTournament + id;
         const _tournament = await axios.get(_uri);
+        setTorneo(_tournament.data)
         setTournament(  '"'+_tournament.data.name +'"')
     }
 
@@ -80,7 +80,7 @@ const TournamentPage = () => {
     return (
         <div className="container--1">
             <div className="middleDiv">
-                <Dashboard  userInscription = {userInscription}  tournamentLeaderboard = {tournamentLeaderboard} title = {tournament}/>
+                <Dashboard   torneo = {torneo} userInscription = {userInscription}  tournamentLeaderboard = {tournamentLeaderboard} title = {tournament}/>
                 <PositionList
                     title="Open Positions"
                     _coins={coins}
@@ -94,7 +94,7 @@ const TournamentPage = () => {
                 />
             </div>
 
-            <RightComponent tournamentId= {id}/>
+            <RightComponent createPositions={true} tournamentId= {id}/>
         </div>
     );
 };

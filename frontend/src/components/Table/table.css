@@ -82,7 +82,7 @@ tbody {
     }
 
     td:nth-child(2)::before {
-        content: "Symbol";
+        background: var(----color-primary-variant) ;
     }
 
     td:nth-child(3)::before {

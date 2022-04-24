@@ -45,17 +45,15 @@ const Tournaments = ({
 
     return (
         <section id="tournaments">
-            <h2> Finished Tournaments</h2>
+            {/* <h2> Finished Tournaments</h2> */}
 
             <div className="container tournaments__container">
                 <div className="tournaments__content">
                     {openRegistedTournaments.length === 0 ? (
-                        <div className="no_open_positions">
-                            <h3> You are not registed in any Tournament</h3>
-                        </div>
+                        <h3> You are not registed in any Tournament</h3>
                     ) : (
                         <div>
-                            <h3> Registeres Tournaments</h3>
+                            <h3> Registered Tournaments</h3>
                             <div className="tournaments__cards">
                                 {openRegistedTournaments.map((tournament) => (
                                     <article
@@ -97,7 +95,10 @@ const Tournaments = ({
                 <div className="tournaments__content">
                     {openUnregistedTournaments.length === 0 ? (
                         <div className="no_open_positions">
-                            <h3> You are not registed in any Finished Tournament</h3>
+                            <h3>
+                                {" "}
+                                You are not registed in any Finished Tournament
+                            </h3>
                         </div>
                     ) : (
                         <div>
@@ -124,7 +125,7 @@ const Tournaments = ({
                                         </div>
 
                                         <a
-                                             href={
+                                            href={
                                                 "/finishedTournaments/" +
                                                 tournament._id.toString()
                                             }

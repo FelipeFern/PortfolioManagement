@@ -4,7 +4,7 @@ import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
-function Dashboard({ tournamentLeaderboard, title, userInscription }) {
+function Dashboard({torneo,  tournamentLeaderboard, title, userInscription }) {
     const data1 = {
         labels: [],
         datasets: [
@@ -20,6 +20,18 @@ function Dashboard({ tournamentLeaderboard, title, userInscription }) {
             },
         ],
     };
+
+    const getCorrectDate = (_date) => {
+        var date = new Date(
+            _date.replace(
+                /^(\d{4})(\d\d)(\d\d)(\d\d)(\d\d)(\d\d)$/,
+                "$4:$5:$6 $2/$3/$1"
+            )
+        );
+        const toReturn = date.toLocaleDateString();
+        return toReturn;
+    };
+
 
   
     return (
@@ -38,10 +50,10 @@ function Dashboard({ tournamentLeaderboard, title, userInscription }) {
                             </h1>
                         </div>
                         <div className="left">
-                            <h3>Money Available </h3>
-                            <h1> $
-                            {userInscription.length !== 0 ?
-                            userInscription.inscription.score : 0   
+                            <h3>Close Date </h3>
+                            <h1> 
+                            {torneo.length !== 0 ?
+                            getCorrectDate(torneo.finishDate): 0   
                         }
                             </h1>
                         </div>
@@ -63,6 +75,8 @@ function Dashboard({ tournamentLeaderboard, title, userInscription }) {
                             <div className="table-container_title">
                                 <h3> Leaderboard </h3>
                             </div>
+                            
+                            {tournamentLeaderboard.length !== 0 &&
                             <table className="table-container__table">
                                 <thead>
                                     <tr>
@@ -72,8 +86,8 @@ function Dashboard({ tournamentLeaderboard, title, userInscription }) {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {tournamentLeaderboard.length !== 0 &&
-                                        tournamentLeaderboard.map(
+                                    
+                                        {tournamentLeaderboard.map(
                                             (rank, index) => (
                                                 <tr key={rank.inscription._id}>
                                                     <td>{index + 1} °</td>
@@ -90,6 +104,7 @@ function Dashboard({ tournamentLeaderboard, title, userInscription }) {
                                         )}
                                 </tbody>
                             </table>
+                            }
                         </div>
                     </div>
                 </div>

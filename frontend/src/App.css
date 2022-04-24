@@ -20,14 +20,10 @@ aside .sidebar{
 
 @media screen and (max-width: 1200px) {
     aside{
-        width: 7rem;       
+        width: 16rem;       
     }
 
     aside .logo {
-        display: none;
-    }
-
-    aside .sidebar h3 {
         display: none;
     }
 
@@ -44,7 +40,7 @@ aside .sidebar{
 
 @media screen and (max-width: 768px) {    
      aside {
-        position: fixed;
+        position: absolute;
         top: 0;
         left: 0;
         align-items: center;

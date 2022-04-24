@@ -24,16 +24,11 @@ section#tournaments .container.tournaments__container {
     gap: 10%;
 }
 
-section#tournaments .tournaments__content {
-    width: 45%;
-}
-
 section#tournaments .tournaments__cards {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 1.5rem;
 }
-
 
 section#tournaments .tournaments__cards .no_open_positions h3{
     width: 30%;
@@ -84,7 +79,6 @@ section#tournaments .tournaments__content h3 {
 }
 
 section#tournaments .card_middle {
-    background: red;
     display: flex;
     justify-content: space-between;
 }
@@ -104,9 +98,30 @@ section#tournaments .small{
 
 /*   ======== Media Queries Medium ========= */
 @media screen and (max-width: 1024px) {
+
+    section#tournaments .container.tournaments__container {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        flex-direction: column;
+        margin-top: 0;
+        padding: 1rem;
+        gap: 10%;
+    }
+
+    section#tournaments  {
+        display: flex;
+        flex-direction: row;
+        grid-template-columns: 1fr;
+        gap: 3rem;
+    }
+
     section#tournaments .tournaments__container {
         grid-template-columns: 1fr;
         gap: 3rem;
+    }
+    section#tournaments .tournaments__content .tournament__card {
+        width: 230px;       
     }
 }
 
@@ -126,4 +141,9 @@ section#tournaments .small{
     section#tournaments .tournaments__content p {
         margin: 1.5rem 0;
     }
+
+    section#tournaments .tournaments__content {
+        width: 300px;       
+    }
+
 }

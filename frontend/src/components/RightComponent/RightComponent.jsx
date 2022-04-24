@@ -8,7 +8,7 @@ const URICoins =
 const URICoinsAPIAll = "http://localhost:5000/api/coingecko/coinsAPI";
 const URIGetInscription = "http://localhost:5000/api/users/inscription/";
 
-function RightComponent({ createPositions, tournamenId }) {
+function RightComponent({  createPositions, tournamenId }) {
     const user = localStorage.getItem("userId");
     const [available, setAvailable] = useState(0);
     const [quantity, setQuantity] = useState(0);
@@ -65,10 +65,10 @@ function RightComponent({ createPositions, tournamenId }) {
         refreshData(e.target.value, coinPrice);
     };
 
-    const fetchCoins = async () => {
-        const data = await (await axios.get(URICoins)).data;
-        setCoins(data);
-    };
+    // const fetchCoins = async () => {
+    //     const data = await (await axios.get(URICoins)).data;
+    //     setCoins(data);
+    // };
 
     const refreshCoins = async () => {
         const data = await (await axios.get(URICoinsAPIAll)).data;
@@ -87,11 +87,16 @@ function RightComponent({ createPositions, tournamenId }) {
         return toReturn;
     };
 
-    useEffect(() => {
-        fetchCoins();
+     useEffect(() => {
+        const fetchCoins = async () => {
+            const data = await (await axios.get(URICoins)).data;
+            setCoins(data);
+        };
+         fetchCoins();
+        
         const coinsData = setInterval(() => {
             refreshCoins();
-        }, 10000);
+        }, 15000);
 
         return () => {
             clearInterval(coinsData);
@@ -116,7 +121,7 @@ function RightComponent({ createPositions, tournamenId }) {
 
                                 <label> Coin: &nbsp;{coin.toUpperCase()}</label>
 
-                                <label> Price: &nbsp; 2 USD</label>
+                                <label> Price: &nbsp; {coinPrice}</label>
 
                                 <label>
                                     Quantity:
@@ -185,7 +190,7 @@ function RightComponent({ createPositions, tournamenId }) {
                                     }
                                 >
                                     <th className="th-img-name">
-                                        <img src={_coin.image} />
+                                        <img alt="Image-icon" src={_coin.image} />
                                         {_coin.symbol.toUpperCase()}
                                     </th>
                                     <th> $ {price(_coin.identifier)} </th>

@@ -120,7 +120,7 @@
 }
 
 .input_field input:is(:focus, :valid) {
-    border-bottom-color: var(--color-light);
+    border-bottom-color: var(--color-white);
     transition: var(--transition);
 }
 
