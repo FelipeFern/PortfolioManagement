@@ -15,8 +15,8 @@ const positionSeed = async () => {
         // =======================================
         ed = new Date();
         cd = new Date();
-        ed.setDate(ed.getDate() - 2);
-        cd.setDate(cd.getDate() - 1);
+        ed.setDate(ed.getDate() - 30);
+        cd.setDate(cd.getDate() - 27);
         ep = Math.floor(Math.random() * (10000 - -0 + 1) + -0);
         cp = Math.floor(Math.random() * (10000 - -0 + 1) + -0);
         const p1 = await position.create({
@@ -27,13 +27,13 @@ const positionSeed = async () => {
             profit: Math.floor(Math.random() * (1000 - -1000 + 1) + -1000),
             quantity: Math.floor(Math.random() * (30 - 0 + 1) + 0),
             buyOrder: Math.random() < 0.5,
-            coin: "624da9ba3732602baca8deaa",
-            inscription: "625ed5504a70879ded1f4da1",
+            coin: "624da9ba3732602baca8deaf",
+            inscription: "625ed5514a70879ded1f4dc5",
         });
 
         const aux1 = p1._id.toString();
         Inscription.findByIdAndUpdate(
-            "625ed5504a70879ded1f4da1",
+            "625ed5514a70879ded1f4dc5",
             { $push: { positions: aux1 } },
             { new: true }
         )
@@ -51,8 +51,8 @@ const positionSeed = async () => {
         // =======================================
         ed = new Date();
         cd = new Date();
-        ed.setDate(ed.getDate() - 2);
-        cd.setDate(cd.getDate() + 3);
+        ed.setDate(ed.getDate() - 28);
+        cd.setDate(cd.getDate() - 27);
         ep = Math.floor(Math.random() * (10000 - -0 + 1) + -0);
         cp = Math.floor(Math.random() * (10000 - -0 + 1) + -0);
         const p2 = await position.create({
@@ -64,12 +64,12 @@ const positionSeed = async () => {
             quantity: Math.floor(Math.random() * (30 - 0 + 1) + 0),
             buyOrder: Math.random() < 0.5,
             coin: "624da9ba3732602baca8dead",
-            inscription: "625ed5504a70879ded1f4da1",
+            inscription: "625ed5514a70879ded1f4dc5",
         });
 
         const aux2 = p2._id.toString();
         Inscription.findByIdAndUpdate(
-            "625ed5504a70879ded1f4da1",
+            "625ed5514a70879ded1f4dc5",
             { $push: { positions: aux2 } },
             { new: true }
         )
@@ -87,8 +87,8 @@ const positionSeed = async () => {
         // =======================================
         ed = new Date();
         cd = new Date();
-        ed.setDate(ed.getDate() - 2);
-        cd.setDate(cd.getDate());
+        ed.setDate(ed.getDate() - 29);
+        cd.setDate(cd.getDate() - 25);
         ep = Math.floor(Math.random() * (10000 - -0 + 1) + -0);
         cp = Math.floor(Math.random() * (10000 - -0 + 1) + -0);
         const p3 = await position.create({
@@ -99,13 +99,13 @@ const positionSeed = async () => {
             profit: Math.floor(Math.random() * (1000 - -1000 + 1) + -1000),
             quantity: Math.floor(Math.random() * (30 - 0 + 1) + 0),
             buyOrder: Math.random() < 0.5,
-            coin: "624da9ba3732602baca8deb5",
-            inscription: "625ed5504a70879ded1f4da1",
+            coin: "624da9ba3732602baca8debb",
+            inscription: "625ed5514a70879ded1f4dc5",
         });
 
         const aux3 = p3._id.toString();
         Inscription.findByIdAndUpdate(
-            "625ed5504a70879ded1f4da1",
+            "625ed5514a70879ded1f4dc5",
             { $push: { positions: aux3 } },
             { new: true }
         )
@@ -123,8 +123,8 @@ const positionSeed = async () => {
         // =======================================
         ed = new Date();
         cd = new Date();
-        ed.setDate(ed.getDate() - 2);
-        cd.setDate(cd.getDate());
+        ed.setDate(ed.getDate() - 32);
+        cd.setDate(cd.getDate() - 30);
         ep = Math.floor(Math.random() * (10000 - -0 + 1) + -0);
         cp = Math.floor(Math.random() * (10000 - -0 + 1) + -0);
         const p4 = await position.create({
@@ -136,12 +136,12 @@ const positionSeed = async () => {
             quantity: Math.floor(Math.random() * (30 - 0 + 1) + 0),
             buyOrder: Math.random() < 0.5,
             coin: "624da9ba3732602baca8deb3",
-            inscription: "625ed5504a70879ded1f4da1",
+            inscription: "625ed5514a70879ded1f4dc5",
         });
 
         const aux4 = p4._id.toString();
         Inscription.findByIdAndUpdate(
-            "625ed5504a70879ded1f4da1",
+            "625ed5514a70879ded1f4dc5",
             { $push: { positions: aux4 } },
             { new: true }
         )
@@ -159,8 +159,8 @@ const positionSeed = async () => {
         // =======================================
         ed = new Date();
         cd = new Date();
-        ed.setDate(ed.getDate() - 2);
-        cd.setDate(cd.getDate() - 1);
+        ed.setDate(ed.getDate() - 27);
+        cd.setDate(cd.getDate() - 25);
         ep = Math.floor(Math.random() * (10000 - -0 + 1) + -0);
         cp = Math.floor(Math.random() * (10000 - -0 + 1) + -0);
         const p5 = await position.create({
@@ -172,12 +172,12 @@ const positionSeed = async () => {
             quantity: Math.floor(Math.random() * (30 - 0 + 1) + 0),
             buyOrder: Math.random() < 0.5,
             coin: "624da9ba3732602baca8debb",
-            inscription: "625ed5504a70879ded1f4da1",
+            inscription: "625ed5514a70879ded1f4dc5",
         });
 
         const aux5 = p5._id.toString();
         Inscription.findByIdAndUpdate(
-            "625ed5504a70879ded1f4da1",
+            "625ed5514a70879ded1f4dc5",
             { $push: { positions: aux5 } },
             { new: true }
         )
@@ -191,7 +191,7 @@ const positionSeed = async () => {
             .catch((err) => {
                 console.log(" Salimos por el carch");
             });
-
+/*
         // ========================================================================== Inscripcion Brt  -- Torneo 2
         // =======================================
         ed = new Date();
@@ -372,9 +372,11 @@ const positionSeed = async () => {
             .catch((err) => {
                 console.log(" Salimos por el carch");
             });
+            */
     } catch (error) {
         console.log(error);
     }
+    
 };
 
 module.exports = positionSeed;

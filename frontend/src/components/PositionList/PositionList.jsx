@@ -65,7 +65,7 @@ function PositionList({
     useEffect(() => {
         const coinsData = setInterval(() => {
             refreshCoins();
-        }, 10000);
+        }, 4000);
 
         return () => {
             clearInterval(coinsData);

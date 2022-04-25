@@ -44,8 +44,8 @@ if (process.env.NODE_ENV === "production") {
 // app.get("/", function (req, res) {
 //     try {
 //         require("./models/tournamentModel");
-//         const tournamentSeed = require("./seeders/tournamentSeeder");
-//         tournamentSeed();
+//         const positionSeed = require("./seeders/positionSeeder");
+//         positionSeed();
 //         return res.status(200).send(" Se ejecutaron los seeders");
 //     } catch (error) {
 //         return res.status(404).send("No se pudieron ejecutar los seeders")

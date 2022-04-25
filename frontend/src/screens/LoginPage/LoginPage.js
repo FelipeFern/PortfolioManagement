@@ -64,7 +64,7 @@ function LoginPage() {
 
                 setLoadingRegister(true);
                 const { data } = await axios.post(
-                    "/api/users",
+                    "https://final-iaw.herokuapp.com//api/users",
                     {
                         name: nameRegister,
                         email: emailRegister,
