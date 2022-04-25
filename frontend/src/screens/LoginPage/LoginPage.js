@@ -197,7 +197,8 @@ function LoginPage() {
                                 </ErrorMessage>
                             )}
                             {loadingRegister && <Loading />}
-                        </div>                      
+                        </div>
+                        
                         <form
                             className="login_form"
                             action="#"

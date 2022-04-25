@@ -52,11 +52,20 @@ const TournamentPage = () => {
     };
 
     const getTournamentPositions = async () => {
+        console.log("Entre");
         const _user = JSON.parse(user);
         const uri = URITournamentPositions + id;
         const { data } = await axios.get(uri);
+        const _data = data.find((elem) => elem.user._id == _user);
+        console.log(_data);
+        if (_data === undefined) {
+            setUserInscription("No");
+            console.log('=======================')
+        } else {
+            setUserInscription(data.find((elem) => elem.user._id == _user));
+        }
         setTournamentLeaderboard(data);
-        setUserInscription(data.find((elem) => elem.user._id == _user));
+
         await insertCoins(data);
     };
 
@@ -69,12 +78,15 @@ const TournamentPage = () => {
     return (
         <div className="container--1">
             <div className="middleDiv">
-                <Dashboard
-                    torneo={torneo}
-                    userInscription={userInscription}
-                    tournamentLeaderboard={tournamentLeaderboard}
-                    title={tournament}
-                />
+                {userInscription !== "No" && (
+                    <Dashboard
+                        torneo={torneo}
+                        userInscription={userInscription}
+                        tournamentLeaderboard={tournamentLeaderboard}
+                        title={tournament}
+                    />
+                )}
+
                 <ClosedPositions
                     title="Closed Positions"
                     _coins={coins}

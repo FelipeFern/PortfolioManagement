@@ -26,6 +26,7 @@ const App = () => {
                         <Route
                             path="/finishedTournaments"
                             element={<FinishedTournamentsPage />}
+                            exact
                         />
                     )}
                     {user && (
@@ -43,8 +44,14 @@ const App = () => {
                     )}
                     {user && (
                         <Route
-                            path="/finishedTournament/:id"
+                            path="/finishedTournaments/:id"
                             element={<FinishedTournamentPage />}
+                        />
+                    )}
+                     {user && (
+                        <Route
+                            path="/finishedTournaments"
+                            element={<FinishedTournamentsPage />}
                         />
                     )}
                     <Route path="/coins" element={<Coins />} exact />

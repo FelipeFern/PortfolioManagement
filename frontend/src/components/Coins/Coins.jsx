@@ -3,13 +3,14 @@ import "./coins.css";
 import Table from "../Table/Table" ;
 import axios from "axios";
 
+const URI2 = "https://final-iaw.herokuapp.com/api/coingecko/coinsAPI"
 const URI = "http://localhost:5000/api/coingecko/coinsAPI";
 
 const Coins = () => {
     const [driversData, setDriversData] = useState([]);
 
     const fetchData = async () => {
-        const data = await (await axios.get(URI)).data;
+        const data = await (await axios.get(URI2)).data;
         setDriversData(data);
     };
     
