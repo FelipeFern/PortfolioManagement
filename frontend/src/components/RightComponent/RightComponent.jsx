@@ -115,7 +115,7 @@ function RightComponent({  createPositions, tournamenId }) {
                                     Coin: &nbsp; {coin.toUpperCase()}USD
                                 </label>
                                 <label>
-                                    Disponible: &nbsp; {available}{" "}
+                                    Disponible: &nbsp; {coinPrice}{" "}
                                     <span>USD</span>
                                 </label>
 
@@ -190,7 +190,7 @@ function RightComponent({  createPositions, tournamenId }) {
                                     }
                                 >
                                     <th className="th-img-name">
-                                        <img alt="Image-icon" src={_coin.image} />
+                                        <img alt="Coin-icon" src={_coin.image} />
                                         {_coin.symbol.toUpperCase()}
                                     </th>
                                     <th> $ {price(_coin.identifier)} </th>

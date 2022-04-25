@@ -176,7 +176,7 @@ function LoginPage() {
                             <div className="login-signup">
                                 <span type="text">
                                     {" "}
-                                    Don’t have an account?
+                                    Don't have an account?
                                     <a onClick={(e) => signUpOnClick(e)}>
                                         {" "}
                                         Sign Up

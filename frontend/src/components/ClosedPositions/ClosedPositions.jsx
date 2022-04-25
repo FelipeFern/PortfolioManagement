@@ -1,19 +1,15 @@
 import React, { useState, useEffect } from "react";
 import "./ClosedPositions.css";
-import axios from "axios";
 
-const URIPositions = "http://localhost:5000/api/users/tournamentPostions/";
+// const URIPositions = "http://localhost:5000/api/users/tournamentPostions/";
 
-const URICoins = "http://localhost:5000/api/coingecko/coin/";
+// const URICoins = "http://localhost:5000/api/coingecko/coin/";
 
 function PositionList({ _coins, _closedTournamentPositions, title }) {
     // const [tournamentPositions, setTournamentPositon] = useState([
     //     _tournamentPositions,
     // ]);
-    const [closedTournamentPositions, setClosedTournamentPositions] = useState(
-        _closedTournamentPositions
-    );
-    const [coins, setCoins] = useState([]);
+   
 
     // const insertCoins = async () => {
     //      let arreglo = []
@@ -40,7 +36,7 @@ function PositionList({ _coins, _closedTournamentPositions, title }) {
     useEffect(async () => {
         // await userPositions();
         //console.log(coins);
-    }, [_closedTournamentPositions]);
+    }, []);
 
     return (
         <div className="recent-order">

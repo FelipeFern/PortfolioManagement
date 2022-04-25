@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./PositionList.css";
 import axios from "axios";
-import { element } from "prop-types";
-import { useNavigate } from "react-router-dom";
 
 const URIPositions = "http://localhost:5000/api/users/tournamentPostions/";
 
@@ -16,12 +14,12 @@ function PositionList({
     _closedTournamentPositions,
     title,
 }) {
-    const navigate = useNavigate();
-    const [openTournamentPositions, setopenTournamentPositions] = useState(
-        _openTournamentPositions
-    );
+    // const [openTournamentPositions, setopenTournamentPositions] = useState(
+    //     _openTournamentPositions
+    // );
     const [coins, setCoins] = useState([_coins]);
 
+    //TO-DO que funcione
     const closePosition = async (_positionId, coin, price) => {
         const closeDate = Date.now();
         const closePrice = price;
@@ -84,7 +82,7 @@ function PositionList({
                                 (_position, index) => (
                                     <tr key={_position.coin.symbol}>
                                         <th className="th-img-name">
-                                            <img src={_position.coin.image} />
+                                            <img alt="Logo-IMG" src={_position.coin.image} />
                                             {_position.coin.symbol.toUpperCase()}
                                         </th>
                                         <td

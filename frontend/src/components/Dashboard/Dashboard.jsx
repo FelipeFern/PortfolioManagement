@@ -1,26 +1,9 @@
 import React from "react";
 import "./dashboard.css";
-import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 
-ChartJS.register(ArcElement, Tooltip, Legend);
 
 function Dashboard({torneo,  tournamentLeaderboard, title, userInscription }) {
-    const data1 = {
-        labels: [],
-        datasets: [
-            {
-                label: "# of Votes",
-                data: [20, 80],
-                backgroundColor: [
-                    "var(--color-primary)",
-                    "rgba(54, 162, 235, 0.2)",
-                ],
-                borderColor: ["var(--color-primary)", "rgba(54, 162, 235, 1)"],
-                borderWidth: 1,
-            },
-        ],
-    };
-
+    
     const getCorrectDate = (_date) => {
         var date = new Date(
             _date.replace(

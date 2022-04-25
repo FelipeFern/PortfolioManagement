@@ -1,11 +1,9 @@
 import axios from "axios";
 import React, { useEffect, useRef, useState } from "react";
 
-const socketName = "prevDay";
 
 const PortfolioPage = () => {
     // Crear un tipo de estos para cada uno de los webSockets a usar, entonces los modificamos desde aca.
-    const [isConnectionOpen, setConnectionOpen] = useState(false);
     const [coins, setCoins] = useState([]);
     const ws = useRef();
 
@@ -21,7 +19,6 @@ const PortfolioPage = () => {
         ws.current.onopen = () => {
             console.log("Connection opened calling Portfolio Pages !");
             initializeSockets();
-            setConnectionOpen(true);
         };
 
         ws.current.onmessage = (message) => {

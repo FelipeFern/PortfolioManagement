@@ -1,4 +1,4 @@
-import React, { Fragment, useContext, useState, useEffect } from "react";
+import React, { Fragment, useState, useEffect } from "react";
 import "./coins.css";
 import Table from "../Table/Table" ;
 import axios from "axios";

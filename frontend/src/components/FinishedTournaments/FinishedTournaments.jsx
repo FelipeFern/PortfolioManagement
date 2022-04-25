@@ -30,15 +30,6 @@ const Tournaments = ({
         setTournamentsState(data);
     };
 
-    const signUpTournament = async (tournamentId) => {
-        const _uri = URIInscription;
-        const _user = JSON.parse(user);
-        const { _inscription } = await axios.post(_uri, {
-            userId: _user,
-            tournamentID: tournamentId,
-        });
-    };
-
     useEffect(() => {
         fetchTournaments();
     }, []);

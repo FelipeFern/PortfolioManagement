@@ -17,14 +17,14 @@ const Header = () => {
 
     return (
         <nav className="nav">
-            <a href="#" className="nav__brand">
+            <a href="/coins" className="nav__brand">
                 {" "}
                 Nombre de Nosotros
             </a>
 
             <ul className={active}>
                 <li key="Home" className="nav__item">
-                    <a href="#" className="nav__link">
+                    <a href="/login" className="nav__link">
                         Home
                     </a>
                 </li>

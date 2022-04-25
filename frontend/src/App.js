@@ -1,6 +1,5 @@
 import "./App.css";
-import React, { useState, useMemo } from "react";
-import { useNavigate } from "react-router-dom";
+import React from "react";
 import LandingPage from "./screens/LandingPage/LandingPage";
 import LoginPage from "./screens/LoginPage/LoginPage";
 import TournamentPage from "./screens/TournamentPage/TournamentPage";
