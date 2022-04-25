@@ -4,8 +4,8 @@ import { AiFillTrophy } from "react-icons/ai";
 import { useState, useEffect } from "react";
 import axios from "axios";
 
-const URI = "http://localhost:5000/api/tournaments/";
-const URIInscription = "http://localhost:5000/api/inscriptions/";
+const URI = "https://final-iaw.herokuapp.com/api/tournaments/";
+const URIInscription = "https://final-iaw.herokuapp.com/api/inscriptions/";
 
 const Tournaments = ({
     openRegistedTournaments,

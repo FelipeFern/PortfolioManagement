@@ -5,9 +5,9 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-const URI = "http://localhost:5000/api/tournaments/";
-const URIInscription = "http://localhost:5000/api/inscriptions/";
-const URITournament = "http://localhost:5000/api/tournaments/";
+const URI = "https://final-iaw.herokuapp.com/api/tournaments/";
+const URIInscription = "https://final-iaw.herokuapp.com/api/inscriptions/";
+const URITournament = "https://final-iaw.herokuapp.com/api/tournaments/";
 
 const Tournaments = ({
     openRegistedTournaments,

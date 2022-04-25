@@ -3,11 +3,11 @@ import "./PositionList.css";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-const URIPositions = "http://localhost:5000/api/users/tournamentPostions/";
+// const URIPositions = "http://localhost:5000/api/users/tournamentPostions/";
 
-const URICoinsAPIAll = "http://localhost:5000/api/coingecko/coinsAPI";
-const URICoinsAPI = "http://localhost:5000/api/coingecko/coinsAPI/";
-const URIClosePosition = "http://localhost:5000/api/positions/close/";
+const URICoinsAPIAll = "https://final-iaw.herokuapp.com/api/coingecko/coinsAPI";
+// const URICoinsAPI = "http://localhost:5000/api/coingecko/coinsAPI/";
+const URIClosePosition = "https://final-iaw.herokuapp.com/api/positions/close/";
 
 function PositionList({
     tournamentId,

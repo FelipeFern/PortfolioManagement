@@ -2,11 +2,11 @@ import React, { useState, useEffect } from "react";
 import "./RightComponent.css";
 import axios from "axios";
 
-const URICreatePosition = "http://localhost:5000/api/positions/";
+const URICreatePosition = "https://final-iaw.herokuapp.com/api/positions/";
 const URICoins =
-    "http://localhost:5000/api/tournaments/coins/625ec361b5f1244a7d437a39";
-const URICoinsAPIAll = "http://localhost:5000/api/coingecko/coinsAPI";
-const URIGetInscription = "http://localhost:5000/api/users/inscription/";
+    "https://final-iaw.herokuapp.com/api/tournaments/coins/625ec361b5f1244a7d437a39";
+const URICoinsAPIAll = "https://final-iaw.herokuapp.com/api/coingecko/coinsAPI";
+const URIGetInscription = "https://final-iaw.herokuapp.com/api/users/inscription/";
 
 function RightComponent({  createPositions, tournamentId }) {
     const user = localStorage.getItem("userId");

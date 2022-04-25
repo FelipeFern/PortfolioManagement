@@ -7,7 +7,7 @@ import "./nav2.css";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
-const URIUser = "http://localhost:5000/api/users/";
+const URIUser = "https://final-iaw.herokuapp.com/api/users/";
 
 function Nav2() {
     const navigate = useNavigate();

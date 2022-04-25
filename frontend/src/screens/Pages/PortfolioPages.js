@@ -8,7 +8,7 @@ const PortfolioPage = () => {
     const ws = useRef();
 
     const initializeSockets = async () => {
-        const prevDaySocketURL = "http://localhost:5000/api/binance/prevDay";
+        const prevDaySocketURL = "https://final-iaw.herokuapp.com/api/binance/prevDay";
         await axios.get(prevDaySocketURL);
     };
 

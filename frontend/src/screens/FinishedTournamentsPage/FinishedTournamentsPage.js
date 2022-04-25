@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import FinishTournament from "../../components/FinishedTournaments/FinishedTournaments";
 import { useParams } from "react-router-dom";
 
-const URIOpenTournaments = "http://localhost:5000/api/tournaments/closed/";
+const URIOpenTournaments = "https://final-iaw.herokuapp.com/api/tournaments/closed/";
 
 const TournamentsPage = () => {
     const { id } = useParams();

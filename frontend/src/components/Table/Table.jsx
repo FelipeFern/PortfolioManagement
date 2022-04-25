@@ -3,7 +3,7 @@ import "./table.css";
 import PropTypes from "prop-types";
 import axios from "axios";
 
-const URI = "http://localhost:5000/api/coingecko/coinsAPI";
+const URI = "https://final-iaw.herokuapp.com/api/coingecko/coinsAPI";
 
 const Table = ({ tableData, headingColumns, title }) => {
     const user = localStorage.getItem("userId");

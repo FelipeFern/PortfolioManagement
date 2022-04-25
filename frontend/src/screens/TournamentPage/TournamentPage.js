@@ -7,13 +7,13 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
-const URITournamentPositions = "http://localhost:5000/api/tournaments/leaderboard/";
+const URITournamentPositions = "https://final-iaw.herokuapp.com/api/tournaments/leaderboard/";
 const URIClosedPositions =
-    "http://localhost:5000/api/users/tournamentClosedPostions/";
+    "https://final-iaw.herokuapp.com/api/users/tournamentClosedPostions/";
 const URIOpenPositions =
-    "http://localhost:5000/api/users/tournamentOpenPostions/";
-const URICoinsAPIAll = "http://localhost:5000/api/coingecko/coinsAPI";
-const URIGetTournament = "http://localhost:5000/api/tournaments/"
+    "https://final-iaw.herokuapp.com/api/users/tournamentOpenPostions/";
+const URICoinsAPIAll = "https://final-iaw.herokuapp.com/api/coingecko/coinsAPI";
+const URIGetTournament = "https://final-iaw.herokuapp.com/api/tournaments/"
 
 const TournamentPage = () => {
     const { id } = useParams();
