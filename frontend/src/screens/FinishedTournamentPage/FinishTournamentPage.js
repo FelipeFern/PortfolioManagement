@@ -9,18 +9,19 @@ import { useParams } from "react-router-dom";
 
 const URIPositions = "http://localhost:5000/api/users/tournamentPositions/";
 const URIClosedPositions =
-    "http://localhost:5000/api/users/tournamentPositions/";
+    "http://localhost:5000/api/users/tournamentClosedPostions/";
 const URIOpenPositions =
     "http://localhost:5000/api/users/tournamentOpenPostions/";
-const URITournamentPositions = "http://localhost:5000/api/users/tournamentPositions/";
+const URITournamentPositions =
+    "http://localhost:5000/api/tournaments/leaderboard/";
 const URICoinsAPIAll = "http://localhost:5000/api/coingecko/coinsAPI";
-const URIGetTournament = "http://localhost:5000/api/tournaments/"
+const URIGetTournament = "http://localhost:5000/api/tournaments/";
 
 const TournamentPage = () => {
     const { id } = useParams();
     const user = localStorage.getItem("userId");
     const [tournament, setTournament] = useState();
-    const [_tournamentLeaderboard, setTournamentLeaderboard] =  useState ([])
+    const [tournamentLeaderboard, setTournamentLeaderboard] = useState([]);
     const [closedTournamentPositions, setClosedTournamentPositions] = useState(
         []
     );
@@ -30,7 +31,7 @@ const TournamentPage = () => {
 
     const insertCoins = async (_array) => {
         const { data } = await axios.get(URICoinsAPIAll);
-        setCoins(data)
+        setCoins(data);
     };
 
     const closedUserPositions = async () => {
@@ -39,27 +40,25 @@ const TournamentPage = () => {
         const { data } = await axios.post(uri, {
             tournament: id,
         });
-        setClosedTournamentPositions(data);        
+        setClosedTournamentPositions(data);
         await insertCoins(data);
     };
 
     const getTournament = async () => {
         const _uri = URIGetTournament + id;
         const _tournament = await axios.get(_uri);
-        setTorneo(_tournament.data)
-        setTournament(  '"'+_tournament.data.name +'"')
-    }
+        setTorneo(_tournament.data);
+        setTournament('"' + _tournament.data.name + '"');
+    };
 
     const getTournamentPositions = async () => {
         const _user = JSON.parse(user);
-        const uri = URITournamentPositions + _user;
-        const { data } = await axios.post(uri, {
-            tournament: id,
-        });
-        setTournamentLeaderboard(data); 
-        setUserInscription(data.find((elem) => elem.user._id == _user))
+        const uri = URITournamentPositions + id;
+        const { data } = await axios.get(uri);
+        setTournamentLeaderboard(data);
+        setUserInscription(data.find((elem) => elem.user._id == _user));
         await insertCoins(data);
-    }
+    };
 
     useEffect(() => {
         closedUserPositions();
@@ -70,7 +69,12 @@ const TournamentPage = () => {
     return (
         <div className="container--1">
             <div className="middleDiv">
-            <Dashboard torneo= {torneo} _userInscription = {userInscription} tournamentLeaderboard = {_tournamentLeaderboard} title = {tournament}/>
+                <Dashboard
+                    torneo={torneo}
+                    userInscription={userInscription}
+                    tournamentLeaderboard={tournamentLeaderboard}
+                    title={tournament}
+                />
                 <ClosedPositions
                     title="Closed Positions"
                     _coins={coins}
@@ -78,7 +82,7 @@ const TournamentPage = () => {
                 />
             </div>
 
-            <RightComponent  createPositions={false} tournamentId= {id}/>
+            <RightComponent createPositions={false} tournamentId={id} />
         </div>
     );
 };

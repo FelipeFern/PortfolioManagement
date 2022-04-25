@@ -253,7 +253,7 @@ const getInscription = asyncHandler(async (req, res) => {
             tournament: tournament,
         });
       
-        res.status(200).json(response._id);
+        res.status(200).json(response);
     } catch (error) {
         return res.status(404).json({ message: error.message });
     }

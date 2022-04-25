@@ -6,20 +6,20 @@ const User = require("../models/userModel");
 const res = require("express/lib/response");
 
 const createInscription = asyncHandler(async (req, res) => {
-    const { userId: _userId, tournamentId: _tournamentId } = req.body;
+    const { userId: _userId, tournamentId: _tournamentId , moneyAvailable: _moneyAvailable} = req.body;
     try {
         const inscription = await Inscription.create({
             user: _userId,
             tournament: _tournamentId,
+            score: _moneyAvailable
         });
-        console.log(inscription);
+
 
         if (inscription === null) {
             return res.status(404).json({
                 message: `The inscription that you trying to get, ID: ${_id} doesn't exist on the DB`,
             });
         }
-
          await updateModels(_userId, _tournamentId, inscription._id.toString())
         return res.status(200).json(inscription);
     } catch (error) {

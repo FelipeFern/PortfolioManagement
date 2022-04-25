@@ -3,9 +3,11 @@ section#tournaments {
     width: 94%;
 }
 
-section#tournaments h2 {
+.tournaments_title {
     font-size: 3.2rem;
     margin-bottom: 0;
+    text-align: center;
+    color: var(--color-primary);
 }
 
 section#tournaments h5 {
@@ -30,7 +32,7 @@ section#tournaments .tournaments__cards {
     gap: 1.5rem;
 }
 
-section#tournaments .tournaments__cards .no_open_positions h3{
+section#tournaments .tournaments__cards .no_open_positions h3 {
     width: 30%;
     color: var(--color-white);
     position: absolute;
@@ -84,12 +86,12 @@ section#tournaments .card_middle {
 }
 
 section#tournaments .card_middle .card_left,
-section#tournaments .card_middle .card_right{
+section#tournaments .card_middle .card_right {
     flex: 1;
     display: grid;
 }
 
-section#tournaments .small{
+section#tournaments .small {
     margin-top: 0.3rem;
     font-size: 1rem;
     color: var(--color-light);
@@ -98,7 +100,6 @@ section#tournaments .small{
 
 /*   ======== Media Queries Medium ========= */
 @media screen and (max-width: 1024px) {
-
     section#tournaments .container.tournaments__container {
         width: 100%;
         display: flex;
@@ -109,7 +110,7 @@ section#tournaments .small{
         gap: 10%;
     }
 
-    section#tournaments  {
+    section#tournaments {
         display: flex;
         flex-direction: row;
         grid-template-columns: 1fr;
@@ -121,7 +122,15 @@ section#tournaments .small{
         gap: 3rem;
     }
     section#tournaments .tournaments__content .tournament__card {
-        width: 230px;       
+        width: 230px;
+    }
+
+    .tournaments_title {
+        margin-top: 1.5rem;
+        font-size: 2.7rem;
+        margin-bottom: 0;
+        text-align: center;
+        color: var(--color-primary);
     }
 }
 
@@ -143,7 +152,14 @@ section#tournaments .small{
     }
 
     section#tournaments .tournaments__content {
-        width: 300px;       
+        width: 300px;
     }
 
+    .tournaments_title {
+        margin-top: 1rem;
+        font-size: 2.2rem;
+        margin-bottom: 0;
+        text-align: center;
+        color: var(--color-primary);
+    }
 }

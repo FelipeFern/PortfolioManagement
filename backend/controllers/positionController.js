@@ -4,13 +4,7 @@ const Inscription = require("../models/inscriptionModel");
 const Coin = require("../models/coinModel");
 
 const createPosition = asyncHandler(async (req, res) => {
-    const {
-        entryPrice,
-        coin,
-        inscription,
-        quantity,
-        buyOrder,
-    } = req.body;
+    const { entryPrice, coin, inscription, quantity, buyOrder } = req.body;
 
     const position = await Position.create({
         entryPrice,
@@ -18,23 +12,20 @@ const createPosition = asyncHandler(async (req, res) => {
         coin,
         inscription,
         quantity,
-        buyOrder
+        buyOrder,
     });
     if (position) {
-        Inscription.findOne(
-            { _id: inscription },
-            function (err, inscriptiona) {
-                if (err) return res.status(404).json(err);
-                if (!inscriptiona) return res.status(404).json(err);
+        Inscription.findOne({ _id: inscription }, function (err, inscriptiona) {
+            if (err) return res.status(404).json(err);
+            if (!inscriptiona) return res.status(404).json(err);
 
-                inscriptiona.positions.push(position._id.toString());
+            inscriptiona.positions.push(position._id.toString());
 
-                inscriptiona.save(function (err) {
-                    if (err) return res.status(400).json(err);
-                    console.log("Se actualizo bien");
-                });
-            }
-        );
+            inscriptiona.save(function (err) {
+                if (err) return res.status(400).json(err);
+                console.log("Se actualizo bien");
+            });
+        });
 
         res.status(200).json(position);
     } else {
@@ -46,43 +37,46 @@ const createPosition = asyncHandler(async (req, res) => {
 });
 
 const closePosition = asyncHandler(async (req, res) => {
-    const { id} = req.params;
-    const { closePrice: _closePrice, closeDate: _closeDate } = req.body;
+    const { id } = req.params;
+    const { closePrice: _closePrice } = req.body;
     try {
-        console.log(_closePrice, _closeDate)
         const position = await Position.findById(id);
         let difference = 0;
         if (position.buyOrder) {
-            difference = position.closePrice - position.entryPrice;
+            difference = (_closePrice - position.entryPrice) * position.quantity;
         } else {
-            difference = position.entryPrice - position.closePrice;
+            difference = (position.entryPrice - _closePrice) * position.quantity;
         }
-        let _profit = position.quantity * difference;
-        await Position.findByIdAndUpdate(id, {
-            closePrice: _closePrice,
-            closeDate: _closeDate,
-            _profit: _profit,
+        const _closeDate = Date.now();
+       
+        Position.findOne({ _id: id }, function (err, _position) {
+            if (err) return res.status(404).json(err);
+            if (!_position) return res.status(404).json(err);
+
+            _position.closePrice = _closePrice;
+            _position.closeDate = _closeDate;
+            _position.profit = difference.toFixed(3);
+
+            _position.save(function (err) {
+                if (err) return res.status(400).json("Error aca");
+            });
         });
 
 
-        Position.findOne(
-            { _id: id },
-            function (err, _position) {
-                if (err) return res.status(404).json(err);
-                if (!_position) return res.status(404).json(err);
+        Inscription.findOne({ _id: position.inscription.toString() }, function (err, inscriptiona) {
+            if (err) return res.status(404).json(err);
+            if (!inscriptiona) return res.status(404).json(err);
+            let _profit = inscriptiona.profit;
+            _profit = _profit + difference 
 
-                _position.closePrice =_closePrice;
-                _position.closeDate = _closeDate;
-                _position._profit = _profit
+            inscriptiona.profit= _profit;
 
-                _position.save(function (err) {
-                    if (err) return res.status(400).json(err);
-                    console.log("Se actualizo bien");
-                });
-            }
-        );
-
-        res.status(200).json({position, _profit, _closeDate, _closePrice});
+            inscriptiona.save(function (err) {
+                if (err) return res.status(400).json(err);
+            });
+        });
+        
+        return res.status(200).json(position);
     } catch (error) {}
 });
 

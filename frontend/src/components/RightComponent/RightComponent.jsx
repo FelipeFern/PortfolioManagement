@@ -8,7 +8,7 @@ const URICoins =
 const URICoinsAPIAll = "http://localhost:5000/api/coingecko/coinsAPI";
 const URIGetInscription = "http://localhost:5000/api/users/inscription/";
 
-function RightComponent({  createPositions, tournamenId }) {
+function RightComponent({  createPositions, tournamentId }) {
     const user = localStorage.getItem("userId");
     const [available, setAvailable] = useState(0);
     const [quantity, setQuantity] = useState(0);
@@ -21,24 +21,23 @@ function RightComponent({  createPositions, tournamenId }) {
     const [allCoins, setAllCoins] = useState([]);
 
     const handleSubmitPosition = async (_buyOrder) => {
-        console.log(tournamenId);
         const _inscription = await axios.post(
             URIGetInscription + JSON.parse(user),
             {
-                tournament: tournamenId,
+                tournament: tournamentId,
             }
         );
-        console.log("insctipcion", _inscription);
-
-        let _coin = coins.find((c) => c._symbol == coin);
+     
+        let _coin = coins.find((c) => c.symbol == coin);
+       
         const { data } = await axios.post(URICreatePosition, {
-            inscription: _inscription,
-            coin: _coin,
+            inscription: _inscription.data._id,
+            coin: _coin._id,
             quantity: quantity,
             buyOrder: _buyOrder,
             entryPrice: coinPrice,
         });
-
+        window.location.reload(true);
         showMessage("Se creo una nueva posicion ....");
     };
 
@@ -56,7 +55,7 @@ function RightComponent({  createPositions, tournamenId }) {
         await setCoin(e);
         let _asset = coins.find((element) => element.symbol === e);
         let _coinPrice = _asset.current_price;
-        await setCoinPrice(parseFloat(_coinPrice).toFixed(4));
+        await setCoinPrice(parseFloat(_coinPrice));
         refreshData(quantity, _coinPrice);
     };
 
@@ -88,6 +87,18 @@ function RightComponent({  createPositions, tournamenId }) {
     };
 
      useEffect(() => {
+
+        const fetchInscription = async ()=> {
+            const _inscription = await  axios.post(
+                URIGetInscription + JSON.parse(user),
+                {
+                    tournament: tournamentId,
+                }
+            );
+            setAvailable(_inscription.data.score)
+        }
+
+        fetchInscription()
         const fetchCoins = async () => {
             const data = await (await axios.get(URICoins)).data;
             setCoins(data);
@@ -115,7 +126,7 @@ function RightComponent({  createPositions, tournamenId }) {
                                     Coin: &nbsp; {coin.toUpperCase()}USD
                                 </label>
                                 <label>
-                                    Disponible: &nbsp; {coinPrice}{" "}
+                                    Available: &nbsp; {available}{" "}
                                     <span>USD</span>
                                 </label>
 
@@ -136,7 +147,7 @@ function RightComponent({  createPositions, tournamenId }) {
                                 </label>
 
                                 <label>
-                                    Total: &nbsp;{total.toFixed(3)} USD
+                                    Total: &nbsp;{total} USD
                                 </label>
                                 <div className="buttons">
                                     <button

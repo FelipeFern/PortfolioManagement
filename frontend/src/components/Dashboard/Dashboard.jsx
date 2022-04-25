@@ -3,6 +3,7 @@ import "./dashboard.css";
 
 
 function Dashboard({torneo,  tournamentLeaderboard, title, userInscription }) {
+    const user = localStorage.getItem("userId");
     
     const getCorrectDate = (_date) => {
         var date = new Date(
@@ -15,6 +16,14 @@ function Dashboard({torneo,  tournamentLeaderboard, title, userInscription }) {
         return toReturn;
     };
 
+    const getIndex = () => {
+        let aux = 0
+        if(userInscription.length !== 0 ){
+         aux = tournamentLeaderboard.findIndex((c) => c.inscription.inscriptionDate = userInscription.inscription.inscriptionDate) 
+        }
+
+        return 1
+    }
 
   
     return (
@@ -28,7 +37,7 @@ function Dashboard({torneo,  tournamentLeaderboard, title, userInscription }) {
                             <h3>Profits </h3>
                             <h1> $
                             {userInscription.length !== 0 ?
-                            userInscription.inscription.profit : 0  
+                            userInscription.inscription.profit.toFixed(2) : 0  
                         }
                             </h1>
                         </div>
@@ -42,10 +51,11 @@ function Dashboard({torneo,  tournamentLeaderboard, title, userInscription }) {
                         </div>
                         <div className="left">
                             <h3>Current Position </h3>
-                            <h1> $
-                            {userInscription.length !== 0 ?
-                            userInscription.inscription.profit : 0   
-                        }
+                            <h1> 
+                            {tournamentLeaderboard.length !== 0 ?
+                            getIndex()
+                            : 0   
+                        }°
                             </h1>
                         </div>
                         
@@ -59,7 +69,7 @@ function Dashboard({torneo,  tournamentLeaderboard, title, userInscription }) {
                                 <h3> Leaderboard </h3>
                             </div>
                             
-                            {tournamentLeaderboard.length !== 0 &&
+                            {tournamentLeaderboard.length !== 0  && userInscription.length !== 0 &&
                             <table className="table-container__table">
                                 <thead>
                                     <tr>
@@ -79,7 +89,7 @@ function Dashboard({torneo,  tournamentLeaderboard, title, userInscription }) {
                                                         $
                                                         {
                                                             rank.inscription
-                                                                .profit
+                                                                .profit.toFixed(0)
                                                         }
                                                     </td>
                                                 </tr>

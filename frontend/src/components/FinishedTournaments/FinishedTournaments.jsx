@@ -35,105 +35,114 @@ const Tournaments = ({
     }, []);
 
     return (
-        <section id="tournaments">
-            {/* <h2> Finished Tournaments</h2> */}
+        <div>
+            <h2 className="tournaments_title"> Finished Tournaments</h2>
 
-            <div className="container tournaments__container">
-                <div className="tournaments__content">
-                    {openRegistedTournaments.length === 0 ? (
-                        <h3> You are not registed in any Tournament</h3>
-                    ) : (
-                        <div>
-                            <h3> Registered Tournaments</h3>
-                            <div className="tournaments__cards">
-                                {openRegistedTournaments.map((tournament) => (
-                                    <article
-                                        className="tournament__card"
-                                        key={tournament._id}
-                                    >
-                                        <AiFillTrophy className="tournament__icon" />
-                                        <h5>{tournament.name}</h5>
-                                        <div className="small">
-                                            Money: {tournament.moneyAvailable}
-                                        </div>
-                                        <div className="small">
-                                            {getCorrectDate(
-                                                tournament.startDate
-                                            )}{" "}
-                                            --{" "}
-                                            {getCorrectDate(
-                                                tournament.finishDate
-                                            )}
-                                        </div>
-                                        <a
-                                            href={
-                                                "/finishedTournament/" +
-                                                tournament._id.toString()
-                                            }
-                                        >
-                                            <button className="btn btn-primary">
-                                                {" "}
-                                                Tournaments Stats
-                                            </button>
-                                        </a>
-                                    </article>
-                                ))}
+            <section id="tournaments">
+                <div className="container tournaments__container">
+                    <div className="tournaments__content">
+                        {openRegistedTournaments.length === 0 ? (
+                            <h3> You are not registed in any Tournament</h3>
+                        ) : (
+                            <div>
+                                <h3> Registered Tournaments</h3>
+                                <div className="tournaments__cards">
+                                    {openRegistedTournaments.map(
+                                        (tournament) => (
+                                            <article
+                                                className="tournament__card"
+                                                key={tournament._id}
+                                            >
+                                                <AiFillTrophy className="tournament__icon" />
+                                                <h5>{tournament.name}</h5>
+                                                <div className="small">
+                                                    Money:{" "}
+                                                    {tournament.moneyAvailable}
+                                                </div>
+                                                <div className="small">
+                                                    {getCorrectDate(
+                                                        tournament.startDate
+                                                    )}{" "}
+                                                    --{" "}
+                                                    {getCorrectDate(
+                                                        tournament.finishDate
+                                                    )}
+                                                </div>
+                                                <a
+                                                    href={
+                                                        "/finishedTournaments/" +
+                                                        tournament._id.toString()
+                                                    }
+                                                >
+                                                    <button className="btn btn-primary">
+                                                        {" "}
+                                                        Tournaments Stats
+                                                    </button>
+                                                </a>
+                                            </article>
+                                        )
+                                    )}
+                                </div>
                             </div>
-                        </div>
-                    )}
-                </div>
+                        )}
+                    </div>
 
-                <div className="tournaments__content">
-                    {openUnregistedTournaments.length === 0 ? (
-                        <div className="no_open_positions">
-                            <h3>
-                                {" "}
-                                You are not registed in any Finished Tournament
-                            </h3>
-                        </div>
-                    ) : (
-                        <div>
-                            <h3> Unregisteres Tournaments</h3>
-                            <div className="tournaments__cards">
-                                {openUnregistedTournaments.map((tournament) => (
-                                    <article
-                                        className="tournament__card"
-                                        key={tournament._id}
-                                    >
-                                        <AiFillTrophy className="tournament__icon" />
-                                        <h5>{tournament.name}</h5>
-                                        <div className="small">
-                                            Money: {tournament.moneyAvailable}
-                                        </div>
-                                        <div className="small">
-                                            {getCorrectDate(
-                                                tournament.startDate
-                                            )}{" "}
-                                            --{" "}
-                                            {getCorrectDate(
-                                                tournament.finishDate
-                                            )}
-                                        </div>
-
-                                        <a
-                                            href={
-                                                "/finishedTournaments/" +
-                                                tournament._id.toString()
-                                            }
-                                        >
-                                            <button className="btn btn-primary">
-                                                {" "}
-                                                Tournaments Stats
-                                            </button>
-                                        </a>
-                                    </article>
-                                ))}
+                    <div className="tournaments__content">
+                        {openUnregistedTournaments.length === 0 ? (
+                            <div className="no_open_positions">
+                                <h3>
+                                    {" "}
+                                    You are not registed in any Finished
+                                    Tournament
+                                </h3>
                             </div>
-                        </div>
-                    )}
+                        ) : (
+                            <div>
+                                <h3> Unregisteres Tournaments</h3>
+                                <div className="tournaments__cards">
+                                    {openUnregistedTournaments.map(
+                                        (tournament) => (
+                                            <article
+                                                className="tournament__card"
+                                                key={tournament._id}
+                                            >
+                                                <AiFillTrophy className="tournament__icon" />
+                                                <h5>{tournament.name}</h5>
+                                                <div className="small">
+                                                    Money:{" "}
+                                                    {tournament.moneyAvailable}
+                                                </div>
+                                                <div className="small">
+                                                    {getCorrectDate(
+                                                        tournament.startDate
+                                                    )}{" "}
+                                                    --{" "}
+                                                    {getCorrectDate(
+                                                        tournament.finishDate
+                                                    )}
+                                                </div>
+
+                                                <a
+                                                    href={
+                                                        "/finishedTournaments/" +
+                                                        tournament._id.toString()
+                                                    }
+                                                >
+                                                    <button className="btn btn-primary">
+                                                        {" "}
+                                                        Tournaments Stats
+                                                    </button>
+                                                </a>
+                                            </article>
+                                        )
+                                    )}
+                                </div>
+                            </div>
+                        )}
+                    </div>
                 </div>
-            </div>
-        </section>
+            </section>
+        </div>
     );
 };
 

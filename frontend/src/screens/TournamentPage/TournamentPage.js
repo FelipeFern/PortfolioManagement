@@ -82,6 +82,7 @@ const TournamentPage = () => {
             <div className="middleDiv">
                 <Dashboard   torneo = {torneo} userInscription = {userInscription}  tournamentLeaderboard = {tournamentLeaderboard} title = {tournament}/>
                 <PositionList
+                    tournamentId = {id}
                     title="Open Positions"
                     _coins={coins}
                     _openTournamentPositions={openTournamentPositions}

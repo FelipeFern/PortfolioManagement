@@ -57,7 +57,7 @@ function PositionList({ _coins, _closedTournamentPositions, title }) {
                         <tbody>
                             {_closedTournamentPositions.map(
                                 (_position, index) => (
-                                    <tr key={_position.coin.symbol}>
+                                    <tr key={_position.position._id}>
                                         <th className="th-img-name">
                                             <img src={_position.coin.image} />
                                             {_position.coin.symbol.toUpperCase()}
@@ -101,7 +101,7 @@ function PositionList({ _coins, _closedTournamentPositions, title }) {
                     </table>
                 </div>
             ) : (
-                <h1>This tournament has no positions</h1>
+                <h2>This tournament has no closed positions</h2>
             )}
         </div>
     );

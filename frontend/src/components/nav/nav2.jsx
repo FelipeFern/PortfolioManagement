@@ -13,7 +13,7 @@ function Nav2() {
     const navigate = useNavigate();
     const user = localStorage.getItem("userId");
     // const [userObject, setUserObject] = useState("");
-    const [activeCoin, setActiveCoin] = useState("");
+    const [activeCoin, setActiveCoin] = useState("active");
     const [activeTournament, setActiveTournament] = useState("");
     const [activeFinishedTournament, setActiveFinishedTournament] =
         useState("");
@@ -35,7 +35,7 @@ function Nav2() {
     // };
 
     useEffect(() => {
-        setActiveCoin("active");
+        //setActiveCoin("active");
         // setUserObject("");
         // user && getUser();
     }, [user]);
@@ -83,8 +83,8 @@ function Nav2() {
                         className={activeTournament}
                         onClick={(e) => {
                             e.preventDefault();
-                            setActiveTournament("active");
                             setActiveCoin("");
+                            setActiveTournament("active");
                             setActiveFinishedTournament("");
                             navigate("/tournaments");
                         }}

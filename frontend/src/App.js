@@ -43,12 +43,6 @@ const App = () => {
                     )}
                     {user && (
                         <Route
-                            path="/finishedTournaments"
-                            element={<FinishedTournamentsPage />}
-                        />
-                    )}
-                    {user && (
-                        <Route
                             path="/finishedTournament/:id"
                             element={<FinishedTournamentPage />}
                         />
