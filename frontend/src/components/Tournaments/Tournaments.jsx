@@ -41,6 +41,9 @@ const Tournaments = ({
 
     useEffect(() => {
         fetchTournaments();
+        return () => {
+            setTournamentsState([]); 
+          };
     }, []);
 
     return (

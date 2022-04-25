@@ -5,10 +5,18 @@ import { MdOutlineCreate } from "react-icons/md";
 import { FiLogOut, FiLogIn } from "react-icons/fi";
 import "./nav2.css";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
+
+const URIUser = "http://localhost:5000/api/users/";
 
 function Nav2() {
     const navigate = useNavigate();
     const user = localStorage.getItem("userId");
+    // const [userObject, setUserObject] = useState("");
+    const [activeCoin, setActiveCoin] = useState("");
+    const [activeTournament, setActiveTournament] = useState("");
+    const [activeFinishedTournament, setActiveFinishedTournament] =
+        useState("");
     const [sidebarActive, setSidebarActive] = useState("sidebar nav_active");
     const [toggleIcon, setToggleIcon] = useState("nav__toggler");
 
@@ -21,7 +29,16 @@ function Nav2() {
             : setToggleIcon("nav__toggler");
     };
 
-    useEffect(() => {}, [user]);
+    // const getUser = async () => {
+    //     const _user = await axios.get(URIUser + JSON.parse(user));
+    //     setUserObject(_user.data);
+    // };
+
+    useEffect(() => {
+        setActiveCoin("active");
+        // setUserObject("");
+        // user && getUser();
+    }, [user]);
 
     const logOutButton = async () => {
         localStorage.clear();
@@ -42,13 +59,17 @@ function Nav2() {
                 </div>
             </div>
             <div className={sidebarActive}>
-                {/* <a href="/coins" className="active">
-                    <div className="icon">
-                        <BsGrid />
-                    </div>
-                    <h3>Menu</h3>
-                </a> */}
-                <a href="/coins">
+                <a
+                    href="/coins"
+                    className={activeCoin}
+                    onClick={(e) => {
+                        e.preventDefault();
+                        setActiveTournament("");
+                        setActiveCoin("active");
+                        setActiveFinishedTournament("");
+                        navigate("/coins");
+                    }}
+                >
                     <div className="icon">
                         <RiCoinsLine />
                     </div>
@@ -57,7 +78,17 @@ function Nav2() {
                 </a>
 
                 {user && (
-                    <a href="/tournaments">
+                    <a
+                        href="/tournaments"
+                        className={activeTournament}
+                        onClick={(e) => {
+                            e.preventDefault();
+                            setActiveTournament("active");
+                            setActiveCoin("");
+                            setActiveFinishedTournament("");
+                            navigate("/tournaments");
+                        }}
+                    >
                         <div className="icon">
                             {" "}
                             <AiOutlineTrophy />
@@ -68,7 +99,17 @@ function Nav2() {
                 )}
 
                 {user && (
-                    <a href="/finishedTournaments">
+                    <a
+                        href="/finishedTournaments"
+                        className={activeFinishedTournament}
+                        onClick={(e) => {
+                            e.preventDefault();
+                            setActiveTournament("");
+                            setActiveFinishedTournament("active");
+                            setActiveCoin("");
+                            navigate("/finishedTournaments");
+                        }}
+                    >
                         <div className="icon">
                             <AiOutlineTrophy />
                         </div>
@@ -76,16 +117,17 @@ function Nav2() {
                         <h3>Finished Tournaments</h3>
                     </a>
                 )}
-
-                {user && (
-                    <a href="/tournament/ias">
+{/*
+                {user & userObject.isAdmin &&
+                 (
+                    <a href="/coins">
                         <div className="icon">
                             <MdOutlineCreate />
                         </div>
 
                         <h3>Create Tournament</h3>
                     </a>
-                )}
+                )} */}
 
                 {user ? (
                     <a

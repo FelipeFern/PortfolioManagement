@@ -4,12 +4,6 @@ import "./LandingPage.css";
 
 const LandingPage = () => {
 
-    // useEffect(() => {
-    //     const userInfo = localStorage.getItem("userInfo");
-    //     if (userInfo) {
-    //         history.push("/coins");
-    //     }
-    // }, [history]);
 
     return (
         <div className=" main">

@@ -40,6 +40,7 @@ aside .sidebar a{
     position: relative;
     height: 4.8rem;
     transition: var(--transition);
+    margin-top: 1rem;
 }
 
 aside .sidebar a .icon{
@@ -59,6 +60,7 @@ aside .sidebar a.active{
     color: var(--color-primary);
     margin-left: 0;
     margin-right: 0;
+    transition: var(--transition);
 }
 
 aside .sidebar a.active::before{

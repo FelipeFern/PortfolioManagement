@@ -3,7 +3,7 @@ import thunk from "redux-thunk";
 import { composeWithDevTools } from 'redux-devtools-extension'
 
 const reducer = combineReducers({
-    //Agregar todos los reducers aca. 
+  
 })
 
 const initialState = {};
