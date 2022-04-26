@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { AiOutlineTrophy , AiOutlineUser} from "react-icons/ai";
+import { AiOutlineTrophy, AiOutlineUser } from "react-icons/ai";
 import { RiCoinsLine } from "react-icons/ri";
 import { FiLogOut, FiLogIn } from "react-icons/fi";
 import "./nav2.css";
@@ -30,12 +30,29 @@ function Nav2() {
     };
 
     const getUser = async () => {
-        const _user = await axios.get(URIUser + JSON.parse(user));
-        setName(_user.data.name);
+        
+        if (user !== null) {
+            const _user = await axios.get(URIUser + JSON.parse(user));
+            setName(_user.data.name);
+        }
     };
 
     useEffect(() => {
-        getUser()
+
+        const userData = setInterval(() => {
+            if(user === null){
+                console.log(user)
+                getUser();
+                console.log(user)
+            }
+        }, 5000);
+
+        return () => {
+            clearInterval(userData);
+        };
+
+       
+        
     }, [user]);
 
     const logOutButton = async () => {
@@ -116,9 +133,8 @@ function Nav2() {
                     </a>
                 )}
 
-                {user  &&
-                 (
-                    <a >
+                {user && (
+                    <a>
                         <div className="icon">
                             <AiOutlineUser />
                         </div>

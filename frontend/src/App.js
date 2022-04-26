@@ -8,16 +8,19 @@ import PortfolioPage from "./screens/Pages/PortfolioPages";
 import TournamentsPage from "./screens/TournamentsPage/TournamentsPage";
 import FinishedTournamentsPage from "./screens/FinishedTournamentsPage/FinishedTournamentsPage";
 import FinishedTournamentPage from "./screens/FinishedTournamentPage/FinishTournamentPage";
-import Tournaments from "./components/Tournaments/Tournaments";
 import Nav2 from "./components/nav/nav2";
 import Coins from "./components/Coins/Coins";
 import Header from "./components/Header/Header";
 
 const App = () => {
-    const user = localStorage.getItem("userId");
+    let user = localStorage.getItem("userId");
+
+    const asignUser = () => {
+        user = localStorage.getItem("userId")
+    }
 
     useEffect(async () => {
-        
+        asignUser()
     }, [user]);
     return (
         <main>

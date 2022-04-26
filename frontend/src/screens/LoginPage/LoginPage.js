@@ -27,7 +27,6 @@ function LoginPage() {
     const [loadingRegister, setLoadingRegister] = useState(false);
 
     const submitHandler = async (e) => {
-        e.preventDefault();
         try {
             setLoadingLogin(true);
             const { data } = await axios.post(
@@ -41,6 +40,7 @@ function LoginPage() {
             setErrorLogin(true);
             localStorage.setItem("userId", JSON.stringify(data._id));
             navigate("/coins");
+            // window.location.reload(true);
         } catch (error) {
             setErrorLogin(error.response.data.message);
             setLoadingLogin(false);
@@ -64,7 +64,6 @@ function LoginPage() {
     */
 
     const submitHandlerRegister = async (e) => {
-        e.preventDefault();
         console.log(emailRegister);
 
         if (passwordRegister !== confirmpasswordRegister) {
@@ -140,7 +139,9 @@ function LoginPage() {
                         <form
                             className="login_form"
                             action="#"
-                            onSubmit={submitHandler}
+                            onSubmit={(e)=> {
+                                e.preventDefault();
+                                submitHandler(e)}}
                         >
                             <div className="input_field">
                                 <div className="logo">
@@ -188,7 +189,9 @@ function LoginPage() {
                             <span type="text">
                                 {" "}
                                 Don't have an account?
-                                <a onClick={(e) => signUpOnClick(e)}>
+                                <a onClick={(e) => {
+                                    e.preventDefault();
+                                    signUpOnClick(e)}}>
                                     {" "}
                                     Sign Up
                                 </a>
@@ -218,7 +221,10 @@ function LoginPage() {
                         <form
                             className="login_form"
                             action="#"
-                            onSubmit={submitHandlerRegister}
+                            onSubmit={(e) => {
+                                e.preventDefault()
+                                submitHandlerRegister()}}
+
                         >
                             <div className="input_field">
                                 <div className="logo">

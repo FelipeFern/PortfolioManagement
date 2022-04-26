@@ -2,12 +2,10 @@ import "./TournamentsPage.css";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import Tournaments from "../../components/Tournaments/Tournaments";
-import { useParams } from "react-router-dom";
 
 const URIOpenTournaments = "https://final-iaw.herokuapp.com/api/tournaments/open/";
 
 const TournamentsPage = () => {
-    const { id } = useParams();
     const user = localStorage.getItem("userId");
     const URIOpen = URIOpenTournaments.concat(JSON.parse(user));
 
@@ -17,14 +15,14 @@ const TournamentsPage = () => {
     );
 
     const openTournaments = async () => {
-        const { data } = await await axios.get(URIOpen);
+        const { data } = await axios.get(URIOpen);
         setOpenRegistedTournaments(data.registedTournaments);
         setOpenUnregistedTournaments(data.unregistedTournaments);
     };
 
     useEffect( () => {
          openTournaments();
-    }, [user,]);
+    }, [user]);
 
     return (
         <div className="tournaments_page">
