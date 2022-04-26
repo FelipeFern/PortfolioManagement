@@ -38,20 +38,16 @@ function Nav2() {
     };
 
     useEffect(() => {
-
+getUser()
         const userData = setInterval(() => {
             if(user === null){
-                console.log(user)
                 getUser();
-                console.log(user)
             }
         }, 5000);
 
         return () => {
             clearInterval(userData);
-        };
-
-       
+        };   
         
     }, [user]);
 
