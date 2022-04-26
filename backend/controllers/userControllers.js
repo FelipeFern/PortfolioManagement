@@ -43,10 +43,9 @@ const registerUser = asyncHandler(async (req, res) => {
 
 const authUser = asyncHandler(async (req, res) => {
     const { email, password } = req.body;
-
-    const user = await User.findOne({ email });
     try {
-        res.status(200).json({
+        const user = await User.findOne({ email });
+        return res.status(200).json({
             _id: user.id,
             name: user.name,
             email: user.email,
@@ -56,7 +55,6 @@ const authUser = asyncHandler(async (req, res) => {
     } catch (error) {
         return res.status(400).json(error)
     }
-   console.log()
 });
 
 const deleteUser = async (req, res) => {
