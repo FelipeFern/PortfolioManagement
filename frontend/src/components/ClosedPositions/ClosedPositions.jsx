@@ -1,41 +1,11 @@
 import React, { useState, useEffect } from "react";
 import "./ClosedPositions.css";
 
-// const URIPositions = "http://localhost:5000/api/users/tournamentPostions/";
-
-// const URICoins = "http://localhost:5000/api/coingecko/coin/";
-
-function PositionList({ _coins, _closedTournamentPositions, title }) {
-    // const [tournamentPositions, setTournamentPositon] = useState([
-    //     _tournamentPositions,
-    // ]);
-   
-
-    // const insertCoins = async () => {
-    //      let arreglo = []
-
-    //     for (let elem of tournamentPositions) {
-    //         const url = URICoins + elem.coin;
-    //         const data = await (await axios.get(url)).data;
-    //         arreglo.push(data)
-    //     }
-    //     setCoins(_coins);
-    // };
-
-    // const userPositions = async () => {
-    //     const data = await (
-    //         await axios.post(URIPositions+ _user, {
-    //             tournament: "625074cd29da7ab6d8897946",
-    //         })
-    //     ).data;
-    //     setTournamentPositon(data);
-    //     await insertCoins();
-
-    // };
+function PositionList({  _closedTournamentPositions, title }) {
+    
 
     useEffect(async () => {
-        // await userPositions();
-        //console.log(coins);
+        
     }, []);
 
     return (

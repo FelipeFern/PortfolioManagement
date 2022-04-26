@@ -1,5 +1,5 @@
 import "./App.css";
-import React from "react";
+import React, { useEffect } from "react";
 import LandingPage from "./screens/LandingPage/LandingPage";
 import LoginPage from "./screens/LoginPage/LoginPage";
 import TournamentPage from "./screens/TournamentPage/TournamentPage";
@@ -16,6 +16,9 @@ import Header from "./components/Header/Header";
 const App = () => {
     const user = localStorage.getItem("userId");
 
+    useEffect(async () => {
+        
+    }, [user]);
     return (
         <main>
             <BrowserRouter>

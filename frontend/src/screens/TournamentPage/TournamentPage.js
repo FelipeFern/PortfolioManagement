@@ -7,13 +7,18 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
-const URITournamentPositions = "https://final-iaw.herokuapp.com/api/tournaments/leaderboard/";
+const URI = "https://final-iaw.herokuapp.com/api/coingecko/coinsAPI";
+const URITournamentPositions =
+    "https://final-iaw.herokuapp.com/api/tournaments/leaderboard/";
 const URIClosedPositions =
     "https://final-iaw.herokuapp.com/api/users/tournamentClosedPostions/";
 const URIOpenPositions =
     "https://final-iaw.herokuapp.com/api/users/tournamentOpenPostions/";
 const URICoinsAPIAll = "https://final-iaw.herokuapp.com/api/coingecko/coinsAPI";
-const URIGetTournament = "https://final-iaw.herokuapp.com/api/tournaments/"
+const URIGetTournament = "https://final-iaw.herokuapp.com/api/tournaments/";
+const URICoins =
+    "https://final-iaw.herokuapp.com/api/tournaments/coins/";
+
 
 const TournamentPage = () => {
     const { id } = useParams();
@@ -26,12 +31,8 @@ const TournamentPage = () => {
     const [openTournamentPositions, setOpenTournamentPositions] = useState([]);
     const [torneo, setTorneo] = useState([]);
     const [coins, setCoins] = useState([]);
+    const [tournamentCoins, setTournamentCoins] = useState([]);
     const [userInscription, setUserInscription] = useState([]);
-
-    const insertCoins = async (_array) => {
-        const { data } = await axios.get(URICoinsAPIAll);
-        setCoins(data)
-    };
 
     const openUserPositions = async () => {
         const _user = JSON.parse(user);
@@ -40,7 +41,6 @@ const TournamentPage = () => {
             tournament: id,
         });
         setOpenTournamentPositions(data);
-        await insertCoins(data);
     };
 
     const closedUserPositions = async () => {
@@ -50,52 +50,81 @@ const TournamentPage = () => {
             tournament: id,
         });
         setClosedTournamentPositions(data);
-        
-        await insertCoins(data);
     };
 
     const getTournament = async () => {
         const _uri = URIGetTournament + id;
         const _tournament = await axios.get(_uri);
-        setTorneo(_tournament.data)
-        setTournament(  '"'+_tournament.data.name +'"')
-    }
+        setTorneo(_tournament.data);
+        setTournament('"' + _tournament.data.name + '"');
+    };
 
     const getTournamentLeaderboard = async () => {
         const _user = JSON.parse(user);
         const uri = URITournamentPositions + id;
         const { data } = await axios.get(uri);
-        setTournamentLeaderboard(data); 
-        setUserInscription(data.find((elem) => elem.user._id == _user))
-        await insertCoins(data);
-    }
+        setTournamentLeaderboard(data);
+        setUserInscription(data.find((elem) => elem.user._id == _user));
+    };
+
+    const insertCoins = async () => {
+        const { data } = await axios.get(URICoinsAPIAll);
+        setCoins(data);
+    };
+
+    
+    const fetchCoins = async () => {
+        const _uri = URICoins + id
+        const data = await axios.get(_uri);
+        setTournamentCoins(data.data);
+    };
+
 
     useEffect(() => {
         openUserPositions();
         closedUserPositions();
         getTournament();
-        getTournamentLeaderboard()
+        getTournamentLeaderboard();
+        setCoins([]);
+        insertCoins();
+        fetchCoins();
+
+
+        const coinsData = setInterval(() => {
+            insertCoins();
+        }, 10000);
+
+        return () => {
+            clearInterval(coinsData);
+        };
     }, []);
 
     return (
         <div className="container--1">
             <div className="middleDiv">
-                <Dashboard   torneo = {torneo} userInscription = {userInscription}  tournamentLeaderboard = {tournamentLeaderboard} title = {tournament}/>
+                <Dashboard
+                    torneo={torneo}
+                    userInscription={userInscription}
+                    tournamentLeaderboard={tournamentLeaderboard}
+                    title={tournament}
+                />
                 <PositionList
-                    tournamentId = {id}
                     title="Open Positions"
                     _coins={coins}
                     _openTournamentPositions={openTournamentPositions}
-                    _closedTournamentPositions={closedTournamentPositions}
                 />
                 <ClosedPositions
                     title="Closed Positions"
-                    _coins={coins}
                     _closedTournamentPositions={closedTournamentPositions}
                 />
             </div>
 
-            <RightComponent createPositions={true} tournamentId= {id}/>
+            <RightComponent
+                tournamentCoins = {tournamentCoins}
+                APIcoins={coins}
+                createPositions={true}
+                tournamentId={id}
+            />
         </div>
     );
 };

@@ -85,7 +85,7 @@ const Tournaments = ({
                                                     {getCorrectDate(
                                                         tournament.startDate
                                                     )}{" "}
-                                                    --{" "}
+                                                    -{" "}
                                                     {getCorrectDate(
                                                         tournament.finishDate
                                                     )}

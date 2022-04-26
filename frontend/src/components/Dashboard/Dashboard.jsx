@@ -16,14 +16,25 @@ function Dashboard({torneo,  tournamentLeaderboard, title, userInscription }) {
         return toReturn;
     };
 
+    const isUser = (c) => user === c.user._id;
+
     const getIndex = () => {
         let aux = 0
+        let aux1 = false;
         if(userInscription.length !== 0 ){
-         aux = tournamentLeaderboard.findIndex((c) => c.inscription.inscriptionDate = userInscription.inscription.inscriptionDate) 
+         for (let cae of tournamentLeaderboard){
+            if(cae.user._id !== user && !aux1){
+                aux++
+            }
+            else{
+                aux1 = true
+            }
+         }
         }
 
-        return 1
+        return aux
     }
+
 
   
     return (
@@ -37,7 +48,7 @@ function Dashboard({torneo,  tournamentLeaderboard, title, userInscription }) {
                             <h3>Profits </h3>
                             <h1> $
                             {userInscription.length !== 0 ?
-                            userInscription.inscription.profit.toFixed(2) : 0  
+                            userInscription.inscription.profit.toFixed(3) : 0  
                         }
                             </h1>
                         </div>
@@ -89,7 +100,7 @@ function Dashboard({torneo,  tournamentLeaderboard, title, userInscription }) {
                                                         $
                                                         {
                                                             rank.inscription
-                                                                .profit.toFixed(0)
+                                                                .profit.toFixed(1)
                                                         }
                                                     </td>
                                                 </tr>

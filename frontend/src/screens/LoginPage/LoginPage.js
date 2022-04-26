@@ -31,21 +31,37 @@ function LoginPage() {
         try {
             setLoadingLogin(true);
             const { data } = await axios.post(
-                "https://final-iaw.herokuapp.com/api/users/login",
+                "http://localhost:5000/api/users/login",
                 {
                     email: emailLogin,
                     password: passwordLogin,
                 }
             );
             setLoadingLogin(false);
-            setErrorLogin(false);
+            setErrorLogin(true);
             localStorage.setItem("userId", JSON.stringify(data._id));
             navigate("/coins");
         } catch (error) {
             setErrorLogin(error.response.data.message);
             setLoadingLogin(false);
+            setMessageLogin()
         }
     };
+
+    /*
+   );
+                console.log(data);
+                setLoadingRegister(false);
+                localStorage.setItem("userId", JSON.stringify(data._id));
+                setErrorRegister(false);
+                setMessageRegister("User creates successfully");
+                navigate("/coins");
+            } catch (error) {
+                setErrorRegister(error.response.data.message);
+                setMessageRegister(false);
+                setLoadingRegister(false);
+
+    */
 
     const submitHandlerRegister = async (e) => {
         e.preventDefault();
@@ -64,7 +80,7 @@ function LoginPage() {
 
                 setLoadingRegister(true);
                 const { data } = await axios.post(
-                    "https://final-iaw.herokuapp.com//api/users",
+                    "/api/users",
                     {
                         name: nameRegister,
                         email: emailRegister,

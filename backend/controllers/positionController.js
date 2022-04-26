@@ -40,6 +40,7 @@ const closePosition = asyncHandler(async (req, res) => {
     const { id } = req.params;
     const { closePrice: _closePrice } = req.body;
     try {
+        
         const position = await Position.findById(id);
         let difference = 0;
         if (position.buyOrder) {
@@ -62,14 +63,18 @@ const closePosition = asyncHandler(async (req, res) => {
             });
         });
 
+        const _money = _closePrice * position.quantity;
 
         Inscription.findOne({ _id: position.inscription.toString() }, function (err, inscriptiona) {
             if (err) return res.status(404).json(err);
             if (!inscriptiona) return res.status(404).json(err);
             let _profit = inscriptiona.profit;
-            _profit = _profit + difference 
+            _profit = _profit + difference;
+            
+            let _score = inscriptiona.score;
 
             inscriptiona.profit= _profit;
+            inscriptiona.score = _score + _money;
 
             inscriptiona.save(function (err) {
                 if (err) return res.status(400).json(err);

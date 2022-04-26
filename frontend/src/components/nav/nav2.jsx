@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { AiOutlineTrophy } from "react-icons/ai";
+import { AiOutlineTrophy , AiOutlineUser} from "react-icons/ai";
 import { RiCoinsLine } from "react-icons/ri";
-import { MdOutlineCreate } from "react-icons/md";
 import { FiLogOut, FiLogIn } from "react-icons/fi";
 import "./nav2.css";
 import { useNavigate } from "react-router-dom";
@@ -19,6 +18,7 @@ function Nav2() {
         useState("");
     const [sidebarActive, setSidebarActive] = useState("sidebar nav_active");
     const [toggleIcon, setToggleIcon] = useState("nav__toggler");
+    const [name, setName] = useState([]);
 
     const navToggle = () => {
         sidebarActive === "sidebar"
@@ -29,15 +29,13 @@ function Nav2() {
             : setToggleIcon("nav__toggler");
     };
 
-    // const getUser = async () => {
-    //     const _user = await axios.get(URIUser + JSON.parse(user));
-    //     setUserObject(_user.data);
-    // };
+    const getUser = async () => {
+        const _user = await axios.get(URIUser + JSON.parse(user));
+        setName(_user.data.name);
+    };
 
     useEffect(() => {
-        //setActiveCoin("active");
-        // setUserObject("");
-        // user && getUser();
+        getUser()
     }, [user]);
 
     const logOutButton = async () => {
@@ -117,17 +115,17 @@ function Nav2() {
                         <h3>Finished Tournaments</h3>
                     </a>
                 )}
-{/*
-                {user & userObject.isAdmin &&
+
+                {user  &&
                  (
-                    <a href="/coins">
+                    <a >
                         <div className="icon">
-                            <MdOutlineCreate />
+                            <AiOutlineUser />
                         </div>
 
-                        <h3>Create Tournament</h3>
+                        <h3>{name}</h3>
                     </a>
-                )} */}
+                )}
 
                 {user ? (
                     <a

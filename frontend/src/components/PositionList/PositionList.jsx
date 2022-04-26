@@ -10,17 +10,10 @@ const URICoinsAPIAll = "https://final-iaw.herokuapp.com/api/coingecko/coinsAPI";
 const URIClosePosition = "https://final-iaw.herokuapp.com/api/positions/close/";
 
 function PositionList({
-    tournamentId,
     _coins,
     _openTournamentPositions,
-    _closedTournamentPositions,
     title,
 }) {
-    // const [openTournamentPositions, setopenTournamentPositions] = useState(
-    //     _openTournamentPositions
-    // );
-    const navigate = useNavigate();
-    const [coins, setCoins] = useState([_coins]);
 
     //TO-DO que funcione
     const closePosition = async (_positionId, coin, price) => {
@@ -45,16 +38,11 @@ function PositionList({
         return toReturn.toFixed(2);
     };
 
-    const refreshCoins = async () => {
-        const data = await (await axios.get(URICoinsAPIAll)).data;
-        setCoins(data);
-    };
-
     const price = (_id) => {
         let toReturn = 0;
 
-        if (coins.length > 0) {
-            let aux = coins.find((coin) => coin.id == _id);
+        if (_coins.length > 0) {
+            let aux = _coins.find((coin) => coin.id == _id);
             if (aux !== undefined) {
                 toReturn = aux.market_data.current_price.usd;
             }
@@ -63,14 +51,8 @@ function PositionList({
     };
 
     useEffect(() => {
-        const coinsData = setInterval(() => {
-            refreshCoins();
-        }, 4000);
-
-        return () => {
-            clearInterval(coinsData);
-        };
-    }, [coins]);
+        
+    }, [_coins]);
 
     return (
         <div className="recent-order">
@@ -122,7 +104,7 @@ function PositionList({
                                         </th>
                                         <th>
                                             {" "}
-                                            ${price(_position.coin.identifier)}
+                                            ${ price(_position.coin.identifier)}
                                         </th>
                                         <td
                                             style={

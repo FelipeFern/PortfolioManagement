@@ -45,7 +45,7 @@ const authUser = asyncHandler(async (req, res) => {
     const { email, password } = req.body;
 
     const user = await User.findOne({ email });
-    if (user && (await user.matchPassword(password))) {
+    try {
         res.status(200).json({
             _id: user.id,
             name: user.name,
@@ -53,10 +53,10 @@ const authUser = asyncHandler(async (req, res) => {
             isAdmin: user.isAdmin,
             token: generateToken(user._id),
         });
-    } else {
-        res.status(400);
-        throw new Error("Invalid email of password");
+    } catch (error) {
+        return res.status(400).json(error)
     }
+   console.log()
 });
 
 const deleteUser = async (req, res) => {

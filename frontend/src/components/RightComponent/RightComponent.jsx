@@ -5,10 +5,15 @@ import axios from "axios";
 const URICreatePosition = "https://final-iaw.herokuapp.com/api/positions/";
 const URICoins =
     "https://final-iaw.herokuapp.com/api/tournaments/coins/625ec361b5f1244a7d437a39";
-const URICoinsAPIAll = "https://final-iaw.herokuapp.com/api/coingecko/coinsAPI";
-const URIGetInscription = "https://final-iaw.herokuapp.com/api/users/inscription/";
+const URIGetInscription =
+    "https://final-iaw.herokuapp.com/api/users/inscription/";
 
-function RightComponent({  createPositions, tournamentId }) {
+function RightComponent({
+    tournamentCoins,
+    APIcoins,
+    createPositions,
+    tournamentId,
+}) {
     const user = localStorage.getItem("userId");
     const [available, setAvailable] = useState(0);
     const [quantity, setQuantity] = useState(0);
@@ -18,7 +23,6 @@ function RightComponent({  createPositions, tournamentId }) {
     const [coins, setCoins] = useState([]);
     const [message, setMessage] = useState("Un Mensajeas");
     const [message_div, setMessageDiv] = useState("message_div_hidden");
-    const [allCoins, setAllCoins] = useState([]);
 
     const handleSubmitPosition = async (_buyOrder) => {
         const _inscription = await axios.post(
@@ -27,9 +31,9 @@ function RightComponent({  createPositions, tournamentId }) {
                 tournament: tournamentId,
             }
         );
-     
+
         let _coin = coins.find((c) => c.symbol == coin);
-       
+
         const { data } = await axios.post(URICreatePosition, {
             inscription: _inscription.data._id,
             coin: _coin._id,
@@ -48,7 +52,14 @@ function RightComponent({  createPositions, tournamentId }) {
 
     const refreshData = async (_quantity, _coinPrice) => {
         let _total = _quantity * _coinPrice;
-        await setTotal(_total);
+        let _quantityAux = _quantity;
+        if (_total > available) {
+            _quantityAux = (available / _coinPrice).toFixed(4);
+            await setQuantity(_quantityAux);
+            await setTotal(available);
+        } else {
+            await setTotal(_total);
+        }
     };
 
     const handleCoinChange = async (e) => {
@@ -64,21 +75,11 @@ function RightComponent({  createPositions, tournamentId }) {
         refreshData(e.target.value, coinPrice);
     };
 
-    // const fetchCoins = async () => {
-    //     const data = await (await axios.get(URICoins)).data;
-    //     setCoins(data);
-    // };
-
-    const refreshCoins = async () => {
-        const data = await (await axios.get(URICoinsAPIAll)).data;
-        setAllCoins(data);
-    };
-
     const price = (_id) => {
         let toReturn = 0;
 
-        if (allCoins.length > 0) {
-            let aux = allCoins.find((coin) => coin.id == _id);
+        if (APIcoins.length > 0) {
+            let aux = APIcoins.find((coin) => coin.id == _id);
             if (aux !== undefined) {
                 toReturn = aux.market_data.current_price.usd;
             }
@@ -86,33 +87,28 @@ function RightComponent({  createPositions, tournamentId }) {
         return toReturn;
     };
 
-     useEffect(() => {
-
-        const fetchInscription = async ()=> {
-            const _inscription = await  axios.post(
+    useEffect(() => {
+        const fetchInscription = async () => {
+            const _inscription = await axios.post(
                 URIGetInscription + JSON.parse(user),
                 {
                     tournament: tournamentId,
                 }
             );
-            setAvailable(_inscription.data.score)
-        }
-
-        fetchInscription()
-        const fetchCoins = async () => {
-            const data = await (await axios.get(URICoins)).data;
-            setCoins(data);
+            await setAvailable(_inscription.data.score);
         };
-         fetchCoins();
-        
+
+        fetchInscription();
+        setCoins(tournamentCoins);
+
         const coinsData = setInterval(() => {
-            refreshCoins();
-        }, 15000);
+            setCoins(tournamentCoins);
+        }, 3000);
 
         return () => {
             clearInterval(coinsData);
         };
-    }, [allCoins]);
+    }, [APIcoins, tournamentCoins]);
 
     return (
         <div className="right">
@@ -146,9 +142,7 @@ function RightComponent({  createPositions, tournamentId }) {
                                     />
                                 </label>
 
-                                <label>
-                                    Total: &nbsp;{total} USD
-                                </label>
+                                <label>Total: &nbsp;{total} USD</label>
                                 <div className="buttons">
                                     <button
                                         className="short"
@@ -201,7 +195,10 @@ function RightComponent({  createPositions, tournamentId }) {
                                     }
                                 >
                                     <th className="th-img-name">
-                                        <img alt="Coin-icon" src={_coin.image} />
+                                        <img
+                                            alt="Coin-icon"
+                                            src={_coin.image}
+                                        />
                                         {_coin.symbol.toUpperCase()}
                                     </th>
                                     <th> $ {price(_coin.identifier)} </th>

@@ -9,22 +9,10 @@ const Table = ({ tableData, headingColumns, title }) => {
     const user = localStorage.getItem("userId");
 
     let tableClass = "table-container__table";
-    const [coins, setCoins] = useState(tableData);
 
     useEffect(() => {
-        // const fetchCoins = async () => {
-        //     const data = await (await axios.get(URI)).data;
-        //     setCoins(data);
-        // };
-
-        // const coinsData = setInterval(() => {
-        //     fetchCoins();
-        // }, 10000);
-
-        // return () => {
-        //     clearInterval(coinsData);
-        // };
-    }, [coins, tableData]);
+      
+    }, [tableData]);
 
     return (
         <div className="table_coins">

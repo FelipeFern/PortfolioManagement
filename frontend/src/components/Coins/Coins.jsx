@@ -10,23 +10,22 @@ const Coins = () => {
     const [driversData, setDriversData] = useState([]);
 
     const fetchData = async () => {
-        const data = await (await axios.get(URI2)).data;
-        setDriversData(data);
+        const data = await axios.get(URI2);
+        setDriversData(data.data);
     };
     
-
     useEffect(() => {
-        fetchData()
-        
-        // const coinsData = setInterval(() => {
-        //     fetchData();
-        // }, 3000);
+        setDriversData([])
+        fetchData();
+        const coinsData = setInterval(() => {
+            fetchData();
+        }, 10000);
 
-        // return () => {
-        //     clearInterval(coinsData);
-        // };
-    }, [ ]);
-
+        return () => {
+            clearInterval(coinsData);
+        };
+    }, []);
+    
     return (
         <Fragment>
             <Table

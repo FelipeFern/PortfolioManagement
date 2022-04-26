@@ -7,7 +7,8 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
-// const URIPositions = "http://localhost:5000/api/users/tournamentPositions/";
+const URICoins =
+    "https://final-iaw.herokuapp.com/api/tournaments/coins/";
 const URIClosedPositions =
     "https://final-iaw.herokuapp.com/api/users/tournamentClosedPostions/";
 //const URIOpenPositions =
@@ -28,6 +29,7 @@ const TournamentPage = () => {
     const [torneo, setTorneo] = useState([]);
     const [coins, setCoins] = useState([]);
     const [userInscription, setUserInscription] = useState([]);
+    const [tournamentCoins, setTournamentCoins] = useState([]);
 
     const insertCoins = async (_array) => {
         const { data } = await axios.get(URICoinsAPIAll);
@@ -51,29 +53,39 @@ const TournamentPage = () => {
         setTournament('"' + _tournament.data.name + '"');
     };
 
-    const getTournamentPositions = async () => {
-        console.log("Entre");
+    const getTournamentLeaderboard = async () => {
         const _user = JSON.parse(user);
         const uri = URITournamentPositions + id;
         const { data } = await axios.get(uri);
-        const _data = data.find((elem) => elem.user._id == _user);
-        console.log(_data);
-        if (_data === undefined) {
-            setUserInscription("No");
-            console.log('=======================')
-        } else {
-            setUserInscription(data.find((elem) => elem.user._id == _user));
-        }
         setTournamentLeaderboard(data);
+        setUserInscription(data.find((elem) => elem.user._id == _user));
+    };
 
-        await insertCoins(data);
+    const fetchCoins = async () => {
+        const _uri = URICoins + id
+        console.log(_uri)
+        const data = await axios.get(_uri);
+        setTournamentCoins(data.data);
     };
 
     useEffect(() => {
         closedUserPositions();
-        getTournamentPositions();
         getTournament();
+        getTournamentLeaderboard();
+        setCoins([]);
+        insertCoins();
+        fetchCoins();
+
+
+        const coinsData = setInterval(() => {
+            insertCoins();
+        }, 10000);
+
+        return () => {
+            clearInterval(coinsData);
+        };
     }, []);
+
 
     return (
         <div className="container--1">
@@ -89,12 +101,16 @@ const TournamentPage = () => {
 
                 <ClosedPositions
                     title="Closed Positions"
-                    _coins={coins}
                     _closedTournamentPositions={closedTournamentPositions}
                 />
             </div>
 
-            <RightComponent createPositions={false} tournamentId={id} />
+            <RightComponent
+                tournamentCoins={tournamentCoins}
+                APIcoins={coins}
+                createPositions={false}
+                tournamentId={id}
+            />
         </div>
     );
 };
