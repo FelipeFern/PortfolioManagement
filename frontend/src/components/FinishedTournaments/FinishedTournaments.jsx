@@ -123,9 +123,9 @@ const Tournaments = ({
                                                 </div>
 
                                                 <a
-                                                    href={
-                                                        "/finishedTournaments/" +
-                                                        tournament._id.toString()
+                                                    href={"/tournaments"
+                                                        // "/finishedTournaments/" +
+                                                        // tournament._id.toString()
                                                     }
                                                 >
                                                     <button className="btn btn-primary">
