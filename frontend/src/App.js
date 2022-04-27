@@ -19,9 +19,18 @@ const App = () => {
         user = localStorage.getItem("userId")
     }
 
-    useEffect(async () => {
+    useEffect(() => {
         asignUser()
-    }, [user]);
+        const coinsData = setInterval(() => {
+            asignUser()
+        }, 10000);
+
+        return () => {
+            clearInterval(coinsData);
+        };
+    }, []);
+
+
     return (
         <main>
             <BrowserRouter>

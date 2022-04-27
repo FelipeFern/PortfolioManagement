@@ -14,6 +14,8 @@ function PositionList({
     _openTournamentPositions,
     title,
 }) {
+    const [time , setTime] = useState(new Date())
+    
 
     //TO-DO que funcione
     const closePosition = async (_positionId, coin, price) => {
@@ -50,9 +52,19 @@ function PositionList({
         return toReturn;
     };
 
+    const setMyTime =() =>  {
+        setTime(new Date());
+     }
+
     useEffect(() => {
-        
-    }, [_coins]);
+        const coinsData = setInterval(() => {
+            setMyTime()
+        }, 3000);
+
+        return () => {
+            clearInterval(coinsData);
+        };
+    }, [_coins, time]);
 
     return (
         <div className="recent-order">

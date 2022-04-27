@@ -6,7 +6,7 @@ const mongoose = require("mongoose");
 
 const coinsAPI = async (req, res) => {
     try {
-        const requestAPI = await coinGeckoClient.coins.all({ per_page: 100 });
+        const requestAPI = await coinGeckoClient.coins.all({ per_page: 100 , localization:false });
         return res.status(200).json(requestAPI.data);
     } catch (error) {
         res.json({ message: error.message });

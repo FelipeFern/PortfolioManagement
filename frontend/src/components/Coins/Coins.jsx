@@ -8,18 +8,26 @@ const URI = "http://localhost:5000/api/coingecko/coinsAPI";
 
 const Coins = () => {
     const [driversData, setDriversData] = useState([]);
+    const [time , setTime] = useState(new Date())
 
     const fetchData = async () => {
         const data = await axios.get(URI2);
         setDriversData(data.data);
     };
     
+    const setMyTime =() =>  {
+        setTime(new Date());
+     }
+ 
+
     useEffect(() => {
         setDriversData([])
         fetchData();
         const coinsData = setInterval(() => {
             fetchData();
-        }, 10000);
+            setMyTime()
+
+        }, 4000);
 
         return () => {
             clearInterval(coinsData);

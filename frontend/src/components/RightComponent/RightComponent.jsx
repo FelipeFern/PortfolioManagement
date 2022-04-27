@@ -23,8 +23,10 @@ function RightComponent({
     const [coins, setCoins] = useState([]);
     const [message, setMessage] = useState("Un Mensajeas");
     const [message_div, setMessageDiv] = useState("message_div_hidden");
+    const [time , setTime] = useState(new Date())
 
     const handleSubmitPosition = async (_buyOrder) => {
+        console.log(user)
         const _inscription = await axios.post(
             URIGetInscription + JSON.parse(user),
             {
@@ -87,6 +89,10 @@ function RightComponent({
         return toReturn;
     };
 
+    const setMyTime =() =>  {
+       setTime(new Date());
+    }
+
     useEffect(() => {
         const fetchInscription = async () => {
             const _inscription = await axios.post(
@@ -103,12 +109,13 @@ function RightComponent({
 
         const coinsData = setInterval(() => {
             setCoins(tournamentCoins);
+            setMyTime()
         }, 3000);
 
         return () => {
             clearInterval(coinsData);
         };
-    }, [APIcoins, tournamentCoins]);
+    }, [APIcoins, tournamentCoins, time]);
 
     return (
         <div className="right">
@@ -136,8 +143,9 @@ function RightComponent({
                                         type="text"
                                         value={quantity}
                                         required
-                                        onChange={(e) =>
-                                            handleQuantityChange(e)
+                                        onChange={(e) =>{
+                                            e.preventDefault()
+                                            handleQuantityChange(e)}
                                         }
                                     />
                                 </label>

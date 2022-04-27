@@ -14,16 +14,21 @@ const createPosition = asyncHandler(async (req, res) => {
         quantity,
         buyOrder,
     });
+
+    let _score = quantity * entryPrice;
+
     if (position) {
         Inscription.findOne({ _id: inscription }, function (err, inscriptiona) {
             if (err) return res.status(404).json(err);
             if (!inscriptiona) return res.status(404).json(err);
 
+            let oldScore = inscriptiona.score ;
+
             inscriptiona.positions.push(position._id.toString());
+            inscriptiona.score = oldScore - _score;
 
             inscriptiona.save(function (err) {
                 if (err) return res.status(400).json(err);
-                console.log("Se actualizo bien");
             });
         });
 
@@ -75,6 +80,7 @@ const closePosition = asyncHandler(async (req, res) => {
 
             inscriptiona.profit= _profit;
             inscriptiona.score = _score + _money;
+    
 
             inscriptiona.save(function (err) {
                 if (err) return res.status(400).json(err);
