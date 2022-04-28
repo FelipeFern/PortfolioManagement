@@ -78,7 +78,7 @@ const TournamentPage = () => {
 
     const fetchCoins = async () => {
         if (id !== undefined) {
-            const _uri = URI2 + id.toString();
+            const _uri = URICoins + id.toString();
             const data = await axios.get(_uri);
             if (data.data.length > 2) {
                 setTournamentCoins(data.data);
