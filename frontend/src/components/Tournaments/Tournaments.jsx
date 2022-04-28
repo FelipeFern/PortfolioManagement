@@ -16,7 +16,7 @@ const Tournaments = ({
 }) => {
     const navigate = useNavigate();
     const user = localStorage.getItem("userId");
-    const [tournamentsState, setTournamentsState] = useState([]);
+    // const [tournamentsState, setTournamentsState] = useState([]);
 
     const getCorrectDate = (_date) => {
         var date = new Date(
@@ -29,12 +29,12 @@ const Tournaments = ({
         return toReturn;
     };
 
-    // Esto me tira error, como que no   Uncaught (in promise) Error: Request aborted
-    const fetchTournaments = async () => {
-        const { data } = await axios.get(URI);
-        console.log(data)
-        setTournamentsState(data);
-    };
+    // // Esto me tira error, como que no   Uncaught (in promise) Error: Request aborted
+    // const fetchTournaments = async () => {
+    //     const { data } = await axios.get(URI);
+    //     console.log(data)
+    //     setTournamentsState(data);
+    // };
 
     const signUpTournament = async (tournamentId) => {
         const _tournament = await axios.get(URITournament + tournamentId);

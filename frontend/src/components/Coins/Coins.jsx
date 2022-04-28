@@ -27,7 +27,7 @@ const Coins = () => {
         fetchData();
         const coinsData = setInterval(() => {
             fetchData();           
-        }, 10000);
+        }, 8000);
 
         return () => {
             clearInterval(coinsData);

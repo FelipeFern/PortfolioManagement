@@ -201,7 +201,7 @@ const getTournamentCoins = asyncHandler(async (req, res) => {
     } catch (error) {
         return res
             .status(404)
-            .json({ message: error });
+            .json( error );
     }
 });
 

@@ -64,7 +64,9 @@ const TournamentPage = () => {
     const fetchCoins = async () => {
         const _uri = URICoins + id
         const data = await axios.get(_uri);
-        setTournamentCoins(data.data);
+        if (data.data.length > 2) {
+            setTournamentCoins(data.data);
+        }
     };
 
     useEffect(() => {
@@ -78,6 +80,7 @@ const TournamentPage = () => {
 
         const coinsData = setInterval(() => {
             insertCoins();
+            fetchCoins()
         }, 5000);
 
         return () => {

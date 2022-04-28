@@ -68,34 +68,38 @@ const TournamentPage = () => {
 
     const insertCoins = async () => {
         const data = await axios.get(URICoinsAPIAll);
+        //console.log("API COINS", data);
         if (data.data.length > 2) {
             setCoins(data.data);
-            console.log(data.data , "\n")
+            // console.log("API COINS", data.data , "\n")
+            // console.log(data.data )
         }
     };
 
     const fetchCoins = async () => {
-        const _uri = URICoins + id;
-        const data = await axios.get(_uri);
-        if (data.data.length > 2) {
-            setTournamentCoins(data.data);
+        if (id !== undefined) {
+            const _uri = URI2 + id.toString();
+            const data = await axios.get(_uri);
+            if (data.data.length > 2) {
+                setTournamentCoins(data.data);
+            }
         }
     };
 
     useEffect(() => {
         openUserPositions();
-        closedUserPositions();        
+        closedUserPositions();
         getTournament();
         insertCoins();
         getTournamentLeaderboard();
         fetchCoins();
         setCoins([]);
-       
-        //fetchCoins();
+        fetchCoins();
 
         const coinsData = setInterval(() => {
             insertCoins();
-        }, 4000);
+            //fetchCoins();
+        }, 5000);
 
         return () => {
             clearInterval(coinsData);
