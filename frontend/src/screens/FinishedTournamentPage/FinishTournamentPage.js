@@ -63,7 +63,6 @@ const TournamentPage = () => {
 
     const fetchCoins = async () => {
         const _uri = URICoins + id
-        console.log(_uri)
         const data = await axios.get(_uri);
         setTournamentCoins(data.data);
     };
@@ -79,7 +78,7 @@ const TournamentPage = () => {
 
         const coinsData = setInterval(() => {
             insertCoins();
-        }, 10000);
+        }, 5000);
 
         return () => {
             clearInterval(coinsData);

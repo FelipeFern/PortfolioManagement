@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
+const URI2 = "http://localhost:5000/api/tournaments/";
 const URI = "https://final-iaw.herokuapp.com/api/tournaments/";
 const URIInscription = "https://final-iaw.herokuapp.com/api/inscriptions/";
 const URITournament = "https://final-iaw.herokuapp.com/api/tournaments/";
@@ -28,8 +29,10 @@ const Tournaments = ({
         return toReturn;
     };
 
+    // Esto me tira error, como que no   Uncaught (in promise) Error: Request aborted
     const fetchTournaments = async () => {
-        const data = await (await axios.get(URI)).data;
+        const { data } = await axios.get(URI);
+        console.log(data)
         setTournamentsState(data);
     };
 
@@ -44,15 +47,15 @@ const Tournaments = ({
             tournamentId: tournamentId,
             moneyAvailable: _moneyAvailable,
         });
-        
+
         navigate("/tournament/" + tournamentId);
     };
 
     useEffect(() => {
-        fetchTournaments();
-        return () => {
-            setTournamentsState([]);
-        };
+        // fetchTournaments();
+        // return () => {
+        //     setTournamentsState([]);
+        // };
     }, []);
 
     return (

@@ -7,12 +7,24 @@ const URI = "https://final-iaw.herokuapp.com/api/coingecko/coinsAPI";
 
 const Table = ({ tableData, headingColumns, title }) => {
     const user = localStorage.getItem("userId");
-
+    const [time, setTime] = useState(new Date());
     let tableClass = "table-container__table";
 
-    useEffect(() => {
-      
-    }, [tableData]);
+    
+    const setMyTime = () => {
+        setTime(new Date());
+    };
+
+     useEffect(() => {
+        const coinsData = setInterval(() => {
+            setMyTime();
+        }, 2000);
+
+        return () => {
+            clearInterval(coinsData);
+        };
+
+     }, [time]);
 
     return (
         <div className="table_coins">

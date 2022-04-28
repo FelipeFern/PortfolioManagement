@@ -7,6 +7,11 @@ const mongoose = require("mongoose");
 const coinsAPI = async (req, res) => {
     try {
         const requestAPI = await coinGeckoClient.coins.all({ per_page: 100 , localization:false });
+        console.log('Entre aca')
+        console.log(requestAPI.data[0].market_data.current_price.usd)
+        console.log(requestAPI.data[1].market_data.current_price.usd)
+        console.log(requestAPI.data[3].market_data.current_price.usd)
+        console.log('\n')
         return res.status(200).json(requestAPI.data);
     } catch (error) {
         res.json({ message: error.message });

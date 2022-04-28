@@ -97,7 +97,6 @@ const getTournaments = asyncHandler(async (req, res) => {
             };
             toReturn.push(toInsert);
         }
-
         return res.status(200).json(toReturn);
     } catch (error) {
         return res
@@ -202,7 +201,7 @@ const getTournamentCoins = asyncHandler(async (req, res) => {
     } catch (error) {
         return res
             .status(404)
-            .json({ message: "Can not get the tournamenet, it's not valid " });
+            .json({ message: error });
     }
 });
 

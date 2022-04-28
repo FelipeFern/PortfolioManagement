@@ -37,13 +37,7 @@ const App = () => {
                 <Nav2 />
 
                 <Routes>
-                    {user && (
-                        <Route
-                            path="/finishedTournaments"
-                            element={<FinishedTournamentsPage />}
-                            exact
-                        />
-                    )}
+                    
                     {user && (
                         <Route
                             path="/tournaments"

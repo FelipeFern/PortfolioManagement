@@ -3,8 +3,7 @@ import "./RightComponent.css";
 import axios from "axios";
 
 const URICreatePosition = "https://final-iaw.herokuapp.com/api/positions/";
-const URICoins =
-    "https://final-iaw.herokuapp.com/api/tournaments/coins/625ec361b5f1244a7d437a39";
+
 const URIGetInscription =
     "https://final-iaw.herokuapp.com/api/users/inscription/";
 
@@ -89,33 +88,52 @@ function RightComponent({
         return toReturn;
     };
 
+    const fetchInscription = async () => {
+        const _inscription = await axios.post(
+            URIGetInscription + JSON.parse(user),
+            {
+                tournament: tournamentId,
+            }
+        );
+        if (_inscription.data !== undefined){
+            setAvailable(_inscription.data.score);
+        }
+        if(tournamentCoins.length > 1){
+            setCoins(tournamentCoins);
+        }
+        
+    };
+
     const setMyTime =() =>  {
        setTime(new Date());
     }
 
     useEffect(() => {
-        const fetchInscription = async () => {
-            const _inscription = await axios.post(
-                URIGetInscription + JSON.parse(user),
-                {
-                    tournament: tournamentId,
-                }
-            );
-            await setAvailable(_inscription.data.score);
-        };
+        // const fetchInscription = async () => {
+        //     const _inscription = await axios.post(
+        //         URIGetInscription + JSON.parse(user),
+        //         {
+        //             tournament: tournamentId,
+        //         }
+        //     );
+        //     if (_inscription.data !== undefined){
+        //         setAvailable(_inscription.data.score);
+        //     }
+            
+        // };
 
         fetchInscription();
         setCoins(tournamentCoins);
 
         const coinsData = setInterval(() => {
-            setCoins(tournamentCoins);
+            //setCoins(tournamentCoins);
             setMyTime()
         }, 3000);
 
         return () => {
             clearInterval(coinsData);
         };
-    }, [APIcoins, tournamentCoins, time]);
+    }, [time ,tournamentCoins]);
 
     return (
         <div className="right">
@@ -195,7 +213,7 @@ function RightComponent({
                             </tr>
                         </thead>
                         <tbody>
-                            {coins.map((_coin) => (
+                            {tournamentCoins.map((_coin) => (
                                 <tr
                                     key={_coin.symbol}
                                     onClick={() =>

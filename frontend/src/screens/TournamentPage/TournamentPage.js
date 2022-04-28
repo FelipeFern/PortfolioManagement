@@ -16,9 +16,8 @@ const URIOpenPositions =
     "https://final-iaw.herokuapp.com/api/users/tournamentOpenPostions/";
 const URICoinsAPIAll = "https://final-iaw.herokuapp.com/api/coingecko/coinsAPI";
 const URIGetTournament = "https://final-iaw.herokuapp.com/api/tournaments/";
-const URICoins =
-    "https://final-iaw.herokuapp.com/api/tournaments/coins/";
-
+const URICoins = "https://final-iaw.herokuapp.com/api/tournaments/coins/";
+const URI2 = "http://localhost:5000/api/tournaments/coins/";
 
 const TournamentPage = () => {
     const { id } = useParams();
@@ -68,31 +67,35 @@ const TournamentPage = () => {
     };
 
     const insertCoins = async () => {
-        const { data } = await axios.get(URICoinsAPIAll);
-        setCoins(data);
+        const data = await axios.get(URICoinsAPIAll);
+        if (data.data.length > 2) {
+            setCoins(data.data);
+            console.log(data.data , "\n")
+        }
     };
 
-    
     const fetchCoins = async () => {
-        const _uri = URICoins + id
+        const _uri = URICoins + id;
         const data = await axios.get(_uri);
-        setTournamentCoins(data.data);
+        if (data.data.length > 2) {
+            setTournamentCoins(data.data);
+        }
     };
-
 
     useEffect(() => {
         openUserPositions();
-        closedUserPositions();
+        closedUserPositions();        
         getTournament();
-        getTournamentLeaderboard();
-        setCoins([]);
         insertCoins();
+        getTournamentLeaderboard();
         fetchCoins();
-
+        setCoins([]);
+       
+        //fetchCoins();
 
         const coinsData = setInterval(() => {
             insertCoins();
-        }, 10000);
+        }, 4000);
 
         return () => {
             clearInterval(coinsData);
@@ -120,7 +123,7 @@ const TournamentPage = () => {
             </div>
 
             <RightComponent
-                tournamentCoins = {tournamentCoins}
+                tournamentCoins={tournamentCoins}
                 APIcoins={coins}
                 createPositions={true}
                 tournamentId={id}
